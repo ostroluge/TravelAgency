@@ -1,4 +1,4 @@
-package fabrique;
+package factory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Customer;
+
 import db.DbManager;
-import domaine.Customer;
 
 public class CustomerFactory {
 
