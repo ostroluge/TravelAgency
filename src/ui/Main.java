@@ -3,8 +3,8 @@ package ui;
 import java.sql.SQLException;
 import java.util.List;
 
-import domaine.Customer;
-import fabrique.CustomerFactory;
+import model.Customer;
+import factory.CustomerFactory;
 
 public class Main {
 
@@ -13,7 +13,7 @@ public class Main {
 		List<Customer> customers = CustomerFactory.getInstance().getAllCustomers();
 		
 		for (Customer customer : customers) {
-			System.out.println(customer.getLastName());
+			System.out.println(customer.getOriginCity());
 		}
 	}
 }

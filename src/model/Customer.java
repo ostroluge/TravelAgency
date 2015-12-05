@@ -1,4 +1,4 @@
-package domaine;
+package model;
 
 public class Customer {
 

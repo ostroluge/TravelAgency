@@ -1,4 +1,4 @@
-package fabrique;
+package factory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Customer;
 import db.DbManager;
-import domaine.Customer;
 
 public class CustomerFactory {
 
@@ -84,6 +84,44 @@ public class CustomerFactory {
 			
 			return resultCode;
 		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int editCustomerLastName(Long id, String lastName) {
+		try {
+			preparedStatement = conn.prepareStatement(
+					"update customer set last_name = ? where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, lastName);
+			preparedStatement.setLong(2, id);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int editCustomerOriginCity(Long id, String originCity) {
+		try {
+			preparedStatement = conn.prepareStatement(
+					"update customer set origin_city = ? where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, originCity);
+			preparedStatement.setLong(2, id);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
