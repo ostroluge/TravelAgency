@@ -1,8 +1,12 @@
 package db;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DbManager {
 
@@ -25,8 +29,17 @@ public class DbManager {
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
+		
+		Properties props = new Properties();
+		try {
+			props.load(new FileInputStream("TravelAgency/src/db/resources/database.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		Connection conn = DriverManager.getConnection(url, user, password);
+		Connection conn = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
 		
 		if (conn != null) {
 			return conn;
