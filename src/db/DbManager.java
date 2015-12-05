@@ -19,17 +19,20 @@ public class DbManager {
 		return INSTANCE;
 	}
 
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
 
-		Connection conn = DriverManager.getConnection(url, user, password);
-		
-		if (conn != null) {
-			return conn;
+		try {
+			Connection conn = DriverManager.getConnection(url, user, password);
+			if (conn != null) {
+				return conn;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return null;

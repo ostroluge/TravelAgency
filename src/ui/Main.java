@@ -13,12 +13,12 @@ public class Main {
 		Connection conn = DbManager.getInstance().getConnection();
 		PreparedStatement preparedStatement;
 		preparedStatement = conn.prepareStatement(
-				"select * from test");
+				"select * from customer");
 		
 		ResultSet resultPreparedStatement = preparedStatement.executeQuery();
 
 		while (resultPreparedStatement.next()) {
-			String nom = resultPreparedStatement.getString(1);
+			String nom = resultPreparedStatement.getString(2);
 			System.out.println(nom);
 		}
 	}
