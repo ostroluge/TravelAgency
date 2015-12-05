@@ -28,7 +28,7 @@ public class DbManager {
 		
 		Properties props = new Properties();
 		try {
-			props.load(new FileInputStream("TravelAgency/src/db/resources/database.properties"));
+			props.load(new FileInputStream("./src/db/resources/database.properties"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
