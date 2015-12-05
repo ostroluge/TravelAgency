@@ -10,10 +10,6 @@ import java.util.Properties;
 
 public class DbManager {
 
-	protected String url = "jdbc:mysql://mysql-thomasostrowski.alwaysdata.net:3306/thomasostrowski_travelagency";
-	protected String user = "106041";
-	protected String password = "miage";
-	
 	public static DbManager INSTANCE;
 		
 	public static DbManager getInstance() {
@@ -23,7 +19,7 @@ public class DbManager {
 		return INSTANCE;
 	}
 
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -39,10 +35,14 @@ public class DbManager {
 			e.printStackTrace();
 		}
 
-		Connection conn = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
-		
-		if (conn != null) {
-			return conn;
+		try {
+			Connection conn = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
+			
+			if (conn != null) {
+				return conn;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return null;
