@@ -19,3 +19,12 @@ insert into customer (last_name, first_name, birthdate, origin_city) values (
 	'1994-01-23',
 	'Arras'
 );
+
+create table city (
+	id integer primary key auto_increment,
+	city_name varchar(30) not null
+);
+
+insert into city values('Guingamp');
+insert into city values('Lille');
+insert into city values('Arras');
