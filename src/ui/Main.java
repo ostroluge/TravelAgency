@@ -20,7 +20,7 @@ public class Main {
 		
 		List<City> cities = CityFactory.getInstance().getAllCity();
 		
-		for (City city : cities) {
+		for(City city : cities){
 			System.out.println(city.getNameCity());
 		}
 	}
