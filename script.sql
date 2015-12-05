@@ -28,3 +28,10 @@ create table city (
 insert into city values('Guingamp');
 insert into city values('Lille');
 insert into city values('Arras');
+
+create table hotel (
+	id integer primary key auto_increment,
+	id_city integer not null,
+	name varchar(30) not null,
+	
+);
