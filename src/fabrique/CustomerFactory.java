@@ -71,4 +71,22 @@ public class CustomerFactory {
 		}
 		return 0;
 	}
+	
+	public int removeCustomer(Long id) {
+		try {
+			preparedStatement = conn.prepareStatement(
+					"delete from customer where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setLong(1, id);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
