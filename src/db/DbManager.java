@@ -6,8 +6,12 @@ import java.sql.SQLException;
 
 public class DbManager {
 
-	public static DbManager INSTANCE;
+	protected String url = "jdbc:mysql://mysql-thomasostrowski.alwaysdata.net:3306/thomasostrowski_travelagency";
+	protected String user = "106041";
+	protected String password = "miage";
 	
+	public static DbManager INSTANCE;
+		
 	public static DbManager getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new DbManager();
@@ -15,26 +19,19 @@ public class DbManager {
 		return INSTANCE;
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 		try {
-			Class.forName("org.hsqldb.jdbcDriver");
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
+
+		Connection conn = DriverManager.getConnection(url, user, password);
 		
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:hsqldb: "
-							+ "travelAgencyDb",
-							"sa",
-							"");
-			
-			if (conn != null) {
-				return conn;
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (conn != null) {
+			return conn;
 		}
+
 		return null;
 	}
 }
