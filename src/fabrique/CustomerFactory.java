@@ -14,6 +14,7 @@ public class CustomerFactory {
 
 	private static CustomerFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
+	private PreparedStatement preparedStatement;
 	
 	public static CustomerFactory getInstance() {
 		if (INSTANCE == null) {
@@ -24,7 +25,6 @@ public class CustomerFactory {
 
 	public List<Customer> getAllCustomers() {
 		List<Customer> customers = new ArrayList<>();
-		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = conn.prepareStatement(
 					"select * from customer");
@@ -48,5 +48,27 @@ public class CustomerFactory {
 			return customers;
 		}
 		return null;
+	}
+	
+	public int addCustomer(String lastName, String firstName, String birthdate, String originCity) {
+		try {
+			preparedStatement = conn.prepareStatement(
+					"insert into customer "
+					+ "(last_name, first_name, birthdate, origin_city) values (?, ?, ?, ?)");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, lastName);
+			preparedStatement.setString(2, firstName);
+			preparedStatement.setString(3, birthdate);
+			preparedStatement.setString(4, originCity);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }
