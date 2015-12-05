@@ -3,7 +3,9 @@ package ui;
 import java.sql.SQLException;
 import java.util.List;
 
+import model.City;
 import model.Customer;
+import factory.CityFactory;
 import factory.CustomerFactory;
 
 public class Main {
@@ -15,5 +17,13 @@ public class Main {
 		for (Customer customer : customers) {
 			System.out.println(customer.getOriginCity());
 		}
+		
+		List<City> cities = CityFactory.getInstance().getAllCity();
+		
+		for(City city : cities){
+			System.out.println(city.getNameCity());
+		}
+		
+		
 	}
 }

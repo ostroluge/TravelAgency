@@ -45,4 +45,43 @@ public class CityFactory {
 		
 		return null;
 	}
+	
+	public int addCity(String nameCity){
+		try {
+			preparedStatement = conn.prepareStatement("insert into city " +
+			"(city_name) values (?)");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, nameCity);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return 0;
+		
+	}
+	
+	public int removeCity(Long id){
+		try {
+			preparedStatement = conn.prepareStatement("delete from city " +
+			"where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setLong(1, id);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			return resultCode;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+		
+	}
 }
