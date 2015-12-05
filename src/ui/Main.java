@@ -1,25 +1,19 @@
 package ui;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import db.DbManager;
+import domaine.Customer;
+import fabrique.CustomerFactory;
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		Connection conn = DbManager.getInstance().getConnection();
-		PreparedStatement preparedStatement;
-		preparedStatement = conn.prepareStatement(
-				"select * from customer");
 		
-		ResultSet resultPreparedStatement = preparedStatement.executeQuery();
-
-		while (resultPreparedStatement.next()) {
-			String nom = resultPreparedStatement.getString(2);
-			System.out.println(nom);
+		List<Customer> customers = CustomerFactory.getInstance().getAllCustomers();
+		
+		for (Customer customer : customers) {
+			System.out.println(customer.getLastName());
 		}
 	}
 }
