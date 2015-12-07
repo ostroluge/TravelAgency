@@ -21,6 +21,10 @@ public class CityFactory {
 		return INSTANCE;
 	}
 	
+	public City create(Long id, String nameCity){
+		return new City(id, nameCity);
+	}
+	
 	public List<City> getAllCity(){
 		List<City> cities = new ArrayList<>();
 	

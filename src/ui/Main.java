@@ -6,6 +6,7 @@ import java.util.List;
 import model.City;
 import model.Customer;
 import model.Hotel;
+import factory.CategoryFactory;
 import factory.CityFactory;
 import factory.CustomerFactory;
 import factory.HotelFactory;
@@ -31,5 +32,8 @@ public class Main {
 		for (Hotel hotel : hotels) {
 			System.out.println(hotel.getName());
 		}
+
+//		CategoryFactory.getInstance().addCategory(3, 5, 50.0f);
+//		CategoryFactory.getInstance().removeCategory(4, 3);
 	}
 }

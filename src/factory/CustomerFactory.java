@@ -23,6 +23,11 @@ public class CustomerFactory {
 		return INSTANCE;
 	}
 
+	public Customer create(Long id, String lastName, String firstName,
+			String birthdate, String originCity){
+		return new Customer(id, lastName, firstName, birthdate, originCity);
+	}
+	
 	public List<Customer> getAllCustomers() {
 		List<Customer> customers = new ArrayList<>();
 		try {

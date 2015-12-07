@@ -23,6 +23,10 @@ public class HotelFactory {
 		return INSTANCE;
 	}
 
+	public Hotel create(Long id, Long idCity, String name){
+		return new Hotel(id, idCity, name);
+	}
+	
 	public List<Hotel> getHotelsFromCity(Long idCity) {
 		List<Hotel> hotels = new ArrayList<>();
 		try {
