@@ -55,6 +55,36 @@ public class CustomerFactory {
 		return null;
 	}
 	
+	public Customer getCustomerById(int id) {
+		Customer customer = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from customer where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setInt(1, id);
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+			
+			while (resultPreparedStatement.next()) {
+				Long idCustomer = resultPreparedStatement.getLong(1);
+				String lastName = resultPreparedStatement.getString(2);
+				String firstName = resultPreparedStatement.getString(3);
+				String birthdate = resultPreparedStatement.getString(4);
+				String originCity = resultPreparedStatement.getString(5);
+				customer = new Customer(idCustomer, lastName, firstName, birthdate, originCity);
+			}
+			
+			if (customer != null) {
+				return customer;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int addCustomer(String lastName, String firstName, String birthdate, String originCity) {
 		try {
 			preparedStatement = conn.prepareStatement(
