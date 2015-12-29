@@ -7,10 +7,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
+import job.customer.AddCustomer;
+import job.customer.DeleteCustomer;
+import job.customer.EditCustomer;
 import model.Customer;
 import ui.customer.listener.CustomerSelectionListener;
 
@@ -30,6 +34,10 @@ public class ManagementPanel extends JPanel implements ActionListener, CustomerS
 	protected JButton addButton;
 	protected JButton editButton;
 	protected JButton deleteButton;
+	protected JButton clearButton;
+	
+	protected Customer customerSelected;
+	protected JTable tableSelected;
 	
 	public ManagementPanel() {
 		CustomerTable.INSTANCE.addListener(this);
@@ -60,10 +68,12 @@ public class ManagementPanel extends JPanel implements ActionListener, CustomerS
 	private void setButtons() {
 		addButton = new JButton("Ajouter");
 		editButton = new JButton("Modifier");
+		clearButton = new JButton("Clear");
 		deleteButton = new JButton("Supprimer");
 		
 		addButton.addActionListener(this);
 		editButton.addActionListener(this);
+		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 	}
 
@@ -79,27 +89,65 @@ public class ManagementPanel extends JPanel implements ActionListener, CustomerS
 		add(originCity);
 		add(addButton);
 		add(editButton);
+		add(clearButton);
 		add(deleteButton);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
-			System.out.println("Ajout d'un client");
+			if (!lastName.getText().trim().toString().equals("") &&
+					!firstName.getText().trim().toString().equals("") &&
+					!birthdate.getText().trim().toString().equals("") &&
+					!originCity.getText().trim().toString().equals("")) {
+				Customer customerToAdd = new Customer(lastName.getText(),
+						firstName.getText(), birthdate.getText(), originCity.getText());
+				new AddCustomer(customerToAdd);
+			} else {
+				System.out.println("Veuillez renseigner tous les champs");
+			}
 		} else if (e.getSource() == editButton) {
-			System.out.println("Modif d'un client");
+			if (customerSelected != null) {
+				if (!lastName.getText().trim().toString().equals("") &&
+						!firstName.getText().trim().toString().equals("") &&
+						!birthdate.getText().trim().toString().equals("") &&
+						!originCity.getText().trim().toString().equals("")) {
+					Customer customerToEdit = new Customer(lastName.getText(),
+							firstName.getText(), birthdate.getText(), originCity.getText());
+					new EditCustomer(customerSelected.getId(), customerToEdit);
+				} else {
+					System.out.println("Veuillez renseigner tous les champs");
+				}
+			} else {
+				System.out.println("Veuillez selectionner un client a modifier");
+			}
 		} else if (e.getSource() == deleteButton) {
-			System.out.println("Suppression d'un client");
+			if (customerSelected != null) {
+				new DeleteCustomer(customerSelected.getId());
+			} else {
+				System.out.println("Veuillez selectionner un client a supprimer");
+			}
+		} else if (e.getSource() == clearButton) {
+			if (customerSelected != null) {
+				customerSelected = null;
+				tableSelected.clearSelection();
+				lastName.setText("");
+				firstName.setText("");
+				birthdate.setText("");
+				originCity.setText("");
+			}
 		}
 	}
 
 	@Override
-	public void onCustomerSelection(Customer customer) {
+	public void onCustomerSelection(Customer customer, JTable table) {
 		if (customer != null) {
+			customerSelected = customer;
 			lastName.setText(customer.getLastName());
 			firstName.setText(customer.getFirstName());
 			birthdate.setText(customer.getBirthdate());
 			originCity.setText(customer.getOriginCity());
 		}
+		tableSelected = table;
 	}
 }

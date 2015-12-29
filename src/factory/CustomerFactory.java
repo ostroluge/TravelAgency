@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Customer;
+import ui.customer.listener.CustomerChangeListener;
 import db.DbManager;
 
 public class CustomerFactory {
@@ -15,6 +16,8 @@ public class CustomerFactory {
 	private static CustomerFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
 	private PreparedStatement preparedStatement;
+	
+	private static List<CustomerChangeListener> listeners = new ArrayList<>();
 	
 	public static CustomerFactory getInstance() {
 		if (INSTANCE == null) {
@@ -99,6 +102,8 @@ public class CustomerFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
 		
 		} catch (SQLException e) {
@@ -117,6 +122,8 @@ public class CustomerFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
 		
 		} catch (SQLException e) {
@@ -125,6 +132,30 @@ public class CustomerFactory {
 		return 0;
 	}
 
+	public int editCustomer(Long id, Customer customer) {
+		try {
+			preparedStatement = conn.prepareStatement(
+					"update customer set last_name = ?,"
+					+ " first_name = ?, birthdate = ?, origin_city = ? where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, customer.getLastName());
+			preparedStatement.setString(2, customer.getFirstName());
+			preparedStatement.setString(3, customer.getBirthdate());
+			preparedStatement.setString(4, customer.getOriginCity());
+			preparedStatement.setLong(5, id);
+			
+			int resultCode = preparedStatement.executeUpdate();
+			
+			fireModelChangeEvent();
+			
+			return resultCode;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public int editCustomerLastName(Long id, String lastName) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -135,6 +166,8 @@ public class CustomerFactory {
 			preparedStatement.setLong(2, id);
 			
 			int resultCode = preparedStatement.executeUpdate();
+			
+			fireModelChangeEvent();
 			
 			return resultCode;
 			
@@ -155,11 +188,23 @@ public class CustomerFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public void addListener(CustomerChangeListener listener) {
+		listeners.add(listener);
+	}
+
+	private static void fireModelChangeEvent() {
+		for (CustomerChangeListener listener : listeners) {
+			listener.customerHasChanged();
+		}
 	}
 }

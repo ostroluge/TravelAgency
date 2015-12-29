@@ -16,6 +16,14 @@ public class Customer {
 		this.birthdate = birthdate;
 		this.originCity = originCity;
 	}
+	
+	public Customer(String lastName, String firstName, String birthdate,
+			String originCity) {
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.birthdate = birthdate;
+		this.originCity = originCity;
+	}
 
 	public Long getId() {
 		return id;

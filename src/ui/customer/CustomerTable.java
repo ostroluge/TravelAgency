@@ -12,11 +12,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Customer;
+import ui.customer.listener.CustomerChangeListener;
 import ui.customer.listener.CustomerSelectionListener;
 import factory.CustomerFactory;
 
 @SuppressWarnings("serial")
-public class CustomerTable extends JPanel {
+public class CustomerTable extends JPanel implements CustomerChangeListener {
 
 	private static List<CustomerSelectionListener> listeners = new ArrayList<>();
 	
@@ -31,6 +32,7 @@ public class CustomerTable extends JPanel {
 	protected JScrollPane scrollPane;
 	
 	public CustomerTable() {
+		CustomerFactory.getInstance().addListener(this);
 		getCustomerDetails();
 		table = new JTable(tableModel);
 		scrollPane = new JScrollPane(table);
@@ -71,7 +73,7 @@ public class CustomerTable extends JPanel {
 					Customer customer = CustomerFactory.getInstance()
 							.getCustomerById(Integer.parseInt(idCustomerSelected));
 					if (customer != null) {
-						fireCustomerSelection(customer);
+						fireCustomerSelection(customer, table);
 					}
 				}
 			}
@@ -88,9 +90,15 @@ public class CustomerTable extends JPanel {
 		listeners.add(listener);
 	}
 
-	private static void fireCustomerSelection(Customer customerSelected) {
+	private static void fireCustomerSelection(Customer customerSelected, JTable table) {
 		for (CustomerSelectionListener listener : listeners) {
-			listener.onCustomerSelection(customerSelected);
+			listener.onCustomerSelection(customerSelected, table);
 		}
+	}
+
+	@Override
+	public void customerHasChanged() {
+		tableModel.setRowCount(0);
+		getCustomerDetails();
 	}
 }
