@@ -1,11 +1,14 @@
 package factory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.City;
-
+import ui.city.listener.CityChangeListener;
 import db.DbManager;
 
 public class CityFactory {
@@ -13,6 +16,8 @@ public class CityFactory {
 	private static CityFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
 	private PreparedStatement preparedStatement;
+	
+	private static List<CityChangeListener> listeners = new ArrayList<>();
 	
 	public static CityFactory getInstance(){
 		if(INSTANCE == null){
@@ -50,6 +55,33 @@ public class CityFactory {
 		return null;
 	}
 	
+	public City getCityById(int id) {
+		City city = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from city where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setInt(1, id);
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+			
+			while (resultPreparedStatement.next()) {
+				Long idCity = resultPreparedStatement.getLong(1);
+				String name = resultPreparedStatement.getString(2);
+				city = new City(idCity, name);
+			}
+			
+			if (city != null) {
+				return city;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int addCity(String nameCity){
 		try {
 			preparedStatement = conn.prepareStatement("insert into city " +
@@ -60,7 +92,10 @@ public class CityFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -80,12 +115,24 @@ public class CityFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return 0;
-		
+	}
+
+	public void addListener(CityChangeListener listener) {
+		listeners.add(listener);
+	}
+
+	private static void fireModelChangeEvent() {
+		for (CityChangeListener listener : listeners) {
+			listener.customerHasChanged();
+		}
 	}
 }

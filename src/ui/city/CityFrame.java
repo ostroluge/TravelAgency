@@ -1,4 +1,4 @@
-package ui.customer;
+package ui.city;
 
 import java.awt.GridLayout;
 
@@ -6,26 +6,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class CustomerFrame extends JFrame {
+public class CityFrame extends JFrame {
 
 	JPanel container = new JPanel();
-	CustomerTable table = new CustomerTable();
-	CustomerManagementPanel managementPanel = new CustomerManagementPanel();
+	CityTable table = new CityTable();
+	CityManagementPanel cityManagementPanel = new CityManagementPanel();
 	
-	public CustomerFrame() {
+	public CityFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(640, 400);
 		setResizable(false);
-		setTitle("Liste des clients");
+		setTitle("Liste des villes");
 		setLocationRelativeTo(null);
 		
 		initContainer();
 		setContentPane(container);
 	}
-	
+
 	private void initContainer() {
 		container.setLayout(new GridLayout(2,1));
 		container.add(table);
-		container.add(managementPanel);
+		container.add(cityManagementPanel);
 	}
 }

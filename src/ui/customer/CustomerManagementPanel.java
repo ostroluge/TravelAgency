@@ -19,7 +19,7 @@ import model.Customer;
 import ui.customer.listener.CustomerSelectionListener;
 
 @SuppressWarnings("serial")
-public class ManagementPanel extends JPanel implements ActionListener, CustomerSelectionListener {
+public class CustomerManagementPanel extends JPanel implements ActionListener, CustomerSelectionListener {
 
 	protected JLabel labelLastName = new JLabel();
 	protected JLabel labelFirstName = new JLabel();
@@ -39,7 +39,7 @@ public class ManagementPanel extends JPanel implements ActionListener, CustomerS
 	protected Customer customerSelected;
 	protected JTable tableSelected;
 	
-	public ManagementPanel() {
+	public CustomerManagementPanel() {
 		CustomerTable.INSTANCE.addListener(this);
 		setLabels();
 		setTextFields();
@@ -124,21 +124,26 @@ public class ManagementPanel extends JPanel implements ActionListener, CustomerS
 		} else if (e.getSource() == deleteButton) {
 			if (customerSelected != null) {
 				new DeleteCustomer(customerSelected.getId());
+				clearSelection();
 			} else {
 				System.out.println("Veuillez selectionner un client a supprimer");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (customerSelected != null) {
-				customerSelected = null;
-				tableSelected.clearSelection();
-				lastName.setText("");
-				firstName.setText("");
-				birthdate.setText("");
-				originCity.setText("");
+				clearSelection();
 			}
 		}
 	}
 
+	private void clearSelection() {
+		customerSelected = null;
+		tableSelected.clearSelection();
+		lastName.setText("");
+		firstName.setText("");
+		birthdate.setText("");
+		originCity.setText("");
+	}
+	
 	@Override
 	public void onCustomerSelection(Customer customer, JTable table) {
 		if (customer != null) {

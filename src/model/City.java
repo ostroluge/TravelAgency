@@ -10,6 +10,10 @@ public class City {
 		this.setNameCity(nameCity);
 	}
 	
+	public City(String name) {
+		this.nameCity = name;
+	}
+	
 	public Long getId() {
 		return id;
 	}

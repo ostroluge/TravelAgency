@@ -1,4 +1,4 @@
-package ui.customer;
+package ui.city;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -11,51 +11,48 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Customer;
+import model.City;
 import ui.MyJTableModel;
-import ui.customer.listener.CustomerChangeListener;
-import ui.customer.listener.CustomerSelectionListener;
-import factory.CustomerFactory;
+import ui.city.listener.CityChangeListener;
+import ui.city.listener.CitySelectionListener;
+import factory.CityFactory;
 
 @SuppressWarnings("serial")
-public class CustomerTable extends JPanel implements CustomerChangeListener {
+public class CityTable extends JPanel implements CityChangeListener {
 
-	private static List<CustomerSelectionListener> listeners = new ArrayList<>();
+	private static List<CitySelectionListener> listeners = new ArrayList<>();
 	
-	public static CustomerTable INSTANCE = new CustomerTable();
+	public static CityTable INSTANCE = new CityTable();
 	
 	protected String[] columnNames = {
-			"id", "Nom", "Prénom", "Date de naissance", "Ville d'origine"
+		"id", "Nom"	
 	};
-	protected List<Customer> customers = new ArrayList<>();
+	protected List<City> cities = new ArrayList<>();
 	protected JTable table;
 	protected MyJTableModel tableModel = new MyJTableModel(columnNames, 0);
 	protected JScrollPane scrollPane;
 	
-	public CustomerTable() {
-		CustomerFactory.getInstance().addListener(this);
-		getCustomerDetails();
+	public CityTable() {
+		CityFactory.getInstance().addListener(this);
+		getCityDetails();
 		table = new JTable(tableModel);
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		setTableSelectionMode();
 		setPanel();
 	}
-
-	private void getCustomerDetails() {
-		customers = CustomerFactory.getInstance().getAllCustomers();
-		for (Customer customer : customers) {
+	
+	private void getCityDetails() {
+		cities = CityFactory.getInstance().getAllCity();
+		for (City city : cities) {
 			Object[] row = {
-					customer.getId(),
-					customer.getLastName(),
-					customer.getFirstName(),
-					customer.getBirthdate(),
-					customer.getOriginCity()
+					city.getId(),
+					city.getNameCity()
 			};
 			tableModel.addRow(row);
 		}
 	}
-
+	
 	private void setTableSelectionMode() {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = table.getSelectionModel();
@@ -71,10 +68,10 @@ public class CustomerTable extends JPanel implements CustomerChangeListener {
 				} else {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
-					Customer customer = CustomerFactory.getInstance()
-							.getCustomerById(Integer.parseInt(idCustomerSelected));
-					if (customer != null) {
-						fireCustomerSelection(customer, table);
+					City city = CityFactory.getInstance()
+							.getCityById(Integer.parseInt(idCustomerSelected));
+					if (city != null) {
+						fireCitySelection(city, table);
 					}
 				}
 			}
@@ -86,20 +83,20 @@ public class CustomerTable extends JPanel implements CustomerChangeListener {
 		add(table.getTableHeader(), BorderLayout.PAGE_START);
 		add(table, BorderLayout.CENTER);
 	}
-
-	public void addListener(CustomerSelectionListener listener) {
+	
+	public void addListener(CitySelectionListener listener) {
 		listeners.add(listener);
 	}
-
-	private static void fireCustomerSelection(Customer customerSelected, JTable table) {
-		for (CustomerSelectionListener listener : listeners) {
-			listener.onCustomerSelection(customerSelected, table);
+	
+	private static void fireCitySelection(City citySelected, JTable table) {
+		for (CitySelectionListener listener : listeners) {
+			listener.onCitySelection(citySelected, table);
 		}
 	}
-
+	
 	@Override
 	public void customerHasChanged() {
 		tableModel.setRowCount(0);
-		getCustomerDetails();
+		getCityDetails();
 	}
 }
