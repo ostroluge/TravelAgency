@@ -48,6 +48,9 @@ create table category (
 	on update cascade
 );
 
+
+alter table category add name_category varchar(30) not null;
+
 create table room (
 	id_hotel integer not null,
 	id_category integer not null,
