@@ -27,7 +27,7 @@ public class CategoryFactory {
 	public int addCategory(String name, Long idHotel, Long capacity, float price){
 		try {
 			preparedStatement = conn.prepareStatement("insert into category " +
-			"(name_category, capacity, price, id_hotel) values (?,?,?)");
+			"(name_category, capacity, price, id_hotel) values (?,?,?,?)");
 			preparedStatement.clearParameters();
 			
 			preparedStatement.setString(1, name);
