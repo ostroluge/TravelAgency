@@ -27,6 +27,59 @@ public class HotelFactory {
 		return new Hotel(id, idCity, name);
 	}
 	
+	public List<Hotel> getAllHotels() {
+		List<Hotel> hotels = new ArrayList<>();
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from hotel");
+			preparedStatement.clearParameters();
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+
+			while (resultPreparedStatement.next()) {
+				Long id = resultPreparedStatement.getLong(1);
+				Long idCity = resultPreparedStatement.getLong(2);
+				String name = resultPreparedStatement.getString(3);
+				hotels.add(new Hotel(id, idCity, name));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		if (hotels != null) {
+			return hotels;
+		}
+		return null;
+	}
+	
+	public Hotel getHotelById(int id) {
+		Hotel hotel = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from hotel where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setInt(1, id);
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+			
+			while (resultPreparedStatement.next()) {
+				Long idHotel = resultPreparedStatement.getLong(1);
+				Long idCity = resultPreparedStatement.getLong(2);
+				String name = resultPreparedStatement.getString(3);
+				hotel = new Hotel(idHotel, idCity, name);
+			}
+			
+			if (hotel != null) {
+				return hotel;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<Hotel> getHotelsFromCity(Long idCity) {
 		List<Hotel> hotels = new ArrayList<>();
 		try {

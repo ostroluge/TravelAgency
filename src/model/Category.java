@@ -2,13 +2,21 @@ package model;
 
 public class Category {
 
-	private Long id;
+	private Long id, hotelId;
 	
 	private int capacity;
 	
 	private float price;
 	
 	private String name;
+	
+	public Category(Long id, Long hotelId, int capacity, float price, String name){
+		this.setId(id);
+		this.setHotelId(hotelId);
+		this.setCapacity(capacity);
+		this.setPrice(price);
+		this.setName(name);
+	}
 	
 	public Category(Long id, int capacity, float price, String name){
 		this.setId(id);
@@ -53,5 +61,13 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
 	}
 }

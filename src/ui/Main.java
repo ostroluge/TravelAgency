@@ -2,8 +2,7 @@ package ui;
 
 import java.sql.SQLException;
 
-import ui.city.CityFrame;
-import ui.customer.CustomerFrame;
+import ui.category.CategoryFrame;
 
 public class Main {
 
@@ -11,7 +10,10 @@ public class Main {
 //		CustomerFrame frame = new CustomerFrame();
 //		frame.setVisible(true);
 
-		CityFrame cityFrame = new CityFrame();
-		cityFrame.setVisible(true);
+//		CityFrame cityFrame = new CityFrame();
+//		cityFrame.setVisible(true);
+	
+		CategoryFrame categoryFrame = new CategoryFrame();
+		categoryFrame.setVisible(true);
 	}
 }

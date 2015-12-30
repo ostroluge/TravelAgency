@@ -2,7 +2,10 @@ package factory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Category;
 import db.DbManager;
@@ -22,6 +25,65 @@ public class CategoryFactory {
 	
 	public Category create(Long id, int capacity, float price, String name){
 		return new Category(id, capacity, price, name);
+	}
+	
+	public Category getCategoryById(int id) {
+		Category category = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from category where id = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setInt(1, id);
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+			
+			while (resultPreparedStatement.next()) {
+				Long idCategory = resultPreparedStatement.getLong(1);
+				int capacity = resultPreparedStatement.getInt(3);
+				float price = resultPreparedStatement.getFloat(4);
+				String name = resultPreparedStatement.getString(5);
+				category = new Category(idCategory, capacity, price, name);
+			}
+			
+			if (category != null) {
+				return category;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Category> getCategoriesByHotelId(Long id) {
+		List<Category> categories = new ArrayList<>();
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from category where id_hotel = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setLong(1, id);
+			
+			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
+			
+			while (resultPreparedStatement.next()) {
+				Long idCategory = resultPreparedStatement.getLong(1);
+				Long idHotel = resultPreparedStatement.getLong(2);
+				int capacity = resultPreparedStatement.getInt(3);
+				float price = resultPreparedStatement.getFloat(4);
+				String name = resultPreparedStatement.getString(5);
+				categories.add(new Category(idCategory, idHotel, capacity, price, name));
+			}
+			
+			if (!categories.isEmpty()) {
+				return categories;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public int addCategory(String name, Long idHotel, Long capacity, float price){
@@ -84,6 +146,5 @@ public class CategoryFactory {
 		
 		
 		return 0;
-		
 	}
 }

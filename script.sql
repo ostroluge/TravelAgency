@@ -59,3 +59,24 @@ create table room (
 	constraint fk_hotel_room foreign key (id_hotel) references hotel(id),
 	constraint fk_category_room foreign key (id_category) references category(id)
 );
+
+insert into category (id_hotel, capacity, price, name_category) values (
+	3,
+	2,
+	15.50,
+	'Normal'
+);
+
+insert into category (id_hotel, capacity, price, name_category) values (
+	3,
+	1,
+	7.30,
+	'Cheap'
+);
+
+insert into category (id_hotel, capacity, price, name_category) values (
+	3,
+	4,
+	70.90,
+	'Deluxe'
+);
