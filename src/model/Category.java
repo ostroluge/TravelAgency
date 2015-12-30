@@ -8,10 +8,19 @@ public class Category {
 	
 	private float price;
 	
-	public Category(Long id, int capacity, float price){
+	private String name;
+	
+	public Category(Long id, int capacity, float price, String name){
 		this.setId(id);
 		this.setCapacity(capacity);
 		this.setPrice(price);
+		this.setName(name);
+	}
+	
+	public Category(String name, int capacity, float price) {
+		this.name = name;
+		this.capacity = capacity;
+		this.price = price;
 	}
 	
 	public Long getId() {
@@ -38,4 +47,11 @@ public class Category {
 		this.price = price;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
