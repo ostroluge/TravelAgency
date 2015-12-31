@@ -26,7 +26,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	public static HotelTable INSTANCE = new HotelTable();
 	
 	protected String[] columnNames = {
-		"id", "Ville", "Nom"
+		"id", "Nom", "Ville"
 	};
 	protected List<Hotel> hotels = new ArrayList<>();
 	protected JTable tableHotel;
@@ -49,8 +49,8 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 
 			Object[] row = {
 				hotel.getId(),
-				city.getNameCity(),
-				hotel.getName()
+				hotel.getName(),
+				city.getNameCity()
 			};
 			tableModel.addRow(row);
 		}
