@@ -1,7 +1,12 @@
 package job.category;
 
-/**
- * Created by thomas on 31/12/15.
- */
+import factory.CategoryFactory;
+import model.Category;
+
 public class AddCategory {
+
+    public AddCategory(Category category, Long idHotel) {
+        CategoryFactory.getInstance().addCategory(category.getName(),
+                idHotel, category.getCapacity(), category.getPrice());
+    }
 }

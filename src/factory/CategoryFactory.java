@@ -9,13 +9,17 @@ import java.util.List;
 
 import model.Category;
 import db.DbManager;
+import ui.category.listener.CategoryChangeListener;
+import ui.city.listener.CityChangeListener;
 
 public class CategoryFactory {
 
 	private static CategoryFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
 	private PreparedStatement preparedStatement;
-	
+
+	private static List<CategoryChangeListener> listeners = new ArrayList<>();
+
 	public static CategoryFactory getInstance(){
 		if(INSTANCE == null){
 			INSTANCE = new CategoryFactory();
@@ -86,19 +90,21 @@ public class CategoryFactory {
 		return null;
 	}
 	
-	public int addCategory(String name, Long idHotel, Long capacity, float price){
+	public int addCategory(String name, Long idHotel, int capacity, float price){
 		try {
 			preparedStatement = conn.prepareStatement("insert into category " +
 			"(name_category, capacity, price, id_hotel) values (?,?,?,?)");
 			preparedStatement.clearParameters();
 			
 			preparedStatement.setString(1, name);
-			preparedStatement.setLong(2, capacity);
+			preparedStatement.setInt(2, capacity);
 			preparedStatement.setFloat(3, price);
 			preparedStatement.setLong(4, idHotel);
 			
 			int resultCode = preparedStatement.executeUpdate();
-			
+
+			fireModelChangeEvent();
+
 			return resultCode;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,16 +117,19 @@ public class CategoryFactory {
 		try {
 			preparedStatement = conn.prepareStatement(
 					"update category set capacity = ?,"
-					+ "set price = ?, set name_category = ? where id = ?");
+					+ "set price = ?, set name_category = ?, set id_hotel = ? where id = ?");
 			preparedStatement.clearParameters();
 			
 			preparedStatement.setInt(1, category.getCapacity());
 			preparedStatement.setFloat(2, category.getPrice());
 			preparedStatement.setString(3, category.getName());
-			preparedStatement.setLong(4, id);
-			
+			preparedStatement.setLong(4, category.getHotelId());
+			preparedStatement.setLong(5, id);
+
 			int resultCode = preparedStatement.executeUpdate();
-			
+
+			fireModelChangeEvent();
+
 			return resultCode;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,15 +137,16 @@ public class CategoryFactory {
 		return 0;
 	}
 	
-	public int removeCategory(int idCategory, int idHotel){
+	public int removeCategory(Long idCategory){
 		try {
 			preparedStatement = conn.prepareStatement("delete from category " +
-			"where id = ? and id_hotel = ?");
+			"where id = ?");
 			preparedStatement.clearParameters();
 			
-			preparedStatement.setInt(1, idCategory);
-			preparedStatement.setInt(2, idHotel);
-			
+			preparedStatement.setLong(1, idCategory);
+
+			fireModelChangeEvent();
+
 			int resultCode = preparedStatement.executeUpdate();
 			
 			return resultCode;
@@ -144,7 +154,16 @@ public class CategoryFactory {
 			e.printStackTrace();
 		}
 		
-		
 		return 0;
+	}
+
+	public void addListener(CategoryChangeListener listener) {
+		listeners.add(listener);
+	}
+
+	private static void fireModelChangeEvent() {
+		for (CategoryChangeListener listener : listeners) {
+			listener.categoryHasChanged();
+		}
 	}
 }

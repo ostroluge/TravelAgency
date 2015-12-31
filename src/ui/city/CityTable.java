@@ -95,7 +95,7 @@ public class CityTable extends JPanel implements CityChangeListener {
 	}
 	
 	@Override
-	public void customerHasChanged() {
+	public void cityHasChanged() {
 		tableModel.setRowCount(0);
 		getCityDetails();
 	}

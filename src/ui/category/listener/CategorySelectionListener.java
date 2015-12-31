@@ -1,7 +1,10 @@
 package ui.category.listener;
 
-/**
- * Created by thomas on 31/12/15.
- */
+import model.Category;
+
+import javax.swing.*;
+
 public interface CategorySelectionListener {
+
+    public void onCategorySelection(Category category, JTable table);
 }

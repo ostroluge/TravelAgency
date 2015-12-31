@@ -74,7 +74,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 					Hotel hotel = HotelFactory.getInstance()
 							.getHotelById(Integer.parseInt(idHotelSelected));
 					if (hotel != null) {
-						fireHotelSelection(hotel, tableHotel);
+						fireHotelSelection(hotel);
 					}
 				}
 			}
@@ -91,9 +91,9 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 		listeners.add(listener);
 	}
 
-	private static void fireHotelSelection(Hotel hotelSelected, JTable table) {
+	private static void fireHotelSelection(Hotel hotelSelected) {
 		for (HotelSelectionListener listener : listeners) {
-			listener.onHotelSelection(hotelSelected, table);
+			listener.onHotelSelection(hotelSelected);
 		}
 	}
 }

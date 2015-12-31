@@ -70,7 +70,7 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
-			if (!name.getText().trim().toString().equals("")) {
+			if (!name.getText().trim().equals("")) {
 				City cityToAdd = new City(name.getText());
 				new AddCity(cityToAdd);
 			} else {

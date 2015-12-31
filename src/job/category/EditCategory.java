@@ -1,7 +1,11 @@
 package job.category;
 
-/**
- * Created by thomas on 31/12/15.
- */
+import factory.CategoryFactory;
+import model.Category;
+
 public class EditCategory {
+
+    public EditCategory(Category category, Long id) {
+        CategoryFactory.getInstance().editCategory(id, category);
+    }
 }

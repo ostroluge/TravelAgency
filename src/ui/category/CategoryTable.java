@@ -12,24 +12,35 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Category;
+import model.Customer;
 import model.Hotel;
 import ui.MyJTableModel;
+import ui.category.listener.CategoryChangeListener;
+import ui.category.listener.CategorySelectionListener;
 import ui.category.listener.HotelSelectionListener;
 import factory.CategoryFactory;
+import ui.customer.listener.CustomerSelectionListener;
 
 @SuppressWarnings("serial")
-public class CategoryTable extends JPanel implements HotelSelectionListener {
+public class CategoryTable extends JPanel implements HotelSelectionListener, CategoryChangeListener {
+
+	private static List<CategorySelectionListener> listeners = new ArrayList<>();
+
+	public static CategoryTable INSTANCE = new CategoryTable();
 
 	protected String[] columnNames = {
-		"id", "Capacite", "Prix", "Nom"	
+		"id", "Nom", "Prix", "Capacité"
 	};
 	protected List<Category> categories = new ArrayList<>();
 	protected JTable tableCategory;
 	protected MyJTableModel tableModel = new MyJTableModel(columnNames, 0);
 	protected JScrollPane scrollPane;
 
+	protected Hotel hotelSelected;
+
 	public CategoryTable() {
 		HotelTable.INSTANCE.addListener(this);
+		CategoryFactory.getInstance().addListener(this);
 		tableCategory = new JTable(tableModel);
 		scrollPane = new JScrollPane(tableCategory);
 		setTableSelectionMode();
@@ -54,7 +65,7 @@ public class CategoryTable extends JPanel implements HotelSelectionListener {
 					Category category = CategoryFactory.getInstance()
 							.getCategoryById(Integer.parseInt(idCategorySelected));
 					if (category != null) {
-//						fireCustomerSelection(hotel, tableHotel);
+						fireCategorySelection(category, tableCategory);
 					}
 				}
 			}
@@ -72,16 +83,35 @@ public class CategoryTable extends JPanel implements HotelSelectionListener {
 		for (Category category : categories) {
 			Object[] row = {
 				category.getId(),
-				category.getCapacity(),
+				category.getName(),
 				category.getPrice(),
-				category.getName()
+				category.getCapacity()
 			};
 			tableModel.addRow(row);
 		}
 	}
-	
+
+	public void addListener(CategorySelectionListener listener) {
+		listeners.add(listener);
+	}
+
+	private static void fireCategorySelection(Category categorySelected, JTable table) {
+		for (CategorySelectionListener listener : listeners) {
+			listener.onCategorySelection(categorySelected, table);
+		}
+	}
+
 	@Override
-	public void onHotelSelection(Hotel hotel, JTable table) {
+	public void onHotelSelection(Hotel hotel) {
+		hotelSelected = hotel;
 		getCategoryDetail(hotel);
+	}
+
+	@Override
+	public void categoryHasChanged() {
+		if (hotelSelected != null) {
+			tableModel.setRowCount(0);
+			getCategoryDetail(hotelSelected);
+		}
 	}
 }

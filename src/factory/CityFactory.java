@@ -132,7 +132,7 @@ public class CityFactory {
 
 	private static void fireModelChangeEvent() {
 		for (CityChangeListener listener : listeners) {
-			listener.customerHasChanged();
+			listener.cityHasChanged();
 		}
 	}
 }

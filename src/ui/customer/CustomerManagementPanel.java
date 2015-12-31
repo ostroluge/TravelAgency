@@ -96,10 +96,10 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
-			if (!lastName.getText().trim().toString().equals("") &&
-					!firstName.getText().trim().toString().equals("") &&
-					!birthdate.getText().trim().toString().equals("") &&
-					!originCity.getText().trim().toString().equals("")) {
+			if (!lastName.getText().trim().equals("") &&
+					!firstName.getText().trim().equals("") &&
+					!birthdate.getText().trim().equals("") &&
+					!originCity.getText().trim().equals("")) {
 				Customer customerToAdd = new Customer(lastName.getText(),
 						firstName.getText(), birthdate.getText(), originCity.getText());
 				new AddCustomer(customerToAdd);
@@ -108,10 +108,10 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 			}
 		} else if (e.getSource() == editButton) {
 			if (customerSelected != null) {
-				if (!lastName.getText().trim().toString().equals("") &&
-						!firstName.getText().trim().toString().equals("") &&
-						!birthdate.getText().trim().toString().equals("") &&
-						!originCity.getText().trim().toString().equals("")) {
+				if (!lastName.getText().trim().equals("") &&
+						!firstName.getText().trim().equals("") &&
+						!birthdate.getText().trim().equals("") &&
+						!originCity.getText().trim().equals("")) {
 					Customer customerToEdit = new Customer(lastName.getText(),
 							firstName.getText(), birthdate.getText(), originCity.getText());
 					new EditCustomer(customerSelected.getId(), customerToEdit);
