@@ -11,6 +11,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import factory.CityFactory;
+import model.City;
 import model.Hotel;
 import ui.MyJTableModel;
 import ui.category.listener.HotelSelectionListener;
@@ -24,7 +26,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	public static HotelTable INSTANCE = new HotelTable();
 	
 	protected String[] columnNames = {
-		"id", "id ville", "Nom"	
+		"id", "Ville", "Nom"
 	};
 	protected List<Hotel> hotels = new ArrayList<>();
 	protected JTable tableHotel;
@@ -42,9 +44,12 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	private void getHotelDetails() {
 		hotels = HotelFactory.getInstance().getAllHotels();
 		for (Hotel hotel : hotels) {
+
+			City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
+
 			Object[] row = {
 				hotel.getId(),
-				hotel.getIdCity(),
+				city.getNameCity(),
 				hotel.getName()
 			};
 			tableModel.addRow(row);

@@ -69,7 +69,7 @@ public class CityTable extends JPanel implements CityChangeListener {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
 					City city = CityFactory.getInstance()
-							.getCityById(Integer.parseInt(idCustomerSelected));
+							.getCityById(Long.parseLong(idCustomerSelected));
 					if (city != null) {
 						fireCitySelection(city, table);
 					}

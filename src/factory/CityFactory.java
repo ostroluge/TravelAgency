@@ -55,14 +55,14 @@ public class CityFactory {
 		return null;
 	}
 	
-	public City getCityById(int id) {
+	public City getCityById(Long id) {
 		City city = null;
 		try {
 			preparedStatement = conn.prepareStatement(
 					"select * from city where id = ?");
 			preparedStatement.clearParameters();
 			
-			preparedStatement.setInt(1, id);
+			preparedStatement.setLong(1, id);
 			
 			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
 			
