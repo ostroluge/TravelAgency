@@ -98,13 +98,14 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
             }
         } else if (e.getSource() == editButton) {
             if (categorySelected != null) {
-                if (!name.getText().trim().equals("") && !price.getText().trim().equals("")
+            	if (!name.getText().trim().equals("") && !price.getText().trim().equals("")
                         && !capacity.getText().trim().equals("")) {
                     Category categoryToEdit = new Category(name.getText(),
                             Integer.parseInt(capacity.getText()), Float.parseFloat(price.getText()));
+                    categoryToEdit.setId(categorySelected.getId());
                     if (hotelSelected != null) {
                         categoryToEdit.setHotelId(hotelSelected.getId());
-                        new EditCategory(categoryToEdit, categoryToEdit.getId());
+                        new EditCategory(categoryToEdit, categorySelected.getId());
                     }
                 }
             } else {

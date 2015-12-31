@@ -10,7 +10,6 @@ import java.util.List;
 import model.Category;
 import db.DbManager;
 import ui.category.listener.CategoryChangeListener;
-import ui.city.listener.CityChangeListener;
 
 public class CategoryFactory {
 
@@ -116,14 +115,14 @@ public class CategoryFactory {
 	public int editCategory(Long id, Category category) {
 		try {
 			preparedStatement = conn.prepareStatement(
-					"update category set capacity = ?,"
-					+ "set price = ?, set name_category = ?, set id_hotel = ? where id = ?");
+					"update category set id_hotel = ?, capacity = ?,"
+					+ " price = ?, name_category = ? where id = ?");
 			preparedStatement.clearParameters();
 			
-			preparedStatement.setInt(1, category.getCapacity());
-			preparedStatement.setFloat(2, category.getPrice());
-			preparedStatement.setString(3, category.getName());
-			preparedStatement.setLong(4, category.getHotelId());
+			preparedStatement.setLong(1, category.getHotelId());
+			preparedStatement.setInt(2, category.getCapacity());
+			preparedStatement.setFloat(3, category.getPrice());
+			preparedStatement.setString(4, category.getName());
 			preparedStatement.setLong(5, id);
 
 			int resultCode = preparedStatement.executeUpdate();
@@ -139,15 +138,16 @@ public class CategoryFactory {
 	
 	public int removeCategory(Long idCategory){
 		try {
-			preparedStatement = conn.prepareStatement("delete from category " +
-			"where id = ?");
-			preparedStatement.clearParameters();
+			PreparedStatement removeCategoryStatement;
+			removeCategoryStatement = conn.prepareStatement(
+					"delete from category where id = ?");
+					
 			
-			preparedStatement.setLong(1, idCategory);
+			removeCategoryStatement.setLong(1, idCategory);
 
 			fireModelChangeEvent();
 
-			int resultCode = preparedStatement.executeUpdate();
+			int resultCode = removeCategoryStatement.executeUpdate();
 			
 			return resultCode;
 		} catch (SQLException e) {
