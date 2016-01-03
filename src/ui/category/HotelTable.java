@@ -15,7 +15,7 @@ import factory.CityFactory;
 import model.City;
 import model.Hotel;
 import ui.MyJTableModel;
-import ui.category.listener.HotelSelectionListener;
+import ui.listener.hotel.HotelSelectionListener;
 import factory.HotelFactory;
 
 @SuppressWarnings("serial")

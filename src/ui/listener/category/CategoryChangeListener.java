@@ -1,4 +1,4 @@
-package ui.category.listener;
+package ui.listener.category;
 
 public interface CategoryChangeListener {
 

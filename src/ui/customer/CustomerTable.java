@@ -13,8 +13,8 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Customer;
 import ui.MyJTableModel;
-import ui.customer.listener.CustomerChangeListener;
-import ui.customer.listener.CustomerSelectionListener;
+import ui.listener.customer.CustomerChangeListener;
+import ui.listener.customer.CustomerSelectionListener;
 import factory.CustomerFactory;
 
 @SuppressWarnings("serial")

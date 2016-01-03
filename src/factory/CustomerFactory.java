@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Customer;
-import ui.customer.listener.CustomerChangeListener;
+import ui.listener.customer.CustomerChangeListener;
 import db.DbManager;
 
 public class CustomerFactory {

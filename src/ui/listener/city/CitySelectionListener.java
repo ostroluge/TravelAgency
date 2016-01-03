@@ -1,4 +1,4 @@
-package ui.city.listener;
+package ui.listener.city;
 
 import javax.swing.JTable;
 

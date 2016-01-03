@@ -15,7 +15,7 @@ import javax.swing.text.PlainDocument;
 import job.city.AddCity;
 import job.city.DeleteCity;
 import model.City;
-import ui.city.listener.CitySelectionListener;
+import ui.listener.city.CitySelectionListener;
 
 @SuppressWarnings("serial")
 public class CityManagementPanel extends JPanel implements ActionListener, CitySelectionListener {

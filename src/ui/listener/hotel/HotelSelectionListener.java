@@ -1,6 +1,4 @@
-package ui.category.listener;
-
-import javax.swing.JTable;
+package ui.listener.hotel;
 
 import model.Hotel;
 

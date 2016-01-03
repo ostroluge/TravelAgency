@@ -1,4 +1,4 @@
-package ui.customer.listener;
+package ui.listener.customer;
 
 public interface CustomerChangeListener {
 

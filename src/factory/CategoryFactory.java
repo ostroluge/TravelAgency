@@ -9,7 +9,7 @@ import java.util.List;
 
 import model.Category;
 import db.DbManager;
-import ui.category.listener.CategoryChangeListener;
+import ui.listener.category.CategoryChangeListener;
 
 public class CategoryFactory {
 

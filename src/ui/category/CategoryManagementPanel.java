@@ -5,12 +5,13 @@ import job.category.DeleteCategory;
 import job.category.EditCategory;
 import model.Category;
 import model.Hotel;
-import ui.category.listener.CategorySelectionListener;
-import ui.category.listener.HotelSelectionListener;
+import ui.listener.category.CategorySelectionListener;
+import ui.listener.hotel.HotelSelectionListener;
 
 import javax.swing.*;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

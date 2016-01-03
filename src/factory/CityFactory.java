@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.City;
-import ui.city.listener.CityChangeListener;
+import ui.listener.city.CityChangeListener;
 import db.DbManager;
 
 public class CityFactory {

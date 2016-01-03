@@ -12,14 +12,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Category;
-import model.Customer;
 import model.Hotel;
 import ui.MyJTableModel;
-import ui.category.listener.CategoryChangeListener;
-import ui.category.listener.CategorySelectionListener;
-import ui.category.listener.HotelSelectionListener;
 import factory.CategoryFactory;
-import ui.customer.listener.CustomerSelectionListener;
+import ui.listener.category.CategoryChangeListener;
+import ui.listener.category.CategorySelectionListener;
+import ui.listener.hotel.HotelSelectionListener;
 
 @SuppressWarnings("serial")
 public class CategoryTable extends JPanel implements HotelSelectionListener, CategoryChangeListener {

@@ -16,7 +16,7 @@ import job.customer.AddCustomer;
 import job.customer.DeleteCustomer;
 import job.customer.EditCustomer;
 import model.Customer;
-import ui.customer.listener.CustomerSelectionListener;
+import ui.listener.customer.CustomerSelectionListener;
 
 @SuppressWarnings("serial")
 public class CustomerManagementPanel extends JPanel implements ActionListener, CustomerSelectionListener {

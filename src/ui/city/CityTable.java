@@ -13,8 +13,8 @@ import javax.swing.event.ListSelectionListener;
 
 import model.City;
 import ui.MyJTableModel;
-import ui.city.listener.CityChangeListener;
-import ui.city.listener.CitySelectionListener;
+import ui.listener.city.CityChangeListener;
+import ui.listener.city.CitySelectionListener;
 import factory.CityFactory;
 
 @SuppressWarnings("serial")
