@@ -32,8 +32,8 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	protected JTextField name;
 	
 	protected JButton addButton;
-    protected JButton deleteButton;
-    protected JButton clearButton;
+	protected JButton deleteButton;
+	protected JButton clearButton;
 	
 	private Room roomSelected;
 	private Category categorySelected;
