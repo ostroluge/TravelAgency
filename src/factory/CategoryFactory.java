@@ -145,9 +145,9 @@ public class CategoryFactory {
 			
 			removeCategoryStatement.setLong(1, idCategory);
 
-			fireModelChangeEvent();
-
 			int resultCode = removeCategoryStatement.executeUpdate();
+
+			fireModelChangeEvent();
 			
 			return resultCode;
 		} catch (SQLException e) {
