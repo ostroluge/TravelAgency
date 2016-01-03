@@ -30,23 +30,24 @@ public class CategoryFactory {
 		return new Category(id, capacity, price, name);
 	}
 	
-	public Category getCategoryById(int id) {
+	public Category getCategoryById(Long id) {
 		Category category = null;
 		try {
 			preparedStatement = conn.prepareStatement(
 					"select * from category where id = ?");
 			preparedStatement.clearParameters();
 			
-			preparedStatement.setInt(1, id);
+			preparedStatement.setLong(1, id);
 			
 			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
 			
 			while (resultPreparedStatement.next()) {
 				Long idCategory = resultPreparedStatement.getLong(1);
+				Long idHotel = resultPreparedStatement.getLong(2);
 				int capacity = resultPreparedStatement.getInt(3);
 				float price = resultPreparedStatement.getFloat(4);
 				String name = resultPreparedStatement.getString(5);
-				category = new Category(idCategory, capacity, price, name);
+				category = new Category(idCategory, idHotel, capacity, price, name);
 			}
 			
 			if (category != null) {

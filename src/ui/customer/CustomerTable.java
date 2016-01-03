@@ -44,15 +44,19 @@ public class CustomerTable extends JPanel implements CustomerChangeListener {
 
 	private void getCustomerDetails() {
 		customers = CustomerFactory.getInstance().getAllCustomers();
-		for (Customer customer : customers) {
-			Object[] row = {
-					customer.getId(),
-					customer.getLastName(),
-					customer.getFirstName(),
-					customer.getBirthdate(),
-					customer.getOriginCity()
-			};
-			tableModel.addRow(row);
+		if (customers != null) {
+			for (Customer customer : customers) {
+				Object[] row = {
+						customer.getId(),
+						customer.getLastName(),
+						customer.getFirstName(),
+						customer.getBirthdate(),
+						customer.getOriginCity()
+				};
+				tableModel.addRow(row);
+			}
+		} else {
+			tableModel.setRowCount(0);
 		}
 	}
 

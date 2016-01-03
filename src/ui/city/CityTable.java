@@ -44,12 +44,16 @@ public class CityTable extends JPanel implements CityChangeListener {
 	
 	private void getCityDetails() {
 		cities = CityFactory.getInstance().getAllCity();
-		for (City city : cities) {
-			Object[] row = {
-					city.getId(),
-					city.getNameCity()
-			};
-			tableModel.addRow(row);
+		if (cities != null) {
+			for (City city : cities) {
+				Object[] row = {
+						city.getId(),
+						city.getNameCity()
+				};
+				tableModel.addRow(row);
+			}
+		} else {
+			tableModel.setRowCount(0);
 		}
 	}
 	

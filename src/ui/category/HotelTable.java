@@ -43,16 +43,18 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	
 	private void getHotelDetails() {
 		hotels = HotelFactory.getInstance().getAllHotels();
-		for (Hotel hotel : hotels) {
-
-			City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
-
-			Object[] row = {
-				hotel.getId(),
-				hotel.getName(),
-				city.getNameCity()
-			};
-			tableModel.addRow(row);
+		if (hotels != null) {
+			for (Hotel hotel : hotels) {
+				City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
+				Object[] row = {
+					hotel.getId(),
+					hotel.getName(),
+					city.getNameCity()
+				};
+				tableModel.addRow(row);
+			}
+		} else {
+			tableModel.setRowCount(0);
 		}
 	}
 

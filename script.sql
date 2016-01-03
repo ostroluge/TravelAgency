@@ -51,6 +51,8 @@ create table category (
 
 alter table category add name_category varchar(30) not null;
 
+alter table room add name_room varchar(30) not null;
+
 create table room (
 	id_hotel integer not null,
 	id_category integer not null,
@@ -79,4 +81,11 @@ insert into category (id_hotel, capacity, price, name_category) values (
 	4,
 	70.90,
 	'Deluxe'
+);
+
+insert into room (id_hotel, id_category, room_number, name_room) values (
+	3, 
+	1,
+	12,
+	'Alexandria'
 );

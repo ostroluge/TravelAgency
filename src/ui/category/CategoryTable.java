@@ -61,7 +61,7 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCategorySelected = tableCategory.getValueAt(selectedRow, 0).toString();
 					Category category = CategoryFactory.getInstance()
-							.getCategoryById(Integer.parseInt(idCategorySelected));
+							.getCategoryById(Long.parseLong(idCategorySelected));
 					if (category != null) {
 						fireCategorySelection(category, tableCategory);
 					}
@@ -78,14 +78,18 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 
 	private void getCategoryDetail(Hotel hotel) {
 		categories = CategoryFactory.getInstance().getCategoriesByHotelId(hotel.getId());
-		for (Category category : categories) {
-			Object[] row = {
-				category.getId(),
-				category.getName(),
-				category.getPrice(),
-				category.getCapacity()
-			};
-			tableModel.addRow(row);
+		if (categories != null) {
+			for (Category category : categories) {
+				Object[] row = {
+					category.getId(),
+					category.getName(),
+					category.getPrice(),
+					category.getCapacity()
+				};
+				tableModel.addRow(row);
+			}
+		} else {
+			tableModel.setRowCount(0);
 		}
 	}
 
