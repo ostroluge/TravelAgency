@@ -53,6 +53,8 @@ alter table category add name_category varchar(30) not null;
 
 alter table room add name_room varchar(30) not null;
 
+alter table room drop primary key, add primary key(id_hotel, id_category, room_number);
+
 create table room (
 	id_hotel integer not null,
 	id_category integer not null,

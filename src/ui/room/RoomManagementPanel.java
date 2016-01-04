@@ -96,10 +96,14 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 		} else if (e.getSource() == deleteButton) {
 			if (roomSelected != null) {
 				new DeleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
+				clearSelection();
 			}
 		} else if (e.getSource() == clearButton) {
 			if (roomSelected != null) {
 				clearSelection();
+			} else {
+				number.setText("");
+				name.setText("");
 			}
 		}
 	}

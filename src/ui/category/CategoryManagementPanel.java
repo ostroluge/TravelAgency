@@ -115,6 +115,10 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
         } else if (e.getSource() == clearButton) {
             if (categorySelected != null) {
                 clearSelection();
+            } else {
+                name.setText("");
+                price.setText("");
+                capacity.setText("");
             }
         } else if (e.getSource() == deleteButton) {
             if (categorySelected != null) {

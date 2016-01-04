@@ -131,6 +131,11 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 		} else if (e.getSource() == clearButton) {
 			if (customerSelected != null) {
 				clearSelection();
+			} else {
+				lastName.setText("");
+				firstName.setText("");
+				birthdate.setText("");
+				originCity.setText("");
 			}
 		}
 	}

@@ -86,6 +86,8 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 		} else if (e.getSource() == clearButton) {
 			if (citySelected != null) {
 				clearSelection();
+			} else {
+				name.setText("");
 			}
 		}
 	}
