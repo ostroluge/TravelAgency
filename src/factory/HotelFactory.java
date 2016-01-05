@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Hotel;
+import ui.hotel.HotelCityTable;
 import db.DbManager;
 
 public class HotelFactory {
@@ -15,6 +16,8 @@ public class HotelFactory {
 	private static HotelFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
 	private PreparedStatement preparedStatement;
+	
+	private static List<HotelCityTable> listeners = new ArrayList<>();
 	
 	public static HotelFactory getInstance() {
 		if (INSTANCE == null) {
@@ -142,4 +145,9 @@ public class HotelFactory {
 		}
 		return 0;
 	}
+
+	public void addListener(HotelCityTable hotelCityTable) {
+		listeners.add(hotelCityTable);
+	}
+
 }

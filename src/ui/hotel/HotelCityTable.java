@@ -11,13 +11,16 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import model.City;
 import model.Hotel;
 import ui.MyJTableModel;
+import ui.listener.city.CityHotelSelectionListener;
+import ui.listener.hotel.HotelCityChangeListener;
 import ui.listener.hotel.HotelCitySelectionListener;
 import factory.HotelFactory;
 
 @SuppressWarnings("serial")
-public class HotelCityTable extends JPanel {
+public class HotelCityTable extends JPanel implements CityHotelSelectionListener, HotelCityChangeListener{
 
 private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 	
@@ -31,29 +34,17 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 	protected MyJTableModel tableModel = new MyJTableModel(columnNames, 0);
 	protected JScrollPane scrollPane;
 	
+	protected City citySelected;
+	
 	public HotelCityTable() {
-		getHotelDetails();
+		CityHotelTable.INSTANCE.addListener(this);
+		HotelFactory.getInstance().addListener(this);
 		tableHotel = new JTable(tableModel);
 		scrollPane = new JScrollPane(tableHotel);
 		setTableSelectionMode();
 		setPanel();
 	}
 	
-	private void getHotelDetails() {
-		hotels = HotelFactory.getInstance().getAllHotels();
-		if (hotels != null) {
-			for (Hotel hotel : hotels) {
-				Object[] row = {
-					hotel.getId(),
-					hotel.getName(),
-				};
-				tableModel.addRow(row);
-			}
-		} else {
-			tableModel.setRowCount(0);
-		}
-	}
-
 	private void setTableSelectionMode() {
 		tableHotel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = tableHotel.getSelectionModel();
@@ -78,6 +69,8 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 			}
 		});
 	}
+	
+
 
 	private void setPanel() {
 		setLayout(new BorderLayout());
@@ -85,6 +78,20 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 		add(tableHotel, BorderLayout.CENTER);
 	}
 
+	private void getHotelDetails(City city) {
+		hotels = HotelFactory.getInstance().getHotelsFromCity(city.getId());
+		if (!hotels.isEmpty() && hotels != null) {
+			for (Hotel hotel : hotels) {
+				Object[] row = {
+						hotel.getId(),
+						hotel.getName(),
+				};
+				tableModel.addRow(row);
+			}
+		} else {
+			tableModel.setRowCount(0);
+		}
+	}
 	public void addListener(HotelCitySelectionListener listener) {
 		listeners.add(listener);
 	}
@@ -93,5 +100,19 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 		for (HotelCitySelectionListener listener : listeners) {
 			listener.onHotelSelection(hotelSelected,table);
 		}
+	}
+
+	@Override
+	public void onCitySelection(City city) {
+		citySelected = city;
+		getHotelDetails(city);
+	}
+
+	@Override
+	public void hotelCityHasChanged() {
+		if(citySelected != null){
+			tableModel.setRowCount(0);
+			getHotelDetails(citySelected);
+		}		
 	}
 }
