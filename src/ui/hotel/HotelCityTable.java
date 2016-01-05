@@ -1,4 +1,4 @@
-package ui.category;
+package ui.hotel; 
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -11,29 +11,27 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import factory.CityFactory;
-import model.City;
 import model.Hotel;
 import ui.MyJTableModel;
-import ui.listener.hotel.HotelSelectionListener;
+import ui.listener.hotel.HotelCitySelectionListener;
 import factory.HotelFactory;
 
 @SuppressWarnings("serial")
-public class HotelTable extends JPanel {
+public class HotelCityTable extends JPanel {
 
-private static List<HotelSelectionListener> listeners = new ArrayList<>();
+private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 	
-	public static HotelTable INSTANCE = new HotelTable();
+	public static HotelCityTable INSTANCE = new HotelCityTable();
 	
 	protected String[] columnNames = {
-		"id", "Nom", "Ville"
+		"id", "Nom"
 	};
 	protected List<Hotel> hotels = new ArrayList<>();
 	protected JTable tableHotel;
 	protected MyJTableModel tableModel = new MyJTableModel(columnNames, 0);
 	protected JScrollPane scrollPane;
 	
-	public HotelTable() {
+	public HotelCityTable() {
 		getHotelDetails();
 		tableHotel = new JTable(tableModel);
 		scrollPane = new JScrollPane(tableHotel);
@@ -45,11 +43,9 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 		hotels = HotelFactory.getInstance().getAllHotels();
 		if (hotels != null) {
 			for (Hotel hotel : hotels) {
-				City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
 				Object[] row = {
 					hotel.getId(),
 					hotel.getName(),
-					city.getNameCity()
 				};
 				tableModel.addRow(row);
 			}
@@ -76,7 +72,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 					Hotel hotel = HotelFactory.getInstance()
 							.getHotelById(Integer.parseInt(idHotelSelected));
 					if (hotel != null) {
-						fireHotelSelection(hotel);
+						fireHotelSelection(hotel,tableHotel);
 					}
 				}
 			}
@@ -89,13 +85,13 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 		add(tableHotel, BorderLayout.CENTER);
 	}
 
-	public void addListener(HotelSelectionListener listener) {
+	public void addListener(HotelCitySelectionListener listener) {
 		listeners.add(listener);
 	}
 	
-	private static void fireHotelSelection(Hotel hotelSelected) {
-		for (HotelSelectionListener listener : listeners) {
-			listener.onHotelSelection(hotelSelected);
+	private static void fireHotelSelection(Hotel hotelSelected , JTable table) {
+		for (HotelCitySelectionListener listener : listeners) {
+			listener.onHotelSelection(hotelSelected,table);
 		}
 	}
 }
