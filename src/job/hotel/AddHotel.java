@@ -5,8 +5,8 @@ import factory.HotelFactory;
 
 public class AddHotel {
 
-		public AddHotel(Hotel hotel) {
-			HotelFactory.getInstance().addHotel(hotel.getIdCity(), hotel.getName());
+		public AddHotel(Long idCity, String nomHotel) {
+			HotelFactory.getInstance().addHotel(idCity, nomHotel);
 		}
 	
 }

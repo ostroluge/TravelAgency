@@ -80,6 +80,7 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 
 	private void getHotelDetails(City city) {
 		hotels = HotelFactory.getInstance().getHotelsFromCity(city.getId());
+		tableModel.setRowCount(0);
 		if (!hotels.isEmpty() && hotels != null) {
 			for (Hotel hotel : hotels) {
 				Object[] row = {
@@ -88,9 +89,7 @@ private static List<HotelCitySelectionListener> listeners = new ArrayList<>();
 				};
 				tableModel.addRow(row);
 			}
-		} else {
-			tableModel.setRowCount(0);
-		}
+		} 
 	}
 	public void addListener(HotelCitySelectionListener listener) {
 		listeners.add(listener);

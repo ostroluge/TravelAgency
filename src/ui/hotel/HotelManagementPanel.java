@@ -25,11 +25,9 @@ import ui.listener.hotel.HotelCitySelectionListener;
 public class HotelManagementPanel extends JPanel implements ActionListener, HotelCitySelectionListener, CityHotelSelectionListener{
 
 	protected JLabel labelHotelName = new JLabel();
-	protected JLabel labelIdHotel = new JLabel();
 	protected JLabel labelIdVille = new JLabel();
 	
 	protected JTextField hotelName;
-	protected JTextField idHotel;
 	protected JTextField idVille;
 	
 	protected JButton addButton;
@@ -51,16 +49,13 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 
 	private void setLabels() {
 		labelHotelName.setText("Nom de l'hotel :");
-		labelIdHotel.setText("Id de l'Hotel :");
 		labelIdVille.setText("Id de la ville :");
 	}
 
 	private void setTextFields() {
 		Document modelTextFieldln = new PlainDocument();
-		Document modelTextFieldfn = new PlainDocument();
 		Document modelTextFieldbd = new PlainDocument();
 		hotelName = new JTextField(modelTextFieldln, "", 10);
-		idHotel = new JTextField(modelTextFieldfn, "", 10);
 		idVille = new JTextField(modelTextFieldbd, "", 10);
 	}
 
@@ -78,8 +73,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		setLayout(new GridLayout(3,4));
 		add(labelHotelName);
 		add(hotelName);
-		add(labelIdHotel);
-		add(idHotel);
 		add(labelIdVille);
 		add(idVille);
 		add(addButton);
@@ -91,11 +84,8 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
 			if (!hotelName.getText().trim().equals("") &&
-					!idHotel.getText().trim().equals("") &&
 					!idVille.getText().trim().equals("")) {
-				Hotel hotelToAdd = new Hotel(
-						Long.parseLong(idHotel.getText()), Long.parseLong(idVille.getText()),hotelName.getText());
-				new AddHotel(hotelToAdd);
+				new AddHotel(Long.parseLong(idVille.getText()),hotelName.getText());
 			} else {
 				System.out.println("Veuillez renseigner tous les champs");
 			}
@@ -107,9 +97,7 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 				System.out.println("Veuillez selectionner un hotel a supprimer");
 			}
 		} else if (e.getSource() == clearButton) {
-			if (hotelSelected != null) {
 				clearSelection();
-			}
 		}
 	}
 
@@ -117,7 +105,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		hotelSelected = null;
 		tableSelected.clearSelection();
 		hotelName.setText("");
-		idHotel.setText("");
 		idVille.setText("");
 	}
 
@@ -133,7 +120,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		if (hotel != null) {
 			hotelSelected = hotel;
 			hotelName.setText(hotel.getName());
-			idHotel.setText(hotel.getId().toString());
 			idVille.setText(hotel.getIdCity().toString());
 		}
 		tableSelected = table;
