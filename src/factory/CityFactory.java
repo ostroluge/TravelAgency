@@ -82,6 +82,33 @@ public class CityFactory {
 		return null;
 	}
 	
+	public City getCityByName(String citySelected) {
+		City city = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from city where city_name = ?");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setString(1, citySelected);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				Long id = resultSet.getLong(1);
+				String name = resultSet.getString(2);
+				city = new City(id, name);
+			}
+		
+			if (city != null) {
+				return city;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int addCity(String nameCity){
 		try {
 			preparedStatement = conn.prepareStatement("insert into city " +

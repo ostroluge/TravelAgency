@@ -91,3 +91,40 @@ insert into room (id_hotel, id_category, room_number, name_room) values (
 	12,
 	'Alexandria'
 );
+
+create table line (
+	id_line integer not null,
+	id_departure_city integer not null,
+	id_arrival_city integer not null,
+	constraint pk_line primary key (id_line),
+	constraint fk_departure_city foreign key (id_departure_city) references city(id),
+	constraint fk_arrival_city foreign key (id_arrival_city) references city(id)
+);
+
+create table flight (
+	id_flight integer not null,
+	id_line integer not null,
+	day_of_week varchar(15) not null,
+	departure_time varchar(6) not null,
+	flight_duration integer not null,
+	max_passenger_first_class integer not null,
+	price_first_class float(6,2) not null,
+	max_passenger_second_class integer not null,
+	price_second_class float(6,2) not null,
+	cancellation_time integer not null,
+	constraint pk_flight primary key (id_flight),
+	constraint fk_line foreign key (id_line) references line(id_line)
+);
+
+alter table flight drop foreign key fk_line;
+
+alter table flight add constraint fk_line foreign key (id_line) references line(id_line) on delete cascade;
+
+alter table line modify column id_line integer not null auto_increment;
+
+alter table flight modify column id_flight integer not null auto_increment;
+
+insert into line (id_departure_city, id_arrival_city) values (
+	2,
+	3
+);
