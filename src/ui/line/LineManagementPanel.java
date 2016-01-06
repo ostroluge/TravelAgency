@@ -54,6 +54,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		
 		List<City> cities = CityFactory.getInstance().getAllCity();
 		List<String> nameCities = new ArrayList<>();
+		nameCities.add("");
 		if (cities != null) {
 			for (City city : cities) {
 				nameCities.add(city.getNameCity());
@@ -99,10 +100,14 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		} else if (e.getSource() == deleteButton) {
 			if (lineSelected != null) {
 				new DeleteLine(lineSelected.getId());
+				clearSelection();
 			}
 		} else if (e.getSource() == clearButton) {
 			if (lineSelected != null) {
 				clearSelection();
+			} else {
+				departureCity.setSelectedItem("");
+				arrivalCity.setSelectedItem("");
 			}
 		} else if (e.getSource() == departureCity) {
 			String citySelected = (String) departureCity.getSelectedItem();
@@ -122,6 +127,8 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	private void clearSelection() {
 		lineSelected = null;
 		tableSelected.clearSelection();
+		departureCity.setSelectedItem("");
+		arrivalCity.setSelectedItem("");
 	}
 	
 	@Override
