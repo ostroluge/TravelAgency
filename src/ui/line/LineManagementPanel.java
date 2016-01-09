@@ -20,6 +20,7 @@ import job.line.DeleteLine;
 import model.City;
 import model.Line;
 import ui.listener.line.LineSelectionListener;
+import ui.menu.MainMenuFrame;
 import factory.CityFactory;
 import factory.LineFactory;
 
@@ -35,6 +36,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	protected JButton addButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 
 	protected Line lineSelected;
 	protected JTable tableSelected;
@@ -80,16 +82,19 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		add(addButton);
 		add(clearButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 	
 	private void setButtons() {
 		addButton = new JButton("Ajouter");
 		clearButton = new JButton("Clear");
 		deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 		
 		addButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 	
 	@Override
@@ -134,6 +139,11 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 			if (city != null) {
 				aCity = city;
 			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 

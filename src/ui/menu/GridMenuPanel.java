@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import ui.category.CategoryFrame;
 import ui.city.CityFrame;
 import ui.customer.CustomerFrame;
+import ui.hotel.HotelFrame;
+import ui.line.LineFrame;
 import ui.room.RoomFrame;
 
 @SuppressWarnings("serial")
@@ -72,7 +74,8 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 			CityFrame cityFrame = new CityFrame();
 			cityFrame.setVisible(true);
 		} else if (e.getSource() == hotelManagementButton) {
-			System.out.println("Not implemented yet");
+			HotelFrame hotelFrame = new HotelFrame();
+			hotelFrame.setVisible(true);
 		} else if (e.getSource() == categoryManagementButton) {
 			CategoryFrame categoryFrame = new CategoryFrame();
 			categoryFrame.setVisible(true);
@@ -80,7 +83,8 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 			RoomFrame roomFrame = new RoomFrame();
 			roomFrame.setVisible(true);
 		} else if (e.getSource() == lineManagementButton) {
-			System.out.println("Not implemented yet");
+			LineFrame lineFrame = new LineFrame();
+			lineFrame.setVisible(true);
 		} else if (e.getSource() == linePlanningManagementButton) {
 			System.out.println("Not implemented yet");
 		}

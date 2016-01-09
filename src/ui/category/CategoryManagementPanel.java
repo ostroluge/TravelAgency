@@ -7,6 +7,7 @@ import model.Category;
 import model.Hotel;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.hotel.HotelSelectionListener;
+import ui.menu.MainMenuFrame;
 
 import javax.swing.*;
 import javax.swing.text.Document;
@@ -31,6 +32,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
     protected JButton editButton;
     protected JButton deleteButton;
     protected JButton clearButton;
+	protected JButton returnButton;
 
     protected Category categorySelected;
     protected Hotel hotelSelected;
@@ -65,11 +67,13 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
         editButton = new JButton("Modifier");
         clearButton = new JButton("Clear");
         deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 
         addButton.addActionListener(this);
         editButton.addActionListener(this);
         clearButton.addActionListener(this);
         deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
     }
 
     private void setPanel() {
@@ -84,6 +88,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
         add(editButton);
         add(clearButton);
         add(deleteButton);
+        add(returnButton);
     }
 
     @Override
@@ -134,7 +139,12 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
             else{
           	  JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une catégorie");
             }
-        }
+        } else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
+		}
     }
 
     private void clearSelection() {

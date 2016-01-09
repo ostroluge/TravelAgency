@@ -20,6 +20,7 @@ import job.customer.DeleteCustomer;
 import job.customer.EditCustomer;
 import model.Customer;
 import ui.listener.customer.CustomerSelectionListener;
+import ui.menu.MainMenuFrame;
 
 @SuppressWarnings("serial")
 public class CustomerManagementPanel extends JPanel implements ActionListener, CustomerSelectionListener {
@@ -38,6 +39,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 	protected JButton editButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 	
 	protected Customer customerSelected;
 	protected JTable tableSelected;
@@ -73,15 +75,17 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 		editButton = new JButton("Modifier");
 		clearButton = new JButton("Clear");
 		deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 		
 		addButton.addActionListener(this);
 		editButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 
 	private void setPanel() {
-		setLayout(new GridLayout(3,4));
+		setLayout(new GridLayout(4,4));
 		add(labelLastName);
 		add(lastName);
 		add(labelFirstName);
@@ -94,6 +98,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 		add(editButton);
 		add(clearButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 
 	@Override
@@ -141,6 +146,11 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 				birthdate.setText("");
 				originCity.setText("");
 			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 

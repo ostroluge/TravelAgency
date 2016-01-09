@@ -21,6 +21,7 @@ import model.City;
 import model.Hotel;
 import ui.listener.city.CityHotelSelectionListener;
 import ui.listener.hotel.HotelCitySelectionListener;
+import ui.menu.MainMenuFrame;
 
 @SuppressWarnings("serial")
 public class HotelManagementPanel extends JPanel implements ActionListener, HotelCitySelectionListener, CityHotelSelectionListener{
@@ -32,6 +33,7 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 	protected JButton addButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 	
 	protected City citySelected;
 	protected Hotel hotelSelected;
@@ -59,10 +61,12 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		addButton = new JButton("Ajouter");
 		clearButton = new JButton("Clear");
 		deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 		
 		addButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 
 	private void setPanel() {
@@ -72,6 +76,7 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		add(addButton);
 		add(clearButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 
 	@Override
@@ -97,6 +102,16 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 				else{
 					hotelName.setText("");
 				}
+			if (hotelSelected != null) {
+				clearSelection();
+			} else {
+				hotelName.setName("");
+			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 
