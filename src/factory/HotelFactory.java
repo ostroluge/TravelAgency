@@ -9,7 +9,6 @@ import java.util.List;
 
 import model.Hotel;
 import ui.hotel.HotelCityTable;
-import ui.listener.category.CategoryChangeListener;
 import db.DbManager;
 
 public class HotelFactory {

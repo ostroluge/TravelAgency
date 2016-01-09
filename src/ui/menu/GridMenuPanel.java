@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import ui.category.CategoryFrame;
 import ui.city.CityFrame;
 import ui.customer.CustomerFrame;
+import ui.flight.FlightFrame;
 import ui.hotel.HotelFrame;
 import ui.line.LineFrame;
 import ui.room.RoomFrame;
@@ -86,7 +87,8 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 			LineFrame lineFrame = new LineFrame();
 			lineFrame.setVisible(true);
 		} else if (e.getSource() == linePlanningManagementButton) {
-			System.out.println("Not implemented yet");
+			FlightFrame flightFrame = new FlightFrame();
+			flightFrame.setVisible(true);
 		}
 	}
 }
