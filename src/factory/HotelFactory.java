@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.Hotel;
 import ui.hotel.HotelCityTable;
+import ui.listener.category.CategoryChangeListener;
 import db.DbManager;
 
 public class HotelFactory {
@@ -122,6 +123,8 @@ public class HotelFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,6 +142,8 @@ public class HotelFactory {
 			
 			int resultCode = preparedStatement.executeUpdate();
 			
+			fireModelChangeEvent();
+			
 			return resultCode;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -148,6 +153,12 @@ public class HotelFactory {
 
 	public void addListener(HotelCityTable hotelCityTable) {
 		listeners.add(hotelCityTable);
+	}
+	
+	private static void fireModelChangeEvent() {
+		for (HotelCityTable listener : listeners) {
+			listener.hotelCityHasChanged();
+		}
 	}
 
 }

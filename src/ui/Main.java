@@ -1,6 +1,6 @@
 package ui;
 
-import ui.line.LineFrame;
+import ui.hotel.HotelFrame;
 
 public class Main {
 
@@ -9,7 +9,13 @@ public class Main {
 //		MainMenuFrame frame = new MainMenuFrame();
 //		frame.setVisible(true);
 		
-		LineFrame frame = new LineFrame();
+//		LineFrame frame = new LineFrame();
+//		frame.setVisible(true);
+//		
+		HotelFrame frame = new HotelFrame();
 		frame.setVisible(true);
+		
+//		CategoryFrame frame = new CategoryFrame();
+//		frame.setVisible(true);
 	}
 }
