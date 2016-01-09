@@ -25,10 +25,8 @@ import ui.listener.hotel.HotelCitySelectionListener;
 public class HotelManagementPanel extends JPanel implements ActionListener, HotelCitySelectionListener, CityHotelSelectionListener{
 
 	protected JLabel labelHotelName = new JLabel();
-	protected JLabel labelIdVille = new JLabel();
 	
 	protected JTextField hotelName;
-	protected JTextField idVille;
 	
 	protected JButton addButton;
 	protected JButton deleteButton;
@@ -49,14 +47,11 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 
 	private void setLabels() {
 		labelHotelName.setText("Nom de l'hotel :");
-		labelIdVille.setText("Id de la ville :");
 	}
 
 	private void setTextFields() {
 		Document modelTextFieldln = new PlainDocument();
-		Document modelTextFieldbd = new PlainDocument();
 		hotelName = new JTextField(modelTextFieldln, "", 10);
-		idVille = new JTextField(modelTextFieldbd, "", 10);
 	}
 
 	private void setButtons() {
@@ -73,8 +68,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		setLayout(new GridLayout(3,4));
 		add(labelHotelName);
 		add(hotelName);
-		add(labelIdVille);
-		add(idVille);
 		add(addButton);
 		add(clearButton);
 		add(deleteButton);
@@ -83,9 +76,8 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
-			if (!hotelName.getText().trim().equals("") &&
-					!idVille.getText().trim().equals("")) {
-				new AddHotel(Long.parseLong(idVille.getText()),hotelName.getText());
+			if (!hotelName.getText().trim().equals("")) {
+				new AddHotel(citySelected.getId(),hotelName.getText());
 			} else {
 				System.out.println("Veuillez renseigner tous les champs");
 			}
@@ -105,7 +97,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		hotelSelected = null;
 		tableSelected.clearSelection();
 		hotelName.setText("");
-		idVille.setText("");
 	}
 
 	@Override
@@ -120,7 +111,6 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		if (hotel != null) {
 			hotelSelected = hotel;
 			hotelName.setText(hotel.getName());
-			idVille.setText(hotel.getIdCity().toString());
 		}
 		tableSelected = table;
 	}
