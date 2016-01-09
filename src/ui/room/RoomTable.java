@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import factory.RoomFactory;
 import model.Category;
 import model.Room;
 import ui.MyJTableModel;
@@ -18,7 +19,6 @@ import ui.category.CategoryTable;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.room.RoomChangeListener;
 import ui.listener.room.RoomSelectionListener;
-import factory.RoomFactory;
 
 @SuppressWarnings("serial")
 public class RoomTable extends JPanel implements RoomChangeListener, CategorySelectionListener {
