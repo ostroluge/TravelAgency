@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
@@ -19,6 +21,7 @@ import model.Room;
 import ui.category.CategoryTable;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.room.RoomSelectionListener;
+import ui.menu.MainMenuFrame;
 import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
@@ -34,6 +37,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	protected JButton addButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 	
 	private Room roomSelected;
 	private Category categorySelected;
@@ -64,10 +68,12 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 		addButton = new JButton("Ajouter");
         clearButton = new JButton("Clear");
         deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 
         addButton.addActionListener(this);
         clearButton.addActionListener(this);
         deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 	
 	private void setPanel() {
@@ -79,6 +85,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 		add(addButton);
 		add(clearButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 	
 	@Override
@@ -105,6 +112,11 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 				number.setText("");
 				name.setText("");
 			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 
