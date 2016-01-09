@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
@@ -69,19 +72,20 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!name.getText().trim().equals("")) {
 				City cityToAdd = new City(name.getText());
 				new AddCity(cityToAdd);
 			} else {
-				System.out.println("Veuillez renseigner le nom de la ville");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner le nom de la ville");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (citySelected != null) {
 				new DeleteCity(citySelected.getId());
 				clearSelection();
 			} else {
-				System.out.println("Veuillez selectionner une ville a supprimer");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez selectionner une ville a supprimer");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (citySelected != null) {

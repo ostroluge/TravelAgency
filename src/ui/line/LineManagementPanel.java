@@ -8,9 +8,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 
 import job.line.AddLine;
 import job.line.DeleteLine;
@@ -18,6 +21,7 @@ import model.City;
 import model.Line;
 import ui.listener.line.LineSelectionListener;
 import factory.CityFactory;
+import factory.LineFactory;
 
 @SuppressWarnings("serial")
 public class LineManagementPanel extends JPanel implements ActionListener, LineSelectionListener {
@@ -25,8 +29,8 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	protected JLabel labelDepartureCity = new JLabel();
 	protected JLabel labelArrivalCity = new JLabel();
 	
-	protected JComboBox departureCity;
-	protected JComboBox arrivalCity;
+	protected JComboBox<Object> departureCity;
+	protected JComboBox<Object> arrivalCity;
 	
 	protected JButton addButton;
 	protected JButton deleteButton;
@@ -59,8 +63,8 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 			for (City city : cities) {
 				nameCities.add(city.getNameCity());
 			}
-			departureCity = new JComboBox(nameCities.toArray());
-			arrivalCity = new JComboBox(nameCities.toArray());
+			departureCity = new JComboBox<>((nameCities.toArray()));
+			arrivalCity = new JComboBox<>(nameCities.toArray());
 			departureCity.addActionListener(this);
 			arrivalCity.addActionListener(this);
 		}
@@ -90,17 +94,26 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!departureCity.getSelectedItem().equals(arrivalCity.getSelectedItem()) &&
 					dCity != null && aCity != null) {
-				new AddLine(dCity.getId(), aCity.getId());
+				if(!LineFactory.getInstance().isAlreadyExisting(dCity.getId(), aCity.getId())){
+					new AddLine(dCity.getId(), aCity.getId());					
+				}
+				else{
+					JOptionPane.showMessageDialog(topFrame, "Cette ligne existe déjà");
+				}
 			} else {
-				System.out.println("Veuillez choisir 2 villes differentes");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez choisir deux villes différentes");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (lineSelected != null) {
 				new DeleteLine(lineSelected.getId());
 				clearSelection();
+			}
+			else{
+				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une ligne");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (lineSelected != null) {

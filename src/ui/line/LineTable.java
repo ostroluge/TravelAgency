@@ -74,9 +74,7 @@ public class LineTable extends JPanel implements LineChangeListener {
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idLineSelected = table.getValueAt(selectedRow, 0).toString();
 					Line line = LineFactory.getInstance()

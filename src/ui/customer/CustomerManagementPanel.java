@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
@@ -95,6 +98,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!lastName.getText().trim().equals("") &&
 					!firstName.getText().trim().equals("") &&
@@ -104,7 +108,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 						firstName.getText(), birthdate.getText(), originCity.getText());
 				new AddCustomer(customerToAdd);
 			} else {
-				System.out.println("Veuillez renseigner tous les champs");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 			}
 		} else if (e.getSource() == editButton) {
 			if (customerSelected != null) {
@@ -116,17 +120,17 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 							firstName.getText(), birthdate.getText(), originCity.getText());
 					new EditCustomer(customerSelected.getId(), customerToEdit);
 				} else {
-					System.out.println("Veuillez renseigner tous les champs");
+					JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 				}
 			} else {
-				System.out.println("Veuillez selectionner un client a modifier");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un client à modifier");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (customerSelected != null) {
 				new DeleteCustomer(customerSelected.getId());
 				clearSelection();
 			} else {
-				System.out.println("Veuillez selectionner un client a supprimer");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un client à supprimer");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (customerSelected != null) {

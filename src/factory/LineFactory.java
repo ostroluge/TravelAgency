@@ -130,4 +130,27 @@ public class LineFactory {
 			listener.lineHasChanged();
 		}
 	}
+
+	public boolean isAlreadyExisting(Long idDeparture, Long idArrival) {
+		ResultSet resultSet;
+		int numberRow = 0;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select count(*) as ROWCOUNT from line where id_departure_city = ? and id_arrival_city = ?");
+			preparedStatement.clearParameters();
+			preparedStatement.setLong(1, idDeparture);
+			preparedStatement.setLong(2, idArrival);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			numberRow = resultSet.getInt("rowcount");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(numberRow >= 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
