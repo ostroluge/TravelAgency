@@ -93,6 +93,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (e.getSource() == addButton) {
             if (!name.getText().trim().equals("") && !price.getText().trim().equals("")
                     && !capacity.getText().trim().equals("")) {
@@ -101,6 +102,11 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
                 if (hotelSelected != null) {
                     new AddCategory(categoryToAdd, hotelSelected.getId());
                 }
+                else{
+              	  JOptionPane.showMessageDialog(topFrame, "Aucun hôtel sélectionné");
+                }
+            } else{
+          	  JOptionPane.showMessageDialog(topFrame, "Veuillez remplir tous les champs");
             }
         } else if (e.getSource() == editButton) {
             if (categorySelected != null) {
@@ -115,7 +121,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
                     }
                 }
             } else {
-                System.out.println("Veuillez d'abord selectionner une categorie");
+            	  JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une catégorie");
             }
         } else if (e.getSource() == clearButton) {
             if (categorySelected != null) {
@@ -129,6 +135,9 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
             if (categorySelected != null) {
                 new DeleteCategory(categorySelected.getId());
                 clearSelection();
+            }
+            else{
+          	  JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une catégorie");
             }
         } else if (e.getSource() == returnButton) {
 			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);

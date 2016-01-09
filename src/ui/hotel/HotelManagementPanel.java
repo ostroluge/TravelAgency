@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -18,8 +19,6 @@ import job.hotel.AddHotel;
 import job.hotel.DeleteHotel;
 import model.City;
 import model.Hotel;
-import ui.category.HotelTable;
-import ui.city.CityTable;
 import ui.listener.city.CityHotelSelectionListener;
 import ui.listener.hotel.HotelCitySelectionListener;
 import ui.menu.MainMenuFrame;
@@ -82,20 +81,27 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!hotelName.getText().trim().equals("")) {
 				new AddHotel(citySelected.getId(),hotelName.getText());
 			} else {
-				System.out.println("Veuillez renseigner tous les champs");
+				 JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (hotelSelected != null) {
 				new DeleteHotel(hotelSelected.getId());
 				clearSelection();
 			} else {
-				System.out.println("Veuillez selectionner un hotel a supprimer");
+				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un hôtel à supprimer");
 			}
 		} else if (e.getSource() == clearButton) {
+				if(hotelSelected != null){
+					clearSelection();
+				}
+				else{
+					hotelName.setText("");
+				}
 			if (hotelSelected != null) {
 				clearSelection();
 			} else {

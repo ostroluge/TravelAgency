@@ -4,20 +4,23 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Category;
 import model.Hotel;
 import ui.MyJTableModel;
-import factory.CategoryFactory;
 import ui.listener.category.CategoryChangeListener;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.hotel.HotelSelectionListener;
+import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
 public class CategoryTable extends JPanel implements HotelSelectionListener, CategoryChangeListener {
@@ -55,9 +58,7 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCategorySelected = tableCategory.getValueAt(selectedRow, 0).toString();
 					Category category = CategoryFactory.getInstance()

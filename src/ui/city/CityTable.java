@@ -67,9 +67,7 @@ public class CityTable extends JPanel implements CityChangeListener {
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
 					City city = CityFactory.getInstance()

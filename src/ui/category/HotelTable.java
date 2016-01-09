@@ -68,9 +68,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idHotelSelected = tableHotel.getValueAt(selectedRow, 0).toString();
 					Hotel hotel = HotelFactory.getInstance()
