@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import ui.category.CategoryFrame;
 import ui.city.CityFrame;
 import ui.customer.CustomerFrame;
+import ui.hotel.HotelFrame;
 import ui.room.RoomFrame;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,8 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 			CityFrame cityFrame = new CityFrame();
 			cityFrame.setVisible(true);
 		} else if (e.getSource() == hotelManagementButton) {
-			System.out.println("Not implemented yet");
+			HotelFrame hotelFrame = new HotelFrame();
+			hotelFrame.setVisible(true);
 		} else if (e.getSource() == categoryManagementButton) {
 			CategoryFrame categoryFrame = new CategoryFrame();
 			categoryFrame.setVisible(true);

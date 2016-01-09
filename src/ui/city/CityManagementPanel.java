@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
@@ -16,6 +18,7 @@ import job.city.AddCity;
 import job.city.DeleteCity;
 import model.City;
 import ui.listener.city.CitySelectionListener;
+import ui.menu.MainMenuFrame;
 
 @SuppressWarnings("serial")
 public class CityManagementPanel extends JPanel implements ActionListener, CitySelectionListener {
@@ -27,6 +30,7 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 	protected JButton addButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 	
 	protected City citySelected;
 	protected JTable tableSelected;
@@ -52,10 +56,12 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 		addButton = new JButton("Ajouter");
 		clearButton = new JButton("Clear");
 		deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 		
 		addButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 	
 	private void setPanel() {
@@ -65,6 +71,7 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 		add(clearButton);
 		add(addButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 	
 	@Override
@@ -89,6 +96,11 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 			} else {
 				name.setText("");
 			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 
