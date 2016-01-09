@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -90,6 +91,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!number.getText().trim().equals("") &&
 					!name.getText().trim().equals("")) {
@@ -99,11 +101,20 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 					new AddRoom(categorySelected.getHotelId(), categorySelected.getId(),
 							roomToAdd.getRoomNumber(), roomToAdd.getNameRoom());
 				}
+				else{
+					 JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un hôtel et une catégorie");
+				}
+			}
+			else{
+				 JOptionPane.showMessageDialog(topFrame, "Veuillez remplir les champs");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (roomSelected != null) {
 				new DeleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
 				clearSelection();
+			}
+			else{
+				 JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une chambre");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (roomSelected != null) {

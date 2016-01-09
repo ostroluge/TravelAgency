@@ -56,9 +56,7 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String roomNumberSelected = tableRoom.getValueAt(selectedRow, 0).toString();
 					
