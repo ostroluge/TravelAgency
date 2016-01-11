@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -79,6 +76,7 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 
 	private void getCategoryDetail(Hotel hotel) {
 		categories = CategoryFactory.getInstance().getCategoriesByHotelId(hotel.getId());
+		tableModel.setRowCount(0);
 		if (categories != null) {
 			for (Category category : categories) {
 				Object[] row = {
@@ -89,8 +87,6 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 				};
 				tableModel.addRow(row);
 			}
-		} else {
-			tableModel.setRowCount(0);
 		}
 	}
 

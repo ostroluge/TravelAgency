@@ -44,6 +44,20 @@ public class Flight {
 		this.cancellationTime = cancellationTime;
 	}
 
+	public Flight(String dayOfWeek, String departureTime, int flightDuration,
+			int maxPassengerFirstClass, float priceFirstClass,
+			int maxPassengerSecondClass, float priceSecondClass,
+			int cancellationTime) {
+		this.dayOfWeek = dayOfWeek;
+		this.departureTime = departureTime;
+		this.flightDuration = flightDuration;
+		this.maxPassengerFirstClass = maxPassengerFirstClass;
+		this.priceFirstClass = priceFirstClass;
+		this.maxPassengerSecondClass = maxPassengerSecondClass;
+		this.priceSecondClass = priceSecondClass;
+		this.cancellationTime = cancellationTime;
+	}
+
 	public Long getId() {
 		return id;
 	}

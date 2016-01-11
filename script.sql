@@ -128,3 +128,43 @@ insert into line (id_departure_city, id_arrival_city) values (
 	2,
 	3
 );
+
+insert into flight (id_line, day_of_week, departure_time, flight_duration, max_passenger_first_class,
+					price_first_class, max_passenger_second_class, price_second_class, cancellation_time) values (
+
+					1,
+					'Lundi',
+					'13h30',
+					2,
+					76,
+					79.80,
+					127,
+					39.40,
+					2
+);
+
+insert into flight (id_line, day_of_week, departure_time, flight_duration, max_passenger_first_class,
+					price_first_class, max_passenger_second_class, price_second_class, cancellation_time) values (
+					5,
+					'Mercredi',
+					'8h20',
+					3,
+					32,
+					45.80,
+					83,
+					19.20,
+					2
+);
+
+insert into flight (id_line, day_of_week, departure_time, flight_duration, max_passenger_first_class,
+					price_first_class, max_passenger_second_class, price_second_class, cancellation_time) values (
+					7,
+					'Vendredi',
+					'19h10',
+					5,
+					12,
+					120.80,
+					32,
+					76.60,
+					2
+);

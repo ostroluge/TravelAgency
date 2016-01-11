@@ -33,6 +33,8 @@ public class FlightFactory {
 					"select * from flight where id_line = ?");
 			preparedStatement.clearParameters();
 			
+			preparedStatement.setLong(1, idLine);
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {

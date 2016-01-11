@@ -14,7 +14,7 @@ public class FlightFrame extends JFrame {
 
 	public FlightFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(640, 400);
+		setSize(1040, 600);
 		setResizable(false);
 		setTitle("Liste des plannings");
 		setLocationRelativeTo(null);

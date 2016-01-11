@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ui.category.HotelTable;
-
 
 @SuppressWarnings("serial")
 public class HotelFrame extends JFrame{

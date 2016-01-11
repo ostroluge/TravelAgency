@@ -14,7 +14,6 @@ import javax.swing.event.ListSelectionListener;
 import model.City;
 import ui.MyJTableModel;
 import ui.listener.city.CityHotelSelectionListener;
-import ui.listener.city.CitySelectionListener;
 import factory.CityFactory;
 
 @SuppressWarnings("serial")

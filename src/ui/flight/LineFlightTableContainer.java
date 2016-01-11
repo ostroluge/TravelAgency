@@ -13,7 +13,7 @@ public class LineFlightTableContainer extends JPanel {
 	FlightTable flightTable = new FlightTable();
 	
 	public LineFlightTableContainer() {
-		setLayout(new GridLayout(2, 1));
+		setLayout(new GridLayout(1, 2));
 		add(lineTable);
 		add(flightTable);
 	}
