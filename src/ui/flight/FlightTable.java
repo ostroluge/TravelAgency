@@ -79,6 +79,7 @@ public class FlightTable extends JPanel implements LineSelectionListener, Flight
 	
 	private void getFlightDetail(Line line) {
 		flights = FlightFactory.getInstance().getFlightsByLineId(line.getId());
+		tableModel.setRowCount(0);
 		if (flights != null) {
 			for (Flight flight : flights) {
 				Object[] row = {
@@ -94,8 +95,6 @@ public class FlightTable extends JPanel implements LineSelectionListener, Flight
 				};
 				tableModel.addRow(row);
 			}
-		} else {
-			tableModel.setRowCount(0);
 		}
 	}
 	
