@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
@@ -83,9 +85,17 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		} else if (e.getSource() == cancelButton) {
 			System.out.println("CANCEL");
 		} else if (e.getSource() == clearButton) {
-			System.out.println("CLEAR");
+			if (bookingSelected != null) {
+				clearSelection();
+			} else {
+				departureDate.setText("");
+				returnDate.setText("");
+			}
 		} else if (e.getSource() == returnButton) {
-			System.out.println("RETOUR");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			AuthenticationFrame frame = new AuthenticationFrame();
+			frame.setVisible(true);
 		}
 	}
 
