@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import job.line.AddLine;
-import job.line.DeleteLine;
+import job.line.LineManager;
+
 import model.City;
 import model.Line;
 import ui.listener.line.LineSelectionListener;
@@ -104,7 +104,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 			if (!departureCity.getSelectedItem().equals(arrivalCity.getSelectedItem()) &&
 					dCity != null && aCity != null) {
 				if(!LineFactory.getInstance().isAlreadyExisting(dCity.getId(), aCity.getId())){
-					new AddLine(dCity.getId(), aCity.getId());					
+					LineManager.INSTANCE.addLine(dCity.getId(), aCity.getId());					
 				}
 				else{
 					JOptionPane.showMessageDialog(topFrame, "Cette ligne existe déjà");
@@ -114,7 +114,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (lineSelected != null) {
-				new DeleteLine(lineSelected.getId());
+				LineManager.INSTANCE.deleteLine(lineSelected.getId());
 				clearSelection();
 			}
 			else{

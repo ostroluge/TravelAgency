@@ -15,8 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-import job.city.AddCity;
-import job.city.DeleteCity;
+import job.city.CityManager;
+
 import model.City;
 import ui.listener.city.CitySelectionListener;
 import ui.menu.MainMenuFrame;
@@ -81,13 +81,13 @@ public class CityManagementPanel extends JPanel implements ActionListener, CityS
 		if (e.getSource() == addButton) {
 			if (!name.getText().trim().equals("")) {
 				City cityToAdd = new City(name.getText());
-				new AddCity(cityToAdd);
+				CityManager.INSTANCE.addCity(cityToAdd);
 			} else {
 				JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner le nom de la ville");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (citySelected != null) {
-				new DeleteCity(citySelected.getId());
+				CityManager.INSTANCE.deleteCity(citySelected.getId());
 				clearSelection();
 			} else {
 				JOptionPane.showMessageDialog(topFrame, "Veuillez selectionner une ville a supprimer");

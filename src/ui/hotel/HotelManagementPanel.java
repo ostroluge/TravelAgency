@@ -15,8 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-import job.hotel.AddHotel;
-import job.hotel.DeleteHotel;
+import job.hotel.HotelManager;
 import model.City;
 import model.Hotel;
 import ui.listener.city.CityHotelSelectionListener;
@@ -84,13 +83,13 @@ public class HotelManagementPanel extends JPanel implements ActionListener, Hote
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!hotelName.getText().trim().equals("")) {
-				new AddHotel(citySelected.getId(),hotelName.getText());
+				HotelManager.INSTANCE.addHotel(citySelected.getId(),hotelName.getText());
 			} else {
 				 JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (hotelSelected != null) {
-				new DeleteHotel(hotelSelected.getId());
+				HotelManager.INSTANCE.deleteHotel(hotelSelected.getId());
 				clearSelection();
 			} else {
 				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un hôtel à supprimer");

@@ -1,8 +1,5 @@
 package ui.category;
 
-import job.category.AddCategory;
-import job.category.DeleteCategory;
-import job.category.EditCategory;
 import model.Category;
 import model.Hotel;
 import ui.listener.category.CategorySelectionListener;
@@ -16,6 +13,8 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import job.category.CategoryManager;
 
 @SuppressWarnings("serial")
 public class CategoryManagementPanel extends JPanel implements ActionListener, CategorySelectionListener, HotelSelectionListener {
@@ -100,7 +99,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
                 Category categoryToAdd = new Category(name.getText(),
                         Integer.parseInt(capacity.getText()), Float.parseFloat(price.getText()));
                 if (hotelSelected != null) {
-                    new AddCategory(categoryToAdd, hotelSelected.getId());
+                    CategoryManager.INSTANCE.addCategory(categoryToAdd, hotelSelected.getId());
                 }
                 else{
               	  JOptionPane.showMessageDialog(topFrame, "Aucun hôtel sélectionné");
@@ -117,7 +116,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
                     categoryToEdit.setId(categorySelected.getId());
                     if (hotelSelected != null) {
                         categoryToEdit.setHotelId(hotelSelected.getId());
-                        new EditCategory(categoryToEdit, categorySelected.getId());
+                        CategoryManager.INSTANCE.editCategory(categoryToEdit, categorySelected.getId());
                     }
                 }
             } else {
@@ -133,7 +132,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
             }
         } else if (e.getSource() == deleteButton) {
             if (categorySelected != null) {
-                new DeleteCategory(categorySelected.getId());
+            	CategoryManager.INSTANCE.deleteCategory(categorySelected.getId());
                 clearSelection();
             }
             else{

@@ -15,8 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-import job.room.AddRoom;
-import job.room.DeleteRoom;
+import job.room.RoomManager;
 import model.Category;
 import model.Room;
 import ui.category.CategoryTable;
@@ -98,7 +97,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 				Room roomToAdd = new Room(Integer.parseInt(number.getText()),
 						name.getText());
 				if (categorySelected != null) {
-					new AddRoom(categorySelected.getHotelId(), categorySelected.getId(),
+					RoomManager.INSTANCE.addRoom(categorySelected.getHotelId(), categorySelected.getId(),
 							roomToAdd.getRoomNumber(), roomToAdd.getNameRoom());
 				}
 				else{
@@ -110,7 +109,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (roomSelected != null) {
-				new DeleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
+				RoomManager.INSTANCE.deleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
 				clearSelection();
 			}
 			else{

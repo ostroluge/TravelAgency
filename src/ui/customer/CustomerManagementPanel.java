@@ -15,9 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-import job.customer.AddCustomer;
-import job.customer.DeleteCustomer;
-import job.customer.EditCustomer;
+import job.customer.CustomerManager;
 import model.Customer;
 import ui.listener.customer.CustomerSelectionListener;
 import ui.menu.MainMenuFrame;
@@ -111,7 +109,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 					!originCity.getText().trim().equals("")) {
 				Customer customerToAdd = new Customer(lastName.getText(),
 						firstName.getText(), birthdate.getText(), originCity.getText());
-				new AddCustomer(customerToAdd);
+				CustomerManager.INSTANCE.addCustomer(customerToAdd);
 			} else {
 				JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 			}
@@ -123,7 +121,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 						!originCity.getText().trim().equals("")) {
 					Customer customerToEdit = new Customer(lastName.getText(),
 							firstName.getText(), birthdate.getText(), originCity.getText());
-					new EditCustomer(customerSelected.getId(), customerToEdit);
+					CustomerManager.INSTANCE.editCustomer(customerSelected.getId(), customerToEdit);
 				} else {
 					JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 				}
@@ -132,7 +130,7 @@ public class CustomerManagementPanel extends JPanel implements ActionListener, C
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (customerSelected != null) {
-				new DeleteCustomer(customerSelected.getId());
+				CustomerManager.INSTANCE.deleteCustomer(customerSelected.getId());
 				clearSelection();
 			} else {
 				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un client à supprimer");
