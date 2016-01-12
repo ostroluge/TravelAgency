@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import ui.booking.AuthenticationFrame;
 import ui.category.CategoryFrame;
 import ui.city.CityFrame;
 import ui.customer.CustomerFrame;
@@ -69,9 +69,11 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == travelManagementButton) {
-			JOptionPane.showMessageDialog(topFrame, "Pas implémenté");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			AuthenticationFrame authenticationFrame = new AuthenticationFrame();
+			authenticationFrame.setVisible(true);
 		} else if (e.getSource() == customerManagementButton) {
 			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 			currentFrame.dispose();

@@ -1,20 +1,26 @@
 package ui.category;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
+
+import job.category.CategoryManager;
 import model.Category;
 import model.Hotel;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.hotel.HotelSelectionListener;
 import ui.menu.MainMenuFrame;
-
-import javax.swing.*;
-import javax.swing.text.Document;
-import javax.swing.text.PlainDocument;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import job.category.CategoryManager;
 
 @SuppressWarnings("serial")
 public class CategoryManagementPanel extends JPanel implements ActionListener, CategorySelectionListener, HotelSelectionListener {

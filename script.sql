@@ -101,6 +101,12 @@ create table line (
 	constraint fk_arrival_city foreign key (id_arrival_city) references city(id)
 );
 
+alter table line modify column id_line integer not null auto_increment;
+alter table line drop foreign key fk_departure_city;
+alter table line drop foreign key fk_arrival_city;
+alter table line add constraint fk_departure_city foreign key (id_departure_city) references city(id) on delete cascade;
+alter table line add constraint fk_arrival_city foreign key (id_arrival_city) references city(id) on delete cascade;
+
 create table flight (
 	id_flight integer not null,
 	id_line integer not null,
@@ -117,12 +123,9 @@ create table flight (
 );
 
 alter table flight drop foreign key fk_line;
-
 alter table flight add constraint fk_line foreign key (id_line) references line(id_line) on delete cascade;
-
-alter table line modify column id_line integer not null auto_increment;
-
 alter table flight modify column id_flight integer not null auto_increment;
+
 
 insert into line (id_departure_city, id_arrival_city) values (
 	2,
