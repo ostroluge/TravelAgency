@@ -171,3 +171,24 @@ insert into flight (id_line, day_of_week, departure_time, flight_duration, max_p
 					76.60,
 					2
 );
+
+create table booking (
+	id_booking integer not null primary key auto_increment,
+	id_client integer not null,
+	id_flight integer not null,
+    id_category integer not null,
+    id_hotel integer not null,
+    room_number integer not null,
+    id_city_departure integer not null,
+    id_city_arrival integer not null,
+    date_departure date not null,
+    date_return date not null,
+    nb_passager integer not null,
+    price float(7,2) not null
+);
+
+alter table booking add constraint fk_customer foreign key (id_client) references customer(id);
+alter table booking add constraint fk_flight foreign key (id_flight) references flight(id_flight);
+alter table booking add constraint fk_room foreign key (id_hotel, id_category, room_number) references room(id_hotel, id_category, room_number);
+alter table booking add constraint fk_city_departure foreign key (id_city_departure) references city(id);
+alter table booking add constraint fk_city_arrival foreign key (id_city_arrival) references city(id);
