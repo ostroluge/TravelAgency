@@ -11,14 +11,21 @@ import model.Category;
 import db.DbManager;
 import ui.listener.category.CategoryChangeListener;
 
+/**
+ * La classe Fabrique de Category
+ */
 public class CategoryFactory {
 
 	private static CategoryFactory INSTANCE;
 	private Connection conn = DbManager.getInstance().getConnection();
 	private PreparedStatement preparedStatement;
-
+	
 	private static List<CategoryChangeListener> listeners = new ArrayList<>();
 
+	/**
+	 * Récupère l'instance de la CategoryFactory
+	 * @return instance of CategoryFactory
+	 */
 	public static CategoryFactory getInstance(){
 		if(INSTANCE == null){
 			INSTANCE = new CategoryFactory();
@@ -26,10 +33,23 @@ public class CategoryFactory {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Fonction de création d'une category
+	 * @param id 
+	 * @param capacity
+	 * @param price
+	 * @param name
+	 * @return new Category
+	 */
 	public Category create(Long id, int capacity, float price, String name){
 		return new Category(id, capacity, price, name);
 	}
 	
+	/**
+	 * Récupère une category à partir de son id
+	 * @param id
+	 * @return Category
+	 */
 	public Category getCategoryById(Long id) {
 		Category category = null;
 		try {
@@ -60,6 +80,11 @@ public class CategoryFactory {
 		return null;
 	}
 	
+	/**
+	 * Récupère toutes les category d'un hotel à partir de son id
+	 * @param id
+	 * @return List<Category>
+	 */
 	public List<Category> getCategoriesByHotelId(Long id) {
 		List<Category> categories = new ArrayList<>();
 		try {
@@ -90,6 +115,14 @@ public class CategoryFactory {
 		return null;
 	}
 	
+	/**
+	 * Permet d'ajouter une category à la base de données
+	 * @param name
+	 * @param idHotel
+	 * @param capacity
+	 * @param price
+	 * @return code retour
+	 */
 	public int addCategory(String name, Long idHotel, int capacity, float price){
 		try {
 			preparedStatement = conn.prepareStatement("insert into category " +
@@ -113,6 +146,12 @@ public class CategoryFactory {
 		
 	}
 	
+	/**
+	 * Permet d'éditer une category en base de données
+	 * @param id
+	 * @param category
+	 * @return code retour
+	 */
 	public int editCategory(Long id, Category category) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -137,6 +176,11 @@ public class CategoryFactory {
 		return 0;
 	}
 	
+	/**
+	 * Permet de supprimer une category dans la base de données
+	 * @param idCategory
+	 * @return code retour
+	 */
 	public int removeCategory(Long idCategory){
 		try {
 			PreparedStatement removeCategoryStatement;
@@ -158,10 +202,17 @@ public class CategoryFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(CategoryChangeListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Permet de vérifier si les category ont changés (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (CategoryChangeListener listener : listeners) {
 			listener.categoryHasChanged();
