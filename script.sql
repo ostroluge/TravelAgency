@@ -48,12 +48,7 @@ create table category (
 	on update cascade
 );
 
-
 alter table category add name_category varchar(30) not null;
-
-alter table room add name_room varchar(30) not null;
-
-alter table room drop primary key, add primary key(id_hotel, id_category, room_number);
 
 create table room (
 	id_hotel integer not null,
@@ -63,6 +58,9 @@ create table room (
 	constraint fk_hotel_room foreign key (id_hotel) references hotel(id),
 	constraint fk_category_room foreign key (id_category) references category(id)
 );
+
+alter table room add name_room varchar(30) not null;
+alter table room drop primary key, add primary key(id_hotel, id_category, room_number);
 
 insert into category (id_hotel, capacity, price, name_category) values (
 	3,
