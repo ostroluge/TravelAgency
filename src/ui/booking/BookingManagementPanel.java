@@ -141,7 +141,10 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 						Booking booking = new Booking(customer.getId(), dCity.getId(), aCity.getId(),
 								Integer.parseInt(nbPassenger.getText().trim()), departureDate.getText().trim(),
 								returnDate.getText().trim());
-						BookingManager.INSTANCE.addBooking(booking);
+//						BookingManager.INSTANCE.addBooking(booking);
+						topFrame.dispose();
+						BookingFlightDepartureFrame bookingFlightFrame = new BookingFlightDepartureFrame(booking);
+						bookingFlightFrame.setVisible(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(topFrame, "Veuillez choisir 2 villes différentes");

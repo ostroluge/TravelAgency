@@ -102,6 +102,44 @@ public class FlightFactory {
 		return null;
 	}
 
+	public Flight getFlightByIdCityDeparture(Long id) {
+		Flight flight = null;
+		try {
+			preparedStatement = conn.prepareStatement(
+					"select * from flight where id_line in (select id_line from line where id_departure_city = ?)");
+			preparedStatement.clearParameters();
+			
+			preparedStatement.setLong(1, id);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				Long idFlight = resultSet.getLong(1);
+				Long idLine = resultSet.getLong(2);
+				String dayOfWeek = resultSet.getString(3);
+				String departureTime = resultSet.getString(4);
+				int flightDuration = resultSet.getInt(5);
+				int maxPassengerFirstClass = resultSet.getInt(6);
+				float priceFirstClass = resultSet.getFloat(7);
+				int maxPassengerSecondClass = resultSet.getInt(8);
+				float priceSecondClass = resultSet.getFloat(9);
+				int cancellationTime = resultSet.getInt(10);
+				flight = new Flight(idFlight, idLine, dayOfWeek,
+						departureTime, flightDuration, maxPassengerFirstClass,
+						priceFirstClass, maxPassengerSecondClass, priceSecondClass,
+						cancellationTime);
+			}
+		
+			if (flight != null) {
+				return flight;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int addFlight(Long idLine, String dayOfWeek, String departureTime,
 			int flightDuration, int maxPassengerFirstClass, float pricePassengerFirstClass,
 			int maxPassengerSecondClass, float priceSecondClass, int cancellationTime) {
