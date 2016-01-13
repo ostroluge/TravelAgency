@@ -10,13 +10,14 @@ public class BookingFrame extends JFrame {
 
 	JPanel container = new JPanel();
 	BookingTable table;
-	BookingManagementPanel managementPanel = new BookingManagementPanel();
+	BookingManagementPanel managementPanel;
 
 	private String nameCustomer;
 	
 	public BookingFrame(String name) {
 		this.nameCustomer = name;
 		table = new BookingTable(nameCustomer);
+		managementPanel  = new BookingManagementPanel(nameCustomer);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(640, 400);

@@ -190,3 +190,19 @@ alter table booking add constraint fk_flight foreign key (id_flight) references 
 alter table booking add constraint fk_room foreign key (id_hotel, id_category, room_number) references room(id_hotel, id_category, room_number);
 alter table booking add constraint fk_city_departure foreign key (id_city_departure) references city(id);
 alter table booking add constraint fk_city_arrival foreign key (id_city_arrival) references city(id);
+
+alter table booking modify id_flight integer;
+alter table booking modify id_category integer;
+alter table booking modify id_hotel integer;
+alter table booking modify room_number integer;
+alter table booking modify price float(7,2);
+
+insert into booking (id_client, id_city_departure, id_city_arrival, date_departure, date_return, nb_passager) values (
+	1,
+	2,
+	8,
+	'2016-01-13',
+	'2016-01-17',
+	2
+);
+

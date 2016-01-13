@@ -34,7 +34,7 @@ public class HotelFactory {
 		List<Hotel> hotels = new ArrayList<>();
 		try {
 			preparedStatement = conn.prepareStatement(
-					"select * from hotel");
+					"select * from hotel order by name asc");
 			preparedStatement.clearParameters();
 			
 			ResultSet resultPreparedStatement = preparedStatement.executeQuery();

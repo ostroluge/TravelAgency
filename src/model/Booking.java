@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.Date;
-
 /**
  * The Class Booking.
  */
@@ -14,13 +12,13 @@ public class Booking {
 	private int roomNumber, nombrePassagers;
 	
 	/** The date return. */
-	private Date dateDeparture, dateReturn;
+	private String dateDeparture, dateReturn;
 	
 	/** The price. */
 	private float price;
 	
 	
-	public Booking(Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, Date dateDeparture, Date dateReturn, float price){
+	public Booking(Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
 		this.idClient = idClient;
 		this.idFlight = idFlight;
 		this.idCategory = idCategory;
@@ -34,7 +32,7 @@ public class Booking {
 		this.price = price;
 	}
 	
-	public Booking(Long id,Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, Date dateDeparture, Date dateReturn, float price){
+	public Booking(Long id,Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
 		this.id = id;
 		this.idClient = idClient;
 		this.idFlight = idFlight;
@@ -48,6 +46,17 @@ public class Booking {
 		this.dateReturn = dateReturn;
 		this.price = price;
 	}
+	
+	public Booking(Long idClient, Long idCityDeparture, Long idCityArrival,
+			int nombrePassagers, String dateDeparture, String dateReturn) {
+		this.idClient = idClient;
+		this.idCityDeparture = idCityDeparture;
+		this.idCityArrival = idCityArrival;
+		this.nombrePassagers = nombrePassagers;
+		this.dateDeparture = dateDeparture;
+		this.dateReturn = dateReturn;
+	}
+
 	/**
 	 * Gets the id.
 	 *
@@ -197,7 +206,7 @@ public class Booking {
 	 *
 	 * @return the date departure
 	 */
-	public Date getDateDeparture() {
+	public String getDateDeparture() {
 		return dateDeparture;
 	}
 	
@@ -206,7 +215,7 @@ public class Booking {
 	 *
 	 * @param dateDeparture the new date departure
 	 */
-	public void setDateDeparture(Date dateDeparture) {
+	public void setDateDeparture(String dateDeparture) {
 		this.dateDeparture = dateDeparture;
 	}
 	
@@ -215,7 +224,7 @@ public class Booking {
 	 *
 	 * @return the date return
 	 */
-	public Date getDateReturn() {
+	public String getDateReturn() {
 		return dateReturn;
 	}
 	
@@ -224,7 +233,7 @@ public class Booking {
 	 *
 	 * @param dateReturn the new date return
 	 */
-	public void setDateReturn(Date dateReturn) {
+	public void setDateReturn(String dateReturn) {
 		this.dateReturn = dateReturn;
 	}
 	

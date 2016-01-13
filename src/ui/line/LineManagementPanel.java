@@ -46,7 +46,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	public LineManagementPanel() {
 		LineTable.INSTANCE.addListener(this);
 		setLabels();
-		setComboBoxs();
+		setComboBoxes();
 		setButtons();
 		setPanel();
 	}
@@ -56,7 +56,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		labelArrivalCity.setText("Ville d'arrivée :");
 	}
 	
-	private void setComboBoxs() {
+	private void setComboBoxes() {
 		
 		List<City> cities = CityFactory.getInstance().getAllCity();
 		List<String> nameCities = new ArrayList<>();

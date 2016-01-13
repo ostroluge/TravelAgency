@@ -12,9 +12,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Booking;
+import model.City;
+import model.Customer;
 import ui.MyJTableModel;
 import ui.listener.booking.BookingChangeListener;
 import ui.listener.booking.BookingSelectionListener;
+
+import com.sun.istack.internal.Nullable;
+
+import factory.BookingFactory;
+import factory.CityFactory;
+import factory.CustomerFactory;
 
 @SuppressWarnings("serial")
 public class BookingTable extends JPanel implements BookingChangeListener {
@@ -24,7 +32,7 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	public static BookingTable INSTANCE = new BookingTable();
 	
 	protected String[] columnNames = {
-		"id", "Date départ", "Date retour"	
+		"id", "Date départ", "Date retour", "Ville départ", "Ville arrivée", "Nbre passagers"
 	};
 	protected List<Booking> bookings = new ArrayList<>();
 	protected JTable table;
@@ -39,7 +47,7 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	
 	public BookingTable(String name) {
 		this.nameCustomer = name;
-//		BookingFactory.getInstance().addListener(this);
+		BookingFactory.getInstance().addListener(this);
 		getBookingDetails();
 		table = new JTable(tableModel);
 		scrollPane = new JScrollPane(table);
@@ -49,18 +57,26 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	}
 	
 	private void getBookingDetails() {
-//		bookings = BookingFactory.getInstance().getBookingsByCustomer();
-		if (bookings != null) {
-			for (Booking booking : bookings) {
-				Object[] row = {
-//						booking.getId(),
-//						booking.getDepartureDate(),
-//						booking.getReturnDate()
-				};
-				tableModel.addRow(row);
+		Customer customer = getCustomer(nameCustomer);
+		if (customer != null) {
+			bookings = BookingFactory.getInstance().getBookingByClientId(customer.getId());
+			if (bookings != null) {
+				for (Booking booking : bookings) {
+					City cityDeparture = CityFactory.getInstance().getCityById(booking.getIdCityDeparture());
+					City cityArrival = CityFactory.getInstance().getCityById(booking.getIdCityArrival());
+					Object[] row = {
+							booking.getId(),
+							booking.getDateDeparture(),
+							booking.getDateReturn(),
+							cityDeparture.getNameCity(),
+							cityArrival.getNameCity(),
+							booking.getNombrePassagers()
+					};
+					tableModel.addRow(row);
+				}
+			} else {
+				tableModel.setRowCount(0);
 			}
-		} else {
-			tableModel.setRowCount(0);
 		}
 	}
 	
@@ -77,11 +93,11 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idBookingSelected = table.getValueAt(selectedRow, 0).toString();
-//					Booking booking = BookingFactory.getInstance()
-//							.getBookingById(Long.parseLong(idBookingSelected));
-//					if (booking != null) {
-//						fireBookingSelection(booking, table);
-//					}
+					Booking booking = BookingFactory.getInstance()
+							.getBookingById(Long.parseLong(idBookingSelected));
+					if (booking != null) {
+						fireBookingSelection(booking, table);
+					}
 				}
 			}
 		});
@@ -107,5 +123,14 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	public void bookingHasChanged() {
 		tableModel.setRowCount(0);
 		getBookingDetails();
+	}
+
+	@Nullable
+	public Customer getCustomer(String name) {
+		if (nameCustomer != null) {
+			return CustomerFactory.getInstance().getCustomerByName(nameCustomer);
+		} else {
+			return null;
+		}
 	}
 }
