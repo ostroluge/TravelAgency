@@ -102,8 +102,9 @@ public class FlightFactory {
 		return null;
 	}
 
-	public Flight getFlightByIdCityDeparture(Long id) {
-		Flight flight = null;
+	public List<Flight> getFlightByIdCityDeparture(Long id) {
+		List<Flight> listFlight = new ArrayList<Flight>();
+		Flight flight= null;
 		try {
 			preparedStatement = conn.prepareStatement(
 					"select * from flight where id_line in (select id_line from line where id_departure_city = ?)");
@@ -128,10 +129,11 @@ public class FlightFactory {
 						departureTime, flightDuration, maxPassengerFirstClass,
 						priceFirstClass, maxPassengerSecondClass, priceSecondClass,
 						cancellationTime);
+				listFlight.add(flight);
 			}
 		
-			if (flight != null) {
-				return flight;
+			if (listFlight != null) {
+				return listFlight;
 			}
 		
 		} catch (SQLException e) {
@@ -139,7 +141,7 @@ public class FlightFactory {
 		}
 		return null;
 	}
-	
+
 	public int addFlight(Long idLine, String dayOfWeek, String departureTime,
 			int flightDuration, int maxPassengerFirstClass, float pricePassengerFirstClass,
 			int maxPassengerSecondClass, float priceSecondClass, int cancellationTime) {

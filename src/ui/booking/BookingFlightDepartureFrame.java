@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Booking;
-import ui.flight.FlightTable;
 
 @SuppressWarnings("serial")
 public class BookingFlightDepartureFrame extends JFrame {

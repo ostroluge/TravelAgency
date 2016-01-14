@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import job.booking.BookingManager;
 import model.Booking;
 import model.Flight;
 import ui.listener.booking.BookingFlightSelectionListener;
@@ -81,7 +80,6 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 			
 		if(e.getSource() == validationButton){
 			if(classe != null && idFlight != null && priceFirstClass != null && priceSecondClass != null){
-				booking.setIdFlight(idFlight);
 				int nombrePassagers = booking.getNombrePassagers();
 				if(classe.equals(1)){
 					if(Double.isNaN(booking.getPrice())){
@@ -110,11 +108,13 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 					}				}
 				
 				if(topFrame.getName().equals("DepartureFrame")){
+					booking.setIdFlightDeparture(idFlight);
 					topFrame.dispose();
 					BookingFlightReturnFrame frame = new BookingFlightReturnFrame(booking);
 					frame.setVisible(true);
 				}
 				else if(topFrame.getName().equals("ReturnFrame")){
+					booking.setIdFlightReturn(idFlight);
 					//To be continued...
 				}
 				

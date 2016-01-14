@@ -26,8 +26,8 @@ public class BookingFactory {
 		return INSTANCE;
 	}
 	
-	public Booking create(Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
-		return new Booking(idClient, idFlight, idCategory, idHotel, idCityDeparture, idCityArrival, roomNumber, nombrePassagers, dateDeparture,dateReturn, price);
+	public Booking create(Long idClient, Long idFlightDeparture, Long idFlightReturn, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
+		return new Booking(idClient, idFlightDeparture, idFlightReturn, idCategory, idHotel, idCityDeparture, idCityArrival, roomNumber, nombrePassagers, dateDeparture,dateReturn, price);
 	}
 	
 	public List<Booking> getBookingByClientId(Long idCustomer){
@@ -43,18 +43,19 @@ public class BookingFactory {
 			while(resultPreparedStatement.next()){
 				Long id = resultPreparedStatement.getLong(1);
 				Long idClient = resultPreparedStatement.getLong(2);
-				Long idFlight = resultPreparedStatement.getLong(3);
-				Long idCategory = resultPreparedStatement.getLong(4);
-				Long idHotel = resultPreparedStatement.getLong(5);
-				int roomNumber = resultPreparedStatement.getInt(6);
-				Long idCityDeparture = resultPreparedStatement.getLong(7);
-				Long idCityArrival = resultPreparedStatement.getLong(8);
-				String dateDeparture = resultPreparedStatement.getString(9);
-				String dateReturn = resultPreparedStatement.getString(10);
-				int nombrePassagers = resultPreparedStatement.getInt(11);
-				float price = resultPreparedStatement.getFloat(12);
+				Long idFlightDeparture = resultPreparedStatement.getLong(3);
+				Long idFlightReturn = resultPreparedStatement.getLong(4);
+				Long idCategory = resultPreparedStatement.getLong(5);
+				Long idHotel = resultPreparedStatement.getLong(6);
+				int roomNumber = resultPreparedStatement.getInt(7);
+				Long idCityDeparture = resultPreparedStatement.getLong(8);
+				Long idCityArrival = resultPreparedStatement.getLong(9);
+				String dateDeparture = resultPreparedStatement.getString(10);
+				String dateReturn = resultPreparedStatement.getString(11);
+				int nombrePassagers = resultPreparedStatement.getInt(12);
+				float price = resultPreparedStatement.getFloat(13);
 				
-				bookings.add(new Booking(id,idClient,idFlight,idCategory, idHotel, idCityDeparture, idCityArrival, roomNumber, nombrePassagers, dateDeparture, dateReturn,price));
+				bookings.add(new Booking(id,idClient,idFlightDeparture,idFlightReturn,idCategory, idHotel, idCityDeparture, idCityArrival, roomNumber, nombrePassagers, dateDeparture, dateReturn,price));
 			}
 			
 			if(!bookings.isEmpty()){
@@ -82,18 +83,19 @@ public class BookingFactory {
 			while (resultSet.next()) {
 				Long idBooking = resultSet.getLong(1);
 				Long idClient = resultSet.getLong(2);
-				Long idFlight = resultSet.getLong(3);
-				Long idCategory = resultSet.getLong(4);
-				Long idHotel = resultSet.getLong(5);
-				int roomNumber = resultSet.getInt(6);
-				Long idCityDeparture = resultSet.getLong(7);
-				Long idCityArrival = resultSet.getLong(8);
-				String dateDeparture = resultSet.getString(9);
-				String dateReturn = resultSet.getString(10);
-				int nombrePassagers = resultSet.getInt(11);
-				float price = resultSet.getFloat(12);
+				Long idFlightDeparture = resultSet.getLong(3);
+				Long idFlightReturn = resultSet.getLong(4);
+				Long idCategory = resultSet.getLong(5);
+				Long idHotel = resultSet.getLong(6);
+				int roomNumber = resultSet.getInt(7);
+				Long idCityDeparture = resultSet.getLong(8);
+				Long idCityArrival = resultSet.getLong(9);
+				String dateDeparture = resultSet.getString(10);
+				String dateReturn = resultSet.getString(11);
+				int nombrePassagers = resultSet.getInt(12);
+				float price = resultSet.getFloat(13);
 				
-				booking = new Booking(idBooking,idClient,idFlight,idCategory, idHotel, idCityDeparture,
+				booking = new Booking(idBooking,idClient,idFlightDeparture,idFlightReturn,idCategory, idHotel, idCityDeparture,
 						idCityArrival, roomNumber, nombrePassagers, dateDeparture, dateReturn,price);
 			}
 			

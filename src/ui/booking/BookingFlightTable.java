@@ -56,17 +56,19 @@ public class BookingFlightTable extends JPanel {
 	public void getFlightDetails(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if(idCityDeparture != null){
-			Flight flight = FlightFactory.getInstance().getFlightByIdCityDeparture(idCityDeparture);
-			Object[] row = {
-					flight.getId(),
-					flight.getCancellationTime(),
-					flight.getDayOfWeek(),
-					flight.getDepartureTime(),
-					flight.getFlightDuration(),
-					flight.getPriceFirstClass(),
-					flight.getPriceSecondClass()
-			};
-			tableModel.addRow(row);
+			List<Flight> listFlight = FlightFactory.getInstance().getFlightByIdCityDeparture(idCityDeparture);
+			for(Flight flight : listFlight){
+				Object[] row = {
+						flight.getId(),
+						flight.getCancellationTime(),
+						flight.getDayOfWeek(),
+						flight.getDepartureTime(),
+						flight.getFlightDuration(),
+						flight.getPriceFirstClass(),
+						flight.getPriceSecondClass()
+				};
+				tableModel.addRow(row);
+			}
 		}
 		else {
 			tableModel.setRowCount(0);

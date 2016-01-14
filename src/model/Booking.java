@@ -6,7 +6,7 @@ package model;
 public class Booking {
 
 	/** The id city arrival. */
-	private Long id, idClient, idFlight, idCategory, idHotel, idCityDeparture, idCityArrival;
+	private Long id, idClient, idFlightDeparture,idFlightReturn, idCategory, idHotel, idCityDeparture, idCityArrival;
 	
 	/** The nombre passagers. */
 	private int roomNumber, nombrePassagers;
@@ -18,9 +18,10 @@ public class Booking {
 	private float price;
 	
 	
-	public Booking(Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
+	public Booking(Long idClient, Long idFlightDeparture, Long idFlightReturn, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
 		this.idClient = idClient;
-		this.idFlight = idFlight;
+		this.idFlightDeparture = idFlightDeparture;
+		this.idFlightReturn = idFlightReturn;
 		this.idCategory = idCategory;
 		this.idHotel = idHotel;
 		this.idCityDeparture = idCityDeparture;
@@ -32,10 +33,11 @@ public class Booking {
 		this.price = price;
 	}
 	
-	public Booking(Long id,Long idClient, Long idFlight, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
+	public Booking(Long id,Long idClient, Long idFlightDeparture, Long idFlightReturn, Long idCategory, Long idHotel, Long idCityDeparture, Long idCityArrival, int roomNumber, int nombrePassagers, String dateDeparture, String dateReturn, float price){
 		this.id = id;
 		this.idClient = idClient;
-		this.idFlight = idFlight;
+		this.idFlightDeparture = idFlightDeparture;
+		this.idFlightReturn = idFlightReturn;
 		this.idCategory = idCategory;
 		this.idHotel = idHotel;
 		this.idCityDeparture = idCityDeparture;
@@ -98,8 +100,8 @@ public class Booking {
 	 *
 	 * @return the id flight
 	 */
-	public Long getIdFlight() {
-		return idFlight;
+	public Long getIdFlightDeparture() {
+		return idFlightDeparture;
 	}
 	
 	/**
@@ -107,8 +109,8 @@ public class Booking {
 	 *
 	 * @param idFlight the new id flight
 	 */
-	public void setIdFlight(Long idFlight) {
-		this.idFlight = idFlight;
+	public void setIdFlightDeparture(Long idFlight) {
+		this.idFlightDeparture = idFlight;
 	}
 	
 	/**
@@ -271,5 +273,13 @@ public class Booking {
 	 */
 	public void setNombrePassagers(int nombrePassagers) {
 		this.nombrePassagers = nombrePassagers;
+	}
+
+	public Long getIdFlightReturn() {
+		return idFlightReturn;
+	}
+
+	public void setIdFlightReturn(Long idFlightReturn) {
+		this.idFlightReturn = idFlightReturn;
 	}
 }
