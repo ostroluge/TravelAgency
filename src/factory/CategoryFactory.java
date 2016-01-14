@@ -211,7 +211,7 @@ public class CategoryFactory {
 	}
 
 	/**
-	 * Permet de vérifier si les category ont changés (via les listeners)
+	 * Permet de vérifier si les category ont changées (via les listeners)
 	 */
 	private static void fireModelChangeEvent() {
 		for (CategoryChangeListener listener : listeners) {
