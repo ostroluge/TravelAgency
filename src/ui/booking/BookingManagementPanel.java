@@ -47,6 +47,7 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 	JButton cancelButton;
 	JButton clearButton;
 	JButton returnButton;
+	JButton deleteButton;
 	
 	protected String nameCustomer;
 	
@@ -103,11 +104,12 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		cancelButton = new JButton("Annuler");
 		clearButton = new JButton("Clear");
 		returnButton = new JButton("Retour");
-		
+		deleteButton = new JButton("Supprimer");
 		bookButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		returnButton.addActionListener(this);
+		deleteButton.addActionListener(this);
 	}
 	
 	private void setPanel() {
@@ -126,6 +128,7 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		add(cancelButton);
 		add(clearButton);
 		add(returnButton);
+		add(deleteButton);
 	}
 	
 	@Override
@@ -142,7 +145,6 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 						Booking booking = new Booking(customer.getId(), dCity.getId(), aCity.getId(),
 								Integer.parseInt(nbPassenger.getText().trim()), departureDate.getText().trim(),
 								returnDate.getText().trim());
-//						BookingManager.INSTANCE.addBooking(booking);
 						topFrame.dispose();
 						BookingFlightDepartureFrame bookingFlightFrame = new BookingFlightDepartureFrame(booking);
 						bookingFlightFrame.setVisible(true);
@@ -173,7 +175,13 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 			currentFrame.dispose();
 			AuthenticationFrame frame = new AuthenticationFrame();
 			frame.setVisible(true);
-		} else if (e.getSource() == departureCity) {
+		} else if(e.getSource() == deleteButton){
+			if(bookingSelected != null){
+				BookingManager.INSTANCE.cancelBooking(bookingSelected.getId());
+				JOptionPane.showMessageDialog(topFrame, "La réservation a été annulée");
+			}
+		}
+		else if (e.getSource() == departureCity) {
 			String citySelected = (String) departureCity.getSelectedItem();
 			City city = CityFactory.getInstance().getCityByName(citySelected);
 			if (city != null) {

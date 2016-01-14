@@ -86,7 +86,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idHotelSelected = tableHotel.getValueAt(selectedRow, 0).toString();
 					Hotel hotel = HotelFactory.getInstance()
-							.getHotelById(Integer.parseInt(idHotelSelected));
+							.getHotelById(Long.parseLong(idHotelSelected));
 					if (hotel != null) {
 						fireHotelSelection(hotel);
 					}

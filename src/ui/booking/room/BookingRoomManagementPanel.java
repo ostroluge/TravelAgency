@@ -3,26 +3,25 @@ package ui.booking.room;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import job.category.CategoryManager;
-import job.room.RoomManager;
-
-import factory.CategoryFactory;
-import factory.RoomFactory;
-
+import model.Booking;
+import model.Room;
+import ui.booking.summary.BookingSummaryFrame;
 import ui.listener.room.RoomSelectionListener;
 import ui.menu.MainMenuFrame;
 import ui.room.RoomTable;
-
-import model.Booking;
-import model.Room;
+import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
 public class BookingRoomManagementPanel extends JPanel implements ActionListener, RoomSelectionListener{
@@ -32,7 +31,6 @@ public class BookingRoomManagementPanel extends JPanel implements ActionListener
 	protected JButton cancelButton;
 	
 	private Room roomSelected;
-	private JTable tableSelected;
 
 	public BookingRoomManagementPanel(Booking booking){
 		this.booking = booking;
@@ -68,12 +66,14 @@ public class BookingRoomManagementPanel extends JPanel implements ActionListener
 				int passagers = booking.getNombrePassagers();
 				float priceBooking = booking.getPrice();
 				float priceRoom = CategoryFactory.getInstance().getCategoryById(roomSelected.getIdCategory()).getPrice();
-				
-				priceBooking += (priceRoom * passagers);
+				Long days = this.getNumberDays(booking.getDateDeparture(), booking.getDateReturn());
+				priceBooking += (priceRoom * passagers * days);
 				
 				booking.setPrice(priceBooking);
-				
-				 JOptionPane.showMessageDialog(topFrame, "PRIX TOTAL : "+priceBooking+"€");
+
+				topFrame.dispose();
+				BookingSummaryFrame frame = new BookingSummaryFrame(booking);
+				frame.setVisible(true);
 			}
 		}
 		else if(e.getSource() == cancelButton){
@@ -88,8 +88,21 @@ public class BookingRoomManagementPanel extends JPanel implements ActionListener
 		if(room != null){
 			roomSelected = room;
 		}
-		
-		tableSelected = table;
 	}
-	
+
+	public long getNumberDays(String departureDate, String returnDate) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+        try {
+            Date dateDepart = format.parse(departureDate);
+            Date dateReturn = format.parse(returnDate);
+
+            long diffMillies = dateReturn.getTime() - dateDepart.getTime();    
+            
+            return TimeUnit.DAYS.convert(diffMillies, TimeUnit.MILLISECONDS);
+            
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return 0l;
+    }
 }

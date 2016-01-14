@@ -113,16 +113,23 @@ public class BookingFactory {
 		try {
 			preparedStatement = conn.prepareStatement(
 					"insert into booking (id_client, id_city_departure,"
-					+ "id_city_arrival, date_departure, date_return, nb_passager)"
-					+ "values (?, ?, ?, ?, ?, ?)");
+					+ "id_city_arrival, id_flight_departure, id_flight_return,"
+					+ "date_departure, date_return, nb_passager, price, room_number,id_category, id_hotel)"
+					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			preparedStatement.clearParameters();
 			
 			preparedStatement.setLong(1, booking.getIdClient());
 			preparedStatement.setLong(2, booking.getIdCityDeparture());
 			preparedStatement.setLong(3, booking.getIdCityArrival());
-			preparedStatement.setString(4, booking.getDateDeparture());
-			preparedStatement.setString(5, booking.getDateReturn());
-			preparedStatement.setInt(6, booking.getNombrePassagers());
+			preparedStatement.setLong(4, booking.getIdFlightDeparture());
+			preparedStatement.setLong(5, booking.getIdFlightReturn());
+			preparedStatement.setString(6, booking.getDateDeparture());
+			preparedStatement.setString(7, booking.getDateReturn());
+			preparedStatement.setInt(8, booking.getNombrePassagers());
+			preparedStatement.setFloat(9, booking.getPrice());
+			preparedStatement.setInt(10, booking.getRoomNumber());
+			preparedStatement.setLong(11, booking.getIdCategory());
+			preparedStatement.setLong(12, booking.getIdHotel());
 			
 			int resultCode = preparedStatement.executeUpdate();
 			

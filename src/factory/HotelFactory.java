@@ -78,14 +78,14 @@ public class HotelFactory {
 	 * @param id
 	 * @return Hotel
 	 */
-	public Hotel getHotelById(int id) {
+	public Hotel getHotelById(Long id) {
 		Hotel hotel = null;
 		try {
 			preparedStatement = conn.prepareStatement(
 					"select * from hotel where id = ?");
 			preparedStatement.clearParameters();
 			
-			preparedStatement.setInt(1, id);
+			preparedStatement.setLong(1, id);
 			
 			ResultSet resultPreparedStatement = preparedStatement.executeQuery();
 			
