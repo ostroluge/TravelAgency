@@ -3,6 +3,7 @@ package ui.booking.flight;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 	protected Booking booking; 
 	Boolean departureFlight;
 	Boolean returnFlight;
-	protected Integer classe;
+	protected String classe;
 	protected Long idFlight;
 	protected Float priceFirstClass;
 	protected Float priceSecondClass;
@@ -51,9 +52,10 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 	}
 	
 	private void setComboBox(){
-		List<Integer> choixClasse = new ArrayList<>();
-		choixClasse.add(1);
-		choixClasse.add(2);
+		List<String> choixClasse = new ArrayList<>();
+		choixClasse.add("");
+		choixClasse.add("1");
+		choixClasse.add("2");
 		
 		this.choixClasse = new JComboBox<>(choixClasse.toArray());
 		this.choixClasse.addActionListener(this);
@@ -77,35 +79,39 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-			
+		DecimalFormat df = new DecimalFormat("0.00");
 		if(e.getSource() == validationButton){
-			if(classe != null && idFlight != null && priceFirstClass != null && priceSecondClass != null){
+			if(classe != null && !classe.equals("") && idFlight != null && priceFirstClass != null && priceSecondClass != null){
 				int nombrePassagers = booking.getNombrePassagers();
-				if(classe.equals(1)){
+				if(classe.equals("1")){
 					if(Double.isNaN(booking.getPrice())){
 						booking.setPrice(priceFirstClass * nombrePassagers);
-						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + booking.getPrice()+"€");
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + df.format(booking.getPrice())+"€");
 					}
 					else{
 						float price = booking.getPrice();
 						float additionnalPrice = (priceFirstClass * nombrePassagers);
 						price += additionnalPrice;
 						booking.setPrice(price);
-						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + additionnalPrice +"€\nLe prix total est de : " + booking.getPrice()+"€");
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + df.format(additionnalPrice) +"€\nLe prix total est de : " + df.format(booking.getPrice())+"€");
 					}
 				}
-				else if(classe.equals(2)){
+				else if(classe.equals("2")){
 					if(Double.isNaN(booking.getPrice())){
 						booking.setPrice(priceSecondClass * nombrePassagers);
-						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + booking.getPrice()+"€");
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + df.format(booking.getPrice())+"€");
 					}
 					else{
 						float price = booking.getPrice();
 						float additionnalPrice = (priceSecondClass * nombrePassagers);
 						price += additionnalPrice;
 						booking.setPrice(price);
-						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + additionnalPrice +"€\nLe prix total est de : " + booking.getPrice()+"€");
-					}				}
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + df.format(additionnalPrice) +"€\nLe prix total est de : " + df.format(booking.getPrice())+"€");
+					}				
+				}
+				else if (classe.equals("")) {
+					JOptionPane.showMessageDialog(topFrame, "Veuillez choisir une classe");
+				}
 				
 				if(topFrame.getName().equals("DepartureFrame")){
 					booking.setIdFlightDeparture(idFlight);
@@ -118,6 +124,8 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 					//To be continued...
 				}
 				
+			} else {
+				JOptionPane.showMessageDialog(topFrame, "Veuillez renseigner tous les champs");
 			}
 		}
 		else if(e.getSource() == cancelButton){
@@ -126,7 +134,7 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 			frame.setVisible(true);
 		}
 		else if(e.getSource() == choixClasse){
-			classe = (Integer) choixClasse.getSelectedItem();
+			classe = (String) choixClasse.getSelectedItem();
 		}
 	}
 
