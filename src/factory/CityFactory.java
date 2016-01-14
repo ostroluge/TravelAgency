@@ -185,11 +185,18 @@ public class CityFactory {
 		
 		return 0;
 	}
-
+	
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(CityChangeListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Permet de vérifier si les city ont changés (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (CityChangeListener listener : listeners) {
 			listener.cityHasChanged();

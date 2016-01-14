@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 
 import model.Booking;
 import model.Flight;
+import ui.booking.room.BookingRoomFrame;
 import ui.listener.booking.BookingFlightSelectionListener;
 import ui.menu.MainMenuFrame;
 
@@ -115,7 +116,9 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 				}
 				else if(topFrame.getName().equals("ReturnFrame")){
 					booking.setIdFlightReturn(idFlight);
-					//To be continued...
+					topFrame.dispose();
+					BookingRoomFrame frame = new BookingRoomFrame(booking);
+					frame.setVisible(true);
 				}
 				
 			}

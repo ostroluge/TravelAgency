@@ -23,6 +23,7 @@ public class HotelTable extends JPanel {
 
 private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	
+	private Long idCity = null; 
 	public static HotelTable INSTANCE = new HotelTable();
 	
 	protected String[] columnNames = {
@@ -41,23 +42,36 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 		setPanel();
 	}
 	
-	private void getHotelDetails() {
-		hotels = HotelFactory.getInstance().getAllHotels();
-		if (hotels != null) {
-			for (Hotel hotel : hotels) {
-				City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
-				Object[] row = {
-					hotel.getId(),
-					hotel.getName(),
-					city.getNameCity()
-				};
-				tableModel.addRow(row);
-			}
-		} else {
-			tableModel.setRowCount(0);
-		}
+	public HotelTable(Long idCity) {
+		this.idCity = idCity;
+		getHotelDetails();
+		tableHotel = new JTable(tableModel);
+		scrollPane = new JScrollPane(tableHotel);
+		setTableSelectionMode();
+		setPanel();
 	}
-
+	
+	private void getHotelDetails() {
+		if(this.idCity != null){
+			hotels = HotelFactory.getInstance().getHotelsFromCity(idCity);
+		} else{
+			hotels = HotelFactory.getInstance().getAllHotels();
+		}
+			if (hotels != null) {
+				for (Hotel hotel : hotels) {
+					City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
+					Object[] row = {
+							hotel.getId(),
+							hotel.getName(),
+							city.getNameCity()
+					};
+					tableModel.addRow(row);
+				}
+			} else {
+				tableModel.setRowCount(0);
+			}
+	}
+	
 	private void setTableSelectionMode() {
 		tableHotel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = tableHotel.getSelectionModel();
