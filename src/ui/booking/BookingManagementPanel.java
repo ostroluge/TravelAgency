@@ -22,6 +22,7 @@ import job.booking.BookingManager;
 import model.Booking;
 import model.City;
 import model.Customer;
+import ui.booking.flight.BookingFlightDepartureFrame;
 import ui.listener.booking.BookingSelectionListener;
 import factory.CityFactory;
 import factory.CustomerFactory;

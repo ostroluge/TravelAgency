@@ -1,4 +1,4 @@
-package ui.booking;
+package ui.booking.flight;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -14,12 +14,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Booking;
 import model.Flight;
-import ui.listener.booking.BookingFlightSelectionListener;
-import ui.listener.booking.BookingSelectionListener;
 import ui.MyJTableModel;
-import factory.BookingFactory;
+import ui.listener.booking.BookingFlightSelectionListener;
 import factory.FlightFactory;
 
 @SuppressWarnings("serial")

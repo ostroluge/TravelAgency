@@ -1,4 +1,4 @@
-package ui.booking;
+package ui.booking.flight;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
