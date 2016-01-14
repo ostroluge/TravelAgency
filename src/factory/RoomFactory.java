@@ -11,6 +11,9 @@ import model.Room;
 import ui.listener.room.RoomChangeListener;
 import db.DbManager;
 
+/**
+ * La classe fabrique des chambres 
+ */
 public class RoomFactory {
 
 	private static RoomFactory INSTANCE;
@@ -19,6 +22,10 @@ public class RoomFactory {
 
 	private static List<RoomChangeListener> listeners = new ArrayList<>();
 	
+	/**
+	 * Récupère l'instance de la RoomFactory
+	 * @return RoomFactory
+	 */
 	public static RoomFactory getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new RoomFactory();
@@ -26,6 +33,12 @@ public class RoomFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Récupère une chambre à partir de ses ids
+	 * @param idCategory
+	 * @param roomNumber
+	 * @return Room
+	 */
 	public Room getRoomByIds(Long idCategory, int roomNumber) {
 		Room room = null;
 		try {
@@ -56,6 +69,11 @@ public class RoomFactory {
 		return null;
 	}
 	
+	/**
+	 * Récupère toutes les chambres d'une category à partir de son id
+	 * @param idCategory
+	 * @return List<Room>
+	 */
 	public List<Room> getRoomsByCategory(Long idCategory) {
 		List<Room> rooms = new ArrayList<>();
 		try {
@@ -84,6 +102,14 @@ public class RoomFactory {
 		return null;
 	}
 
+	/**
+	 * Permet d'ajouter une chambre à la base de données
+	 * @param idHotel
+	 * @param idCategory
+	 * @param roomNumber
+	 * @param nameRoom
+	 * @return code retour
+	 */
 	public int addRoom(Long idHotel, Long idCategory, int roomNumber, String nameRoom) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -107,6 +133,13 @@ public class RoomFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet de supprimer une chambre dans la base de données
+	 * @param idHotel
+	 * @param idCategory
+	 * @param roomNumber
+	 * @return code retour
+	 */
 	public int removeRoom(Long idHotel, Long idCategory, int roomNumber) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -130,10 +163,17 @@ public class RoomFactory {
 		return 0;
 	}
 	
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(RoomChangeListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Permet de vérifier si les chambres ont changées (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (RoomChangeListener listener : listeners) {
 			listener.roomHasChanged();

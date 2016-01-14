@@ -11,6 +11,9 @@ import model.Hotel;
 import ui.hotel.HotelCityTable;
 import db.DbManager;
 
+/**
+ * La classe fabrique des hotels
+ */
 public class HotelFactory {
 
 	private static HotelFactory INSTANCE;
@@ -19,6 +22,10 @@ public class HotelFactory {
 	
 	private static List<HotelCityTable> listeners = new ArrayList<>();
 	
+	/**
+	 * Récupère l'instance de l'HotelFactory
+	 * @return HotelFactory
+	 */
 	public static HotelFactory getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new HotelFactory();
@@ -26,10 +33,21 @@ public class HotelFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Fonction de création d'un hotel
+	 * @param id
+	 * @param idCity
+	 * @param name
+	 * @return new Hotel
+	 */
 	public Hotel create(Long id, Long idCity, String name){
 		return new Hotel(id, idCity, name);
 	}
 	
+	/**
+	 * Récupère tous les hotel en base de donnees
+	 * @return List<Hotel>
+	 */
 	public List<Hotel> getAllHotels() {
 		List<Hotel> hotels = new ArrayList<>();
 		try {
@@ -55,6 +73,11 @@ public class HotelFactory {
 		return null;
 	}
 	
+	/**
+	 * Récupère un hotel à partir de son id
+	 * @param id
+	 * @return Hotel
+	 */
 	public Hotel getHotelById(int id) {
 		Hotel hotel = null;
 		try {
@@ -83,6 +106,11 @@ public class HotelFactory {
 		return null;
 	}
 	
+	/**
+	 * Récupère les hotels selon leur ville
+	 * @param idCity
+	 * @return List<Hotel>
+	 */
 	public List<Hotel> getHotelsFromCity(Long idCity) {
 		List<Hotel> hotels = new ArrayList<>();
 		try {
@@ -111,6 +139,12 @@ public class HotelFactory {
 		return null;
 	}
 
+	/**
+	 * Permet d'ajouter un hotel à la base de données
+	 * @param idCity
+	 * @param name
+	 * @return code retour
+	 */
 	public int addHotel(Long idCity, String name) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -131,6 +165,11 @@ public class HotelFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet de supprimer un hotel dans la base de données
+	 * @param id
+	 * @return code retour
+	 */
 	public int removeHotel(Long id) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -150,10 +189,17 @@ public class HotelFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(HotelCityTable hotelCityTable) {
 		listeners.add(hotelCityTable);
 	}
 	
+	/**
+	 * Permet de vérifier si les hotels ont changés (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (HotelCityTable listener : listeners) {
 			listener.hotelCityHasChanged();

@@ -11,6 +11,9 @@ import model.Flight;
 import ui.listener.flight.FlightChangeListener;
 import db.DbManager;
 
+/**
+ * La classe fabrique des vols 
+ */
 public class FlightFactory {
 
 	private static FlightFactory INSTANCE;
@@ -19,6 +22,10 @@ public class FlightFactory {
 
 	private static List<FlightChangeListener> listeners = new ArrayList<>();
 	
+	/**
+	 * Récupère l'instance de la FlightFactory
+	 * @return instance of FlightFactory
+	 */
 	public static FlightFactory getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new FlightFactory();
@@ -26,6 +33,11 @@ public class FlightFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Récupère les vols à partir de leur idLine
+	 * @param idLine
+	 * @return List<Flight>
+	 */
 	public List<Flight> getFlightsByLineId(Long idLine) {
 		List<Flight> flights = new ArrayList<>();
 		try {
@@ -64,6 +76,11 @@ public class FlightFactory {
 		return null;
 	}
 
+	/**
+	 * Récupère vol à partir de son id
+	 * @param id
+	 * @return Flight
+	 */
 	public Flight getFlightById(Long id) {
 		Flight flight = null;
 		try {
@@ -102,6 +119,11 @@ public class FlightFactory {
 		return null;
 	}
 
+	/**
+	 * Récupère les vols à partir de leur idCityDeparture
+	 * @param id
+	 * @return List<Flight>
+	 */
 	public List<Flight> getFlightByIdCityDeparture(Long id) {
 		List<Flight> listFlight = new ArrayList<Flight>();
 		Flight flight= null;
@@ -142,6 +164,19 @@ public class FlightFactory {
 		return null;
 	}
 
+	/**
+	 * Permet d'ajouter un vol à la base de données
+	 * @param idLine
+	 * @param dayOfWeek
+	 * @param departureTime
+	 * @param flightDuration
+	 * @param maxPassengerFirstClass
+	 * @param pricePassengerFirstClass
+	 * @param maxPassengerSecondClass
+	 * @param priceSecondClass
+	 * @param cancellationTime
+	 * @return code de retour
+	 */
 	public int addFlight(Long idLine, String dayOfWeek, String departureTime,
 			int flightDuration, int maxPassengerFirstClass, float pricePassengerFirstClass,
 			int maxPassengerSecondClass, float priceSecondClass, int cancellationTime) {
@@ -175,6 +210,12 @@ public class FlightFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet d'éditer un vol en base de données
+	 * @param id
+	 * @param flight
+	 * @return code de retour
+	 */
 	public int editFlight(Long id, Flight flight) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -207,6 +248,11 @@ public class FlightFactory {
 		return 0;
 	}
 	
+	/**
+	 * Permet de supprimer un vol dans la base de données
+	 * @param id
+	 * @return code retour
+	 */
 	public int removeFlight(Long id) {
 		try {
 			preparedStatement = conn.prepareStatement(

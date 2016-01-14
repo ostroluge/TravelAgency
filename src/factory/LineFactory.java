@@ -11,6 +11,9 @@ import model.Line;
 import ui.listener.line.LineChangeListener;
 import db.DbManager;
 
+/**
+ * La classe fabrique des lignes 
+ */
 public class LineFactory {
 
 	private static LineFactory INSTANCE;
@@ -19,6 +22,10 @@ public class LineFactory {
 	
 	private static List<LineChangeListener> listeners = new ArrayList<>();
 	
+	/**
+	 * Récupère l'instance de la LineFactory
+	 * @return LineFactory
+	 */
 	public static LineFactory getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new LineFactory();
@@ -26,6 +33,10 @@ public class LineFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Récupère toutes les lignes
+	 * @return List<Line>
+	 */
 	public List<Line> getAllLines() {
 		List<Line> lines = new ArrayList<>();
 		try {
@@ -52,6 +63,11 @@ public class LineFactory {
 		return null;
 	}
 
+	/**
+	 * Récupère une ligne à partir de son id
+	 * @param id
+	 * @return Line
+	 */
 	public Line getLineById(Long id) {
 		Line line = null;
 		try {
@@ -80,6 +96,12 @@ public class LineFactory {
 		return null;
 	}
 
+	/**
+	 * Permet d'ajouter une ligne à la base de données
+	 * @param idDepartureCity
+	 * @param idArrivalCity
+	 * @return code retour
+	 */
 	public int addLine(Long idDepartureCity, Long idArrivalCity) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -101,6 +123,11 @@ public class LineFactory {
 		return 0;
 	}
 	
+	/**
+	 * Permet de supprimer une ligne dans la base de données
+	 * @param id
+	 * @return code retour
+	 */
 	public int removeLine(Long id) {
 		try {
 			preparedStatement = conn.prepareStatement(
@@ -121,16 +148,29 @@ public class LineFactory {
 		return 0;
 	}
 
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(LineChangeListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Permet de vérifier si les lignes ont changées (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (LineChangeListener listener : listeners) {
 			listener.lineHasChanged();
 		}
 	}
 
+	/**
+	 * Permet de verifier si une liste similiaire existe
+	 * @param idDeparture
+	 * @param idArrival
+	 * @return true si la ligne existe deja
+	 */
 	public boolean isAlreadyExisting(Long idDeparture, Long idArrival) {
 		ResultSet resultSet;
 		int numberRow = 0;
