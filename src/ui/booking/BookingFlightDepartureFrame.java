@@ -16,6 +16,7 @@ public class BookingFlightDepartureFrame extends JFrame {
 	BookingFlightManagementPanel managementPanel;
 	
 	public BookingFlightDepartureFrame(Booking booking) {
+		this.setName("DepartureFrame");
 		this.booking = booking;
 		table = new BookingFlightTable(booking.getIdCityDeparture());
 		managementPanel = new BookingFlightManagementPanel(booking);

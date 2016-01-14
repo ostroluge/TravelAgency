@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -26,7 +27,8 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 	JLabel labelChoixClasse = new JLabel();
 	JComboBox<Object> choixClasse;
 	protected Booking booking; 
-	
+	Boolean departureFlight;
+	Boolean returnFlight;
 	protected Integer classe;
 	protected Long idFlight;
 	protected Float priceFirstClass;
@@ -76,17 +78,46 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			
 		if(e.getSource() == validationButton){
 			if(classe != null && idFlight != null && priceFirstClass != null && priceSecondClass != null){
 				booking.setIdFlight(idFlight);
 				int nombrePassagers = booking.getNombrePassagers();
 				if(classe.equals(1)){
-					booking.setPrice(priceFirstClass * nombrePassagers);
+					if(Double.isNaN(booking.getPrice())){
+						booking.setPrice(priceFirstClass * nombrePassagers);
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + booking.getPrice()+"€");
+					}
+					else{
+						float price = booking.getPrice();
+						float additionnalPrice = (priceFirstClass * nombrePassagers);
+						price += additionnalPrice;
+						booking.setPrice(price);
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + additionnalPrice +"€\nLe prix total est de : " + booking.getPrice()+"€");
+					}
 				}
 				else if(classe.equals(2)){
-					booking.setPrice(priceSecondClass * nombrePassagers);
+					if(Double.isNaN(booking.getPrice())){
+						booking.setPrice(priceSecondClass * nombrePassagers);
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + booking.getPrice()+"€");
+					}
+					else{
+						float price = booking.getPrice();
+						float additionnalPrice = (priceSecondClass * nombrePassagers);
+						price += additionnalPrice;
+						booking.setPrice(price);
+						JOptionPane.showMessageDialog(topFrame, "Le prix des billets est de : " + additionnalPrice +"€\nLe prix total est de : " + booking.getPrice()+"€");
+					}				}
+				
+				if(topFrame.getName().equals("DepartureFrame")){
+					topFrame.dispose();
+					BookingFlightReturnFrame frame = new BookingFlightReturnFrame(booking);
+					frame.setVisible(true);
 				}
-				System.out.println("Price :" + booking.getPrice());
+				else if(topFrame.getName().equals("ReturnFrame")){
+					//To be continued...
+				}
+				
 			}
 		}
 		else if(e.getSource() == cancelButton){
@@ -108,5 +139,4 @@ public class BookingFlightManagementPanel extends JPanel implements ActionListen
 		}
 		tableSelected = table;
 	}
-
 }
