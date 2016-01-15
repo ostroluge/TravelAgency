@@ -11,6 +11,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.flight.FlightManager;
+
 import model.Flight;
 import model.Line;
 import ui.MyJTableModel;
@@ -61,7 +63,7 @@ public class FlightTable extends JPanel implements LineSelectionListener, Flight
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idFlight = tableFlight.getValueAt(selectedRow, 0).toString();
-					Flight flight = FlightFactory.getInstance()
+					Flight flight = FlightManager.INSTANCE
 							.getFlightById(Long.parseLong(idFlight));
 					if (flight != null) {
 						fireFlightSelection(flight, tableFlight);
@@ -78,7 +80,7 @@ public class FlightTable extends JPanel implements LineSelectionListener, Flight
 	}
 	
 	private void getFlightDetail(Line line) {
-		flights = FlightFactory.getInstance().getFlightsByLineId(line.getId());
+		flights = FlightManager.INSTANCE.getFlightsByLineId(line.getId());
 		tableModel.setRowCount(0);
 		if (flights != null) {
 			for (Flight flight : flights) {

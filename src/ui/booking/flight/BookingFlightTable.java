@@ -14,8 +14,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.flight.FlightManager;
+
 import model.Flight;
 import ui.MyJTableModel;
+import ui.flight.FlightManagementPanel;
 import ui.listener.booking.BookingFlightSelectionListener;
 import factory.FlightFactory;
 
@@ -53,7 +56,7 @@ public class BookingFlightTable extends JPanel {
 	public void getFlightDetails(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if(idCityDeparture != null){
-			List<Flight> listFlight = FlightFactory.getInstance().getFlightByIdCityDeparture(idCityDeparture);
+			List<Flight> listFlight = FlightManager.INSTANCE.getFlightByIdCityDeparture(idCityDeparture);
 			for(Flight flight : listFlight){
 				Object[] row = {
 						flight.getId(),
@@ -92,7 +95,7 @@ public class BookingFlightTable extends JPanel {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idFlightSelected = table.getValueAt(selectedRow, 0).toString();
-					Flight flight= FlightFactory.getInstance().getFlightById(Long.parseLong(idFlightSelected));
+					Flight flight= FlightManager.INSTANCE.getFlightById(Long.parseLong(idFlightSelected));
 					if (flight != null) {
 						fireBookingFlightSelection(flight, table);
 					}

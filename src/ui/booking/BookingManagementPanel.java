@@ -20,6 +20,7 @@ import javax.swing.text.PlainDocument;
 
 import job.booking.BookingManager;
 import job.city.CityManager;
+import job.customer.CustomerManager;
 import model.Booking;
 import model.City;
 import model.Customer;
@@ -138,7 +139,7 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 				
 				if (!departureCity.getSelectedItem().equals(arrivalCity.getSelectedItem())) {
 					if (aCity != null && dCity != null) {
-						Customer customer = CustomerFactory.getInstance().getCustomerByName(nameCustomer);
+						Customer customer = CustomerManager.INSTANCE.getCustomerByName(nameCustomer);
 						Booking booking = new Booking(customer.getId(), dCity.getId(), aCity.getId(),
 								Integer.parseInt(nbPassenger.getText().trim()), departureDate.getText().trim(),
 								returnDate.getText().trim());

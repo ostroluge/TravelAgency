@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import job.booking.BookingManager;
 import job.city.CityManager;
+import job.customer.CustomerManager;
 import model.Booking;
 import model.City;
 import model.Customer;
@@ -130,7 +131,7 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	@Nullable
 	public Customer getCustomer(String name) {
 		if (nameCustomer != null) {
-			return CustomerFactory.getInstance().getCustomerByName(nameCustomer);
+			return CustomerManager.INSTANCE.getCustomerByName(nameCustomer);
 		} else {
 			return null;
 		}

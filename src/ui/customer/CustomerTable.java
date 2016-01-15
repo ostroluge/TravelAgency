@@ -11,6 +11,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.customer.CustomerManager;
+
 import model.Customer;
 import ui.MyJTableModel;
 import ui.listener.customer.CustomerChangeListener;
@@ -43,7 +45,7 @@ public class CustomerTable extends JPanel implements CustomerChangeListener {
 	}
 
 	private void getCustomerDetails() {
-		customers = CustomerFactory.getInstance().getAllCustomers();
+		customers = CustomerManager.INSTANCE.getAllCustomers();
 		if (customers != null) {
 			for (Customer customer : customers) {
 				Object[] row = {
@@ -73,7 +75,7 @@ public class CustomerTable extends JPanel implements CustomerChangeListener {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
-					Customer customer = CustomerFactory.getInstance()
+					Customer customer = CustomerManager.INSTANCE
 							.getCustomerById(Integer.parseInt(idCustomerSelected));
 					if (customer != null) {
 						fireCustomerSelection(customer, table);

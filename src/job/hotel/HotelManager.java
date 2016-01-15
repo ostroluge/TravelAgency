@@ -1,5 +1,8 @@
 package job.hotel;
 
+import java.util.List;
+
+import model.Hotel;
 import factory.HotelFactory;
 
 /**
@@ -24,5 +27,31 @@ public class HotelManager {
 	 */
 	public void deleteHotel(Long id){
 		HotelFactory.getInstance().removeHotel(id);
+	}
+	
+	/**
+	 * Récupère tous les hotel en base de donnees
+	 * @return List<Hotel>
+	 */
+	public List<Hotel> getAllHotels() {
+		return HotelFactory.getInstance().getAllHotels();
+	}
+	
+	/**
+	 * Récupère un hotel à partir de son id
+	 * @param id
+	 * @return Hotel
+	 */
+	public Hotel getHotelById(Long id) {
+		return HotelFactory.getInstance().getHotelById(id);
+	}
+		
+	/**
+	 * Récupère les hotels selon leur ville
+	 * @param idCity
+	 * @return List<Hotel>
+	 */
+	public List<Hotel> getHotelsFromCity(Long idCity) {
+		return HotelFactory.getInstance().getHotelsFromCity(idCity);
 	}
 }

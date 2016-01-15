@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import job.city.CityManager;
+import job.hotel.HotelManager;
 
 import factory.CityFactory;
 import model.City;
@@ -55,9 +56,9 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	
 	private void getHotelDetails() {
 		if(this.idCity != null){
-			hotels = HotelFactory.getInstance().getHotelsFromCity(idCity);
+			hotels = HotelManager.INSTANCE.getHotelsFromCity(idCity);
 		} else{
-			hotels = HotelFactory.getInstance().getAllHotels();
+			hotels = HotelManager.INSTANCE.getAllHotels();
 		}
 			if (hotels != null) {
 				for (Hotel hotel : hotels) {
@@ -87,7 +88,7 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idHotelSelected = tableHotel.getValueAt(selectedRow, 0).toString();
-					Hotel hotel = HotelFactory.getInstance()
+					Hotel hotel = HotelManager.INSTANCE
 							.getHotelById(Long.parseLong(idHotelSelected));
 					if (hotel != null) {
 						fireHotelSelection(hotel);

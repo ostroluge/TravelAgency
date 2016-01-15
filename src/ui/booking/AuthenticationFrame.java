@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
+import job.customer.CustomerManager;
+
 import ui.menu.MainMenuFrame;
 import factory.CustomerFactory;
 
@@ -63,7 +65,7 @@ public class AuthenticationFrame extends JFrame implements ActionListener {
 		if (e.getSource() == logButton) {
 			if (!name.getText().trim().equals("")) {
 				String nameCustomer = name.getText().trim().toUpperCase();
-				if (CustomerFactory.getInstance().getCustomerByName(nameCustomer) != null) {
+				if (CustomerManager.INSTANCE.getCustomerByName(nameCustomer) != null) {
 					this.dispose();
 					BookingFrame bookingFrame = new BookingFrame(nameCustomer);
 					bookingFrame.setVisible(true);
