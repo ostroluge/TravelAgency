@@ -1,7 +1,9 @@
 package job.booking;
 
-import factory.BookingFactory;
+import java.util.List;
+
 import model.Booking;
+import factory.BookingFactory;
 
 /**
  * Classe permettant de gerer les reservations 
@@ -24,5 +26,23 @@ public class BookingManager {
 	 */
 	public void cancelBooking(Long bookingId) {
 		BookingFactory.getInstance().cancelBooking(bookingId);
+	}
+	
+	/**
+	 * Récupère la liste de booking via l'id client
+	 * @param idCustomer
+	 * @return List<Booking>
+	 */
+	public List<Booking> getBookingByClientId(Long idCustomer){
+		return BookingFactory.getInstance().getBookingByClientId(idCustomer);
+	}
+	
+	/**
+	 * Récupère la réservation par son id
+	 * @param id
+	 * @return Booking
+	 */
+	public Booking getBookingById(Long id){
+		return BookingFactory.getInstance().getBookingById(id);
 	}
 }

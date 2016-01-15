@@ -1,5 +1,7 @@
 package job.category;
 
+import java.util.List;
+
 import model.Category;
 import factory.CategoryFactory;
 
@@ -35,5 +37,18 @@ public class CategoryManager {
 	 */
 	public void editCategory(Category category, Long id){
 		CategoryFactory.getInstance().editCategory(id, category);
+	}
+	
+	/**
+	 * Récupère une catégorie par son id
+	 * @param id
+	 * @return
+	 */
+	public Category getCategoryById(Long id){
+		return CategoryFactory.getInstance().getCategoryById(id);
+	}
+	
+	public List<Category> getCategoriesByHotelId(Long id){
+		return CategoryFactory.getInstance().getCategoriesByHotelId(id);
 	}
 }

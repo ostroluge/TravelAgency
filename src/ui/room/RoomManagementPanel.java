@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
+import job.category.CategoryManager;
 import job.room.RoomManager;
 import model.Category;
 import model.Room;
@@ -22,7 +23,6 @@ import ui.category.CategoryTable;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.room.RoomSelectionListener;
 import ui.menu.MainMenuFrame;
-import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
 public class RoomManagementPanel extends JPanel implements ActionListener,
@@ -150,7 +150,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	@Override
 	public void onCategorySelection(Category category, JTable table) {
 		if (category != null) {
-			categorySelected = CategoryFactory.getInstance().getCategoryById(category.getId());
+			categorySelected = CategoryManager.INSTANCE.getCategoryById(category.getId());
 		}
 	}
 }

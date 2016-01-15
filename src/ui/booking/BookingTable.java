@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.booking.BookingManager;
 import model.Booking;
 import model.City;
 import model.Customer;
@@ -59,7 +60,7 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 	private void getBookingDetails() {
 		Customer customer = getCustomer(nameCustomer);
 		if (customer != null) {
-			bookings = BookingFactory.getInstance().getBookingByClientId(customer.getId());
+			bookings = BookingManager.INSTANCE.getBookingByClientId(customer.getId());
 			if (bookings != null) {
 				for (Booking booking : bookings) {
 					City cityDeparture = CityFactory.getInstance().getCityById(booking.getIdCityDeparture());
@@ -93,7 +94,7 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idBookingSelected = table.getValueAt(selectedRow, 0).toString();
-					Booking booking = BookingFactory.getInstance()
+					Booking booking = BookingManager.INSTANCE
 							.getBookingById(Long.parseLong(idBookingSelected));
 					if (booking != null) {
 						fireBookingSelection(booking, table);
