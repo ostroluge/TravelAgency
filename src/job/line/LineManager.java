@@ -36,4 +36,8 @@ public class LineManager {
 	public Line getLineById(Long id) {
 		return LineFactory.getInstance().getLineById(id);
 	}
+	
+	public boolean lineAlreadyExists(Long idDeparture, Long idArrival) {
+		return LineFactory.getInstance().isAlreadyExisting(idDeparture, idArrival);
+	}
 }
