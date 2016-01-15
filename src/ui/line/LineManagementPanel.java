@@ -104,7 +104,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		if (e.getSource() == addButton) {
 			if (!departureCity.getSelectedItem().equals(arrivalCity.getSelectedItem()) &&
 					dCity != null && aCity != null) {
-				if(!LineFactory.getInstance().isAlreadyExisting(dCity.getId(), aCity.getId())){
+				if(!LineManager.INSTANCE.lineAlreadyExists(dCity.getId(), aCity.getId())){
 					LineManager.INSTANCE.addLine(dCity.getId(), aCity.getId());					
 				}
 				else{
