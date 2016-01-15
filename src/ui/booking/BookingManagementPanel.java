@@ -44,7 +44,6 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 	JComboBox<Object> arrivalCity;
 	
 	JButton bookButton;
-	JButton cancelButton;
 	JButton clearButton;
 	JButton returnButton;
 	JButton deleteButton;
@@ -101,12 +100,10 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 	
 	private void setButtons() {
 		bookButton = new JButton("Réserver");
-		cancelButton = new JButton("Annuler");
 		clearButton = new JButton("Clear");
 		returnButton = new JButton("Retour");
 		deleteButton = new JButton("Supprimer");
 		bookButton.addActionListener(this);
-		cancelButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		returnButton.addActionListener(this);
 		deleteButton.addActionListener(this);
@@ -125,10 +122,9 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		add(labelNbPassenger);
 		add(nbPassenger);
 		add(bookButton);
-		add(cancelButton);
 		add(clearButton);
-		add(returnButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 	
 	@Override
@@ -152,13 +148,6 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 				} else {
 					JOptionPane.showMessageDialog(topFrame, "Veuillez choisir 2 villes différentes");
 				}
-			}
-		} else if (e.getSource() == cancelButton) {
-			if (bookingSelected != null) {
-				BookingManager.INSTANCE.cancelBooking(bookingSelected.getId());
-				clearSelection();
-			} else {
-				JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une réservation");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (bookingSelected != null) {
