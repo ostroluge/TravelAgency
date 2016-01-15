@@ -1,5 +1,7 @@
 package job.city;
 
+import java.util.List;
+
 import model.City;
 import factory.CityFactory;
 
@@ -24,5 +26,31 @@ public class CityManager {
 	 */
 	public void deleteCity(Long id){
 		CityFactory.getInstance().removeCity(id);
+	}
+	
+	/**
+	 * Récupère toutes les villes de la base
+	 * @return List<City>
+	 */
+	public List<City> getAllCity(){
+		return CityFactory.getInstance().getAllCity();
+	}
+	
+	/**
+	 * Permet de récupérer une City par son id
+	 * @param id
+	 * @return City
+	 */
+	public City getCityById(Long id){
+		return CityFactory.getInstance().getCityById(id);
+	}
+	
+	/**
+	 * Permet de récupérer une City grâce à son nom
+	 * @param citySelected
+	 * @return City
+	 */
+	public City getCityByName(String citySelected){
+		return CityFactory.getInstance().getCityByName(citySelected);
 	}
 }

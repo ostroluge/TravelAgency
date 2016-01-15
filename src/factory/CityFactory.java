@@ -43,6 +43,10 @@ public class CityFactory {
 		return new City(id, nameCity);
 	}
 	
+	/**
+	 * Récupère toutes les villes de la base
+	 * @return List<City>
+	 */
 	public List<City> getAllCity(){
 		List<City> cities = new ArrayList<>();
 	

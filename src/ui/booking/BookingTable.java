@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import job.booking.BookingManager;
+import job.city.CityManager;
 import model.Booking;
 import model.City;
 import model.Customer;
@@ -63,8 +64,8 @@ public class BookingTable extends JPanel implements BookingChangeListener {
 			bookings = BookingManager.INSTANCE.getBookingByClientId(customer.getId());
 			if (bookings != null) {
 				for (Booking booking : bookings) {
-					City cityDeparture = CityFactory.getInstance().getCityById(booking.getIdCityDeparture());
-					City cityArrival = CityFactory.getInstance().getCityById(booking.getIdCityArrival());
+					City cityDeparture = CityManager.INSTANCE.getCityById(booking.getIdCityDeparture());
+					City cityArrival = CityManager.INSTANCE.getCityById(booking.getIdCityArrival());
 					Object[] row = {
 							booking.getId(),
 							booking.getDateDeparture(),
