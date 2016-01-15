@@ -1,5 +1,8 @@
 package job.room;
 
+import java.util.List;
+
+import model.Room;
 import factory.RoomFactory;
 
 /**
@@ -28,5 +31,15 @@ public class RoomManager {
 	 */
 	public void deleteRoom(Long idHotel, Long idCategory, int roomNumber) {
 		RoomFactory.getInstance().removeRoom(idHotel, idCategory, roomNumber);
+	}
+
+	public Room getRoomById(Long idCategory, int roomNumer) {
+		return RoomFactory.getInstance()
+		.getRoomByIds(idCategory, roomNumer);
+	}
+	
+	public List<Room> getRoomsByCategory(Long idCategory) {
+		return RoomFactory.getInstance()
+				.getRoomsByCategory(idCategory);
 	}
 }

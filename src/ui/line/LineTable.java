@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.line.LineManager;
 import model.City;
 import model.Line;
 import ui.MyJTableModel;
@@ -45,7 +46,7 @@ public class LineTable extends JPanel implements LineChangeListener {
 	}
 	
 	private void getLineDetails() {
-		lines = LineFactory.getInstance().getAllLines();
+		lines = LineManager.INSTANCE.getAllLines();
 		if (lines != null) {
 			for (Line line : lines) {
 				City departureCity = CityFactory.getInstance()
@@ -77,7 +78,7 @@ public class LineTable extends JPanel implements LineChangeListener {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idLineSelected = table.getValueAt(selectedRow, 0).toString();
-					Line line = LineFactory.getInstance()
+					Line line = LineManager.INSTANCE
 							.getLineById(Long.parseLong(idLineSelected));
 					if (line != null) {
 						fireLineSelection(line, table);

@@ -1,5 +1,8 @@
 package job.line;
 
+import java.util.List;
+
+import model.Line;
 import factory.LineFactory;
 
 /**
@@ -24,5 +27,13 @@ public class LineManager {
 	 */
 	public void deleteLine(Long idLine){
 		LineFactory.getInstance().removeLine(idLine);
+	}
+	
+	public List<Line> getAllLines() {
+		return LineFactory.getInstance().getAllLines();
+	}
+	
+	public Line getLineById(Long id) {
+		return LineFactory.getInstance().getLineById(id);
 	}
 }

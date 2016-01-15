@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.room.RoomManager;
 import factory.RoomFactory;
 import model.Category;
 import model.Hotel;
@@ -65,8 +66,8 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 					String roomNumberSelected = tableRoom.getValueAt(selectedRow, 0).toString();
 					
 					if (categorySelected != null) {
-						Room room = RoomFactory.getInstance()
-								.getRoomByIds(categorySelected.getId(), Integer.parseInt(roomNumberSelected));
+						Room room = RoomManager.INSTANCE
+								.getRoomById(categorySelected.getId(), Integer.parseInt(roomNumberSelected));
 						if (room != null) {
 							fireRoomSelection(room, tableRoom);
 						}
@@ -83,7 +84,7 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 	}
 	
 	private void getRoomDetail(Category category) {
-		rooms = RoomFactory.getInstance().getRoomsByCategory(category.getId());
+		rooms = RoomManager.INSTANCE.getRoomsByCategory(category.getId());
 		
 		if (rooms != null) {
 			for (Room room : rooms) {
