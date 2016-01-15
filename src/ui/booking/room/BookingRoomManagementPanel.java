@@ -15,13 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+import job.category.CategoryManager;
 import model.Booking;
 import model.Room;
 import ui.booking.summary.BookingSummaryFrame;
 import ui.listener.room.RoomSelectionListener;
 import ui.menu.MainMenuFrame;
 import ui.room.RoomTable;
-import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
 public class BookingRoomManagementPanel extends JPanel implements ActionListener, RoomSelectionListener{
@@ -65,7 +65,7 @@ public class BookingRoomManagementPanel extends JPanel implements ActionListener
 				//Calcul du prix
 				int passagers = booking.getNombrePassagers();
 				float priceBooking = booking.getPrice();
-				float priceRoom = CategoryFactory.getInstance().getCategoryById(roomSelected.getIdCategory()).getPrice();
+				float priceRoom = CategoryManager.INSTANCE.getCategoryById(roomSelected.getIdCategory()).getPrice();
 				Long days = this.getNumberDays(booking.getDateDeparture(), booking.getDateReturn());
 				priceBooking += (priceRoom * passagers * days);
 				

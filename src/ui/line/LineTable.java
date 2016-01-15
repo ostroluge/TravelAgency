@@ -11,13 +11,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.city.CityManager;
 import job.line.LineManager;
 import model.City;
 import model.Line;
 import ui.MyJTableModel;
 import ui.listener.line.LineChangeListener;
 import ui.listener.line.LineSelectionListener;
-import factory.CityFactory;
 import factory.LineFactory;
 
 @SuppressWarnings("serial")
@@ -49,9 +49,9 @@ public class LineTable extends JPanel implements LineChangeListener {
 		lines = LineManager.INSTANCE.getAllLines();
 		if (lines != null) {
 			for (Line line : lines) {
-				City departureCity = CityFactory.getInstance()
+				City departureCity = CityManager.INSTANCE
 						.getCityById(line.getIdDepartureCity());
-				City arrivalCity = CityFactory.getInstance()
+				City arrivalCity = CityManager.INSTANCE
 						.getCityById(line.getIdArrivalCity());
 				Object[] row = {
 						line.getId(),

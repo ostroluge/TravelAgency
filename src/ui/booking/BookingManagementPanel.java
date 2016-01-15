@@ -19,6 +19,7 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 import job.booking.BookingManager;
+import job.city.CityManager;
 import model.Booking;
 import model.City;
 import model.Customer;
@@ -84,7 +85,7 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 	}
 	
 	private void setComboBoxes() {
-		List<City> cities = CityFactory.getInstance().getAllCity();
+		List<City> cities = CityManager.INSTANCE.getAllCity();
 		List<String> nameCities = new ArrayList<>();
 		nameCities.add("");
 		if (cities != null) {
@@ -172,13 +173,13 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		}
 		else if (e.getSource() == departureCity) {
 			String citySelected = (String) departureCity.getSelectedItem();
-			City city = CityFactory.getInstance().getCityByName(citySelected);
+			City city = CityManager.INSTANCE.getCityByName(citySelected);
 			if (city != null) {
 				dCity = city;
 			}
 		} else if (e.getSource() == arrivalCity) {
 			String citySelected = (String) arrivalCity.getSelectedItem();
-			City city = CityFactory.getInstance().getCityByName(citySelected);
+			City city = CityManager.INSTANCE.getCityByName(citySelected);
 			if (city != null) {
 				aCity = city;
 			}
@@ -200,9 +201,9 @@ public class BookingManagementPanel extends JPanel implements ActionListener, Bo
 		if (booking != null) {
 			bookingSelected = booking;
 			
-			City dCity = CityFactory.getInstance()
+			City dCity =  CityManager.INSTANCE
 					.getCityById(booking.getIdCityDeparture());
-			City aCity = CityFactory.getInstance()
+			City aCity =  CityManager.INSTANCE
 					.getCityById(booking.getIdCityArrival());
 			
 			departureDate.setText(booking.getDateDeparture());

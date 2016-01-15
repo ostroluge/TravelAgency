@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import job.city.CityManager;
+
 import model.Booking;
 import ui.MyJTableModel;
 import factory.CityFactory;
@@ -39,8 +41,8 @@ public class BookingSummaryTable extends JPanel {
 		Object[] row = {
 				booking.getDateDeparture(),
 				booking.getDateReturn(),
-				CityFactory.getInstance().getCityById(booking.getIdCityDeparture()).getNameCity(),
-				CityFactory.getInstance().getCityById(booking.getIdCityArrival()).getNameCity(),
+				CityManager.INSTANCE.getCityById(booking.getIdCityDeparture()).getNameCity(),
+				CityManager.INSTANCE.getCityById(booking.getIdCityArrival()).getNameCity(),
 				booking.getNombrePassagers(),
 				HotelFactory.getInstance().getHotelById(booking.getIdHotel()).getName(),
 				df.format(booking.getPrice())

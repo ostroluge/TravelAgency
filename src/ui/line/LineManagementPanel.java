@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+import job.city.CityManager;
 import job.line.LineManager;
 
 import model.City;
@@ -58,7 +59,7 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 	
 	private void setComboBoxes() {
 		
-		List<City> cities = CityFactory.getInstance().getAllCity();
+		List<City> cities = CityManager.INSTANCE.getAllCity();
 		List<String> nameCities = new ArrayList<>();
 		nameCities.add("");
 		if (cities != null) {
@@ -159,9 +160,9 @@ public class LineManagementPanel extends JPanel implements ActionListener, LineS
 		if (line != null) {
 			lineSelected = line;
 			
-			City dCity = CityFactory.getInstance()
+			City dCity =  CityManager.INSTANCE
 					.getCityById(line.getIdDepartureCity());
-			City aCity = CityFactory.getInstance()
+			City aCity =  CityManager.INSTANCE
 					.getCityById(line.getIdArrivalCity());
 			
 			departureCity.setSelectedItem(dCity.getNameCity());

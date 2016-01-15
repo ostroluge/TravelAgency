@@ -11,6 +11,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.city.CityManager;
+
 import model.City;
 import ui.MyJTableModel;
 import ui.listener.city.CityChangeListener;
@@ -43,7 +45,7 @@ public class CityTable extends JPanel implements CityChangeListener {
 	}
 	
 	private void getCityDetails() {
-		cities = CityFactory.getInstance().getAllCity();
+		cities = CityManager.INSTANCE.getAllCity();
 		if (cities != null) {
 			for (City city : cities) {
 				Object[] row = {
@@ -70,7 +72,7 @@ public class CityTable extends JPanel implements CityChangeListener {
 				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
-					City city = CityFactory.getInstance()
+					City city = CityManager.INSTANCE
 							.getCityById(Long.parseLong(idCustomerSelected));
 					if (city != null) {
 						fireCitySelection(city, table);
