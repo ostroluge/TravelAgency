@@ -11,12 +11,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.city.CityManager;
+import job.line.LineManager;
 import model.City;
 import model.Line;
 import ui.MyJTableModel;
 import ui.listener.line.LineChangeListener;
 import ui.listener.line.LineSelectionListener;
-import factory.CityFactory;
 import factory.LineFactory;
 
 @SuppressWarnings("serial")
@@ -45,12 +46,12 @@ public class LineTable extends JPanel implements LineChangeListener {
 	}
 	
 	private void getLineDetails() {
-		lines = LineFactory.getInstance().getAllLines();
+		lines = LineManager.INSTANCE.getAllLines();
 		if (lines != null) {
 			for (Line line : lines) {
-				City departureCity = CityFactory.getInstance()
+				City departureCity = CityManager.INSTANCE
 						.getCityById(line.getIdDepartureCity());
-				City arrivalCity = CityFactory.getInstance()
+				City arrivalCity = CityManager.INSTANCE
 						.getCityById(line.getIdArrivalCity());
 				Object[] row = {
 						line.getId(),
@@ -74,12 +75,10 @@ public class LineTable extends JPanel implements LineChangeListener {
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idLineSelected = table.getValueAt(selectedRow, 0).toString();
-					Line line = LineFactory.getInstance()
+					Line line = LineManager.INSTANCE
 							.getLineById(Long.parseLong(idLineSelected));
 					if (line != null) {
 						fireLineSelection(line, table);

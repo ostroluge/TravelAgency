@@ -11,6 +11,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.city.CityManager;
+import job.hotel.HotelManager;
+
 import factory.CityFactory;
 import model.City;
 import model.Hotel;
@@ -23,6 +26,7 @@ public class HotelTable extends JPanel {
 
 private static List<HotelSelectionListener> listeners = new ArrayList<>();
 	
+	private Long idCity = null; 
 	public static HotelTable INSTANCE = new HotelTable();
 	
 	protected String[] columnNames = {
@@ -41,23 +45,36 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 		setPanel();
 	}
 	
-	private void getHotelDetails() {
-		hotels = HotelFactory.getInstance().getAllHotels();
-		if (hotels != null) {
-			for (Hotel hotel : hotels) {
-				City city = CityFactory.getInstance().getCityById(hotel.getIdCity());
-				Object[] row = {
-					hotel.getId(),
-					hotel.getName(),
-					city.getNameCity()
-				};
-				tableModel.addRow(row);
-			}
-		} else {
-			tableModel.setRowCount(0);
-		}
+	public HotelTable(Long idCity) {
+		this.idCity = idCity;
+		getHotelDetails();
+		tableHotel = new JTable(tableModel);
+		scrollPane = new JScrollPane(tableHotel);
+		setTableSelectionMode();
+		setPanel();
 	}
-
+	
+	private void getHotelDetails() {
+		if(this.idCity != null){
+			hotels = HotelManager.INSTANCE.getHotelsFromCity(idCity);
+		} else{
+			hotels = HotelManager.INSTANCE.getAllHotels();
+		}
+			if (hotels != null) {
+				for (Hotel hotel : hotels) {
+					City city = CityManager.INSTANCE.getCityById(hotel.getIdCity());
+					Object[] row = {
+							hotel.getId(),
+							hotel.getName(),
+							city.getNameCity()
+					};
+					tableModel.addRow(row);
+				}
+			} else {
+				tableModel.setRowCount(0);
+			}
+	}
+	
 	private void setTableSelectionMode() {
 		tableHotel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = tableHotel.getSelectionModel();
@@ -68,13 +85,11 @@ private static List<HotelSelectionListener> listeners = new ArrayList<>();
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idHotelSelected = tableHotel.getValueAt(selectedRow, 0).toString();
-					Hotel hotel = HotelFactory.getInstance()
-							.getHotelById(Integer.parseInt(idHotelSelected));
+					Hotel hotel = HotelManager.INSTANCE
+							.getHotelById(Long.parseLong(idHotelSelected));
 					if (hotel != null) {
 						fireHotelSelection(hotel);
 					}

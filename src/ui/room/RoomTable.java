@@ -11,17 +11,21 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.room.RoomManager;
+import factory.RoomFactory;
 import model.Category;
+import model.Hotel;
 import model.Room;
 import ui.MyJTableModel;
 import ui.category.CategoryTable;
+import ui.category.HotelTable;
 import ui.listener.category.CategorySelectionListener;
+import ui.listener.hotel.HotelSelectionListener;
 import ui.listener.room.RoomChangeListener;
 import ui.listener.room.RoomSelectionListener;
-import factory.RoomFactory;
 
 @SuppressWarnings("serial")
-public class RoomTable extends JPanel implements RoomChangeListener, CategorySelectionListener {
+public class RoomTable extends JPanel implements RoomChangeListener, CategorySelectionListener, HotelSelectionListener {
 
 	private static List<RoomSelectionListener> listeners = new ArrayList<>();
 	
@@ -38,6 +42,7 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 	private Category categorySelected;
 	
 	public RoomTable() {
+		HotelTable.INSTANCE.addListener(this);
 		CategoryTable.INSTANCE.addListener(this);
 		RoomFactory.getInstance().addListener(this);
 		tableRoom = new JTable(tableModel);
@@ -56,15 +61,13 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String roomNumberSelected = tableRoom.getValueAt(selectedRow, 0).toString();
 					
 					if (categorySelected != null) {
-						Room room = RoomFactory.getInstance()
-								.getRoomByIds(categorySelected.getId(), Integer.parseInt(roomNumberSelected));
+						Room room = RoomManager.INSTANCE
+								.getRoomById(categorySelected.getId(), Integer.parseInt(roomNumberSelected));
 						if (room != null) {
 							fireRoomSelection(room, tableRoom);
 						}
@@ -81,7 +84,8 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 	}
 	
 	private void getRoomDetail(Category category) {
-		rooms = RoomFactory.getInstance().getRoomsByCategory(category.getId());
+		rooms = RoomManager.INSTANCE.getRoomsByCategory(category.getId());
+		
 		if (rooms != null) {
 			for (Room room : rooms) {
 				Object[] row = {
@@ -111,6 +115,12 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 		getRoomDetail(category);
 	}
 
+	//A la selection d'un hotel on vide la table model et on réinitialise la catégorie
+	public void onHotelSelection(Hotel hotel) {
+		categorySelected = null;
+		tableModel.setRowCount(0);
+	}
+	
 	@Override
 	public void roomHasChanged() {
 		if (categorySelected != null) {
@@ -118,4 +128,5 @@ public class RoomTable extends JPanel implements RoomChangeListener, CategorySel
 			getRoomDetail(categorySelected);
 		}
 	}
+
 }

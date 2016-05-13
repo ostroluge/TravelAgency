@@ -8,10 +8,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Classe de gestion de la connexion à la base de données
+ */
 public class DbManager {
 
 	public static DbManager INSTANCE;
 		
+	/**
+	 * Récupère l'instance du DbManager
+	 * @return instance of DbManager
+	 */
 	public static DbManager getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new DbManager();
@@ -19,6 +26,10 @@ public class DbManager {
 		return INSTANCE;
 	}
 
+	/**
+	 * Permet d'effectuer la connexion à la base de données
+	 * @return Connection
+	 */
 	public Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

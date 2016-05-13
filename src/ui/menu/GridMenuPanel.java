@@ -5,11 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import ui.booking.AuthenticationFrame;
 import ui.category.CategoryFrame;
 import ui.city.CityFrame;
 import ui.customer.CustomerFrame;
+import ui.flight.FlightFrame;
+import ui.hotel.HotelFrame;
+import ui.line.LineFrame;
 import ui.room.RoomFrame;
 
 @SuppressWarnings("serial")
@@ -64,25 +70,45 @@ public class GridMenuPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == travelManagementButton) {
-			System.out.println("Not implemented yet");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			AuthenticationFrame authenticationFrame = new AuthenticationFrame();
+			authenticationFrame.setVisible(true);
 		} else if (e.getSource() == customerManagementButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
 			CustomerFrame customerFrame = new CustomerFrame();
 			customerFrame.setVisible(true);
 		} else if (e.getSource() == cityManagementButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
 			CityFrame cityFrame = new CityFrame();
 			cityFrame.setVisible(true);
 		} else if (e.getSource() == hotelManagementButton) {
-			System.out.println("Not implemented yet");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			HotelFrame hotelFrame = new HotelFrame();
+			hotelFrame.setVisible(true);
 		} else if (e.getSource() == categoryManagementButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
 			CategoryFrame categoryFrame = new CategoryFrame();
 			categoryFrame.setVisible(true);
 		} else if (e.getSource() == roomManagementButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
 			RoomFrame roomFrame = new RoomFrame();
 			roomFrame.setVisible(true);
 		} else if (e.getSource() == lineManagementButton) {
-			System.out.println("Not implemented yet");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			LineFrame lineFrame = new LineFrame();
+			lineFrame.setVisible(true);
 		} else if (e.getSource() == linePlanningManagementButton) {
-			System.out.println("Not implemented yet");
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			FlightFrame flightFrame = new FlightFrame();
+			flightFrame.setVisible(true);
 		}
 	}
 }

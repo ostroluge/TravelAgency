@@ -4,9 +4,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import ui.category.HotelTable;
-import ui.city.CityTable;
-
 @SuppressWarnings("serial")
 public class CityHotelTableContainer extends JPanel{
 

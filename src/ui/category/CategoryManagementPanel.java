@@ -1,20 +1,26 @@
 package ui.category;
 
-import job.category.AddCategory;
-import job.category.DeleteCategory;
-import job.category.EditCategory;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
+
+import job.category.CategoryManager;
 import model.Category;
 import model.Hotel;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.hotel.HotelSelectionListener;
-
-import javax.swing.*;
-import javax.swing.text.Document;
-import javax.swing.text.PlainDocument;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import ui.menu.MainMenuFrame;
 
 @SuppressWarnings("serial")
 public class CategoryManagementPanel extends JPanel implements ActionListener, CategorySelectionListener, HotelSelectionListener {
@@ -31,6 +37,7 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
     protected JButton editButton;
     protected JButton deleteButton;
     protected JButton clearButton;
+	protected JButton returnButton;
 
     protected Category categorySelected;
     protected Hotel hotelSelected;
@@ -65,11 +72,13 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
         editButton = new JButton("Modifier");
         clearButton = new JButton("Clear");
         deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 
         addButton.addActionListener(this);
         editButton.addActionListener(this);
         clearButton.addActionListener(this);
         deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
     }
 
     private void setPanel() {
@@ -84,18 +93,25 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
         add(editButton);
         add(clearButton);
         add(deleteButton);
+        add(returnButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (e.getSource() == addButton) {
             if (!name.getText().trim().equals("") && !price.getText().trim().equals("")
                     && !capacity.getText().trim().equals("")) {
                 Category categoryToAdd = new Category(name.getText(),
                         Integer.parseInt(capacity.getText()), Float.parseFloat(price.getText()));
                 if (hotelSelected != null) {
-                    new AddCategory(categoryToAdd, hotelSelected.getId());
+                    CategoryManager.INSTANCE.addCategory(categoryToAdd, hotelSelected.getId());
                 }
+                else{
+              	  JOptionPane.showMessageDialog(topFrame, "Aucun hôtel sélectionné");
+                }
+            } else{
+          	  JOptionPane.showMessageDialog(topFrame, "Veuillez remplir tous les champs");
             }
         } else if (e.getSource() == editButton) {
             if (categorySelected != null) {
@@ -106,11 +122,11 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
                     categoryToEdit.setId(categorySelected.getId());
                     if (hotelSelected != null) {
                         categoryToEdit.setHotelId(hotelSelected.getId());
-                        new EditCategory(categoryToEdit, categorySelected.getId());
+                        CategoryManager.INSTANCE.editCategory(categoryToEdit, categorySelected.getId());
                     }
                 }
             } else {
-                System.out.println("Veuillez d'abord selectionner une categorie");
+            	  JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une catégorie");
             }
         } else if (e.getSource() == clearButton) {
             if (categorySelected != null) {
@@ -122,10 +138,18 @@ public class CategoryManagementPanel extends JPanel implements ActionListener, C
             }
         } else if (e.getSource() == deleteButton) {
             if (categorySelected != null) {
-                new DeleteCategory(categorySelected.getId());
+            	CategoryManager.INSTANCE.deleteCategory(categorySelected.getId());
                 clearSelection();
             }
-        }
+            else{
+          	  JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une catégorie");
+            }
+        } else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
+		}
     }
 
     private void clearSelection() {

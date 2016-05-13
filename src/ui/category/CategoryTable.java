@@ -11,13 +11,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.category.CategoryManager;
+
 import model.Category;
 import model.Hotel;
 import ui.MyJTableModel;
-import factory.CategoryFactory;
 import ui.listener.category.CategoryChangeListener;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.hotel.HotelSelectionListener;
+import factory.CategoryFactory;
 
 @SuppressWarnings("serial")
 public class CategoryTable extends JPanel implements HotelSelectionListener, CategoryChangeListener {
@@ -55,12 +57,10 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 					return;
 				}
 				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					System.out.println("no row selected");
-				} else {
+				if (!lsm.isSelectionEmpty()) {
 					int selectedRow = lsm.getMinSelectionIndex();
 					String idCategorySelected = tableCategory.getValueAt(selectedRow, 0).toString();
-					Category category = CategoryFactory.getInstance()
+					Category category = CategoryManager.INSTANCE
 							.getCategoryById(Long.parseLong(idCategorySelected));
 					if (category != null) {
 						fireCategorySelection(category, tableCategory);
@@ -77,7 +77,8 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 	}
 
 	private void getCategoryDetail(Hotel hotel) {
-		categories = CategoryFactory.getInstance().getCategoriesByHotelId(hotel.getId());
+		categories = CategoryManager.INSTANCE.getCategoriesByHotelId(hotel.getId());
+		tableModel.setRowCount(0);
 		if (categories != null) {
 			for (Category category : categories) {
 				Object[] row = {
@@ -88,8 +89,6 @@ public class CategoryTable extends JPanel implements HotelSelectionListener, Cat
 				};
 				tableModel.addRow(row);
 			}
-		} else {
-			tableModel.setRowCount(0);
 		}
 	}
 

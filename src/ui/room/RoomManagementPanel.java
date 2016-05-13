@@ -5,21 +5,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-import job.room.AddRoom;
-import job.room.DeleteRoom;
+import job.category.CategoryManager;
+import job.room.RoomManager;
 import model.Category;
 import model.Room;
 import ui.category.CategoryTable;
 import ui.listener.category.CategorySelectionListener;
 import ui.listener.room.RoomSelectionListener;
-import factory.CategoryFactory;
+import ui.menu.MainMenuFrame;
 
 @SuppressWarnings("serial")
 public class RoomManagementPanel extends JPanel implements ActionListener,
@@ -34,6 +37,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	protected JButton addButton;
 	protected JButton deleteButton;
 	protected JButton clearButton;
+	protected JButton returnButton;
 	
 	private Room roomSelected;
 	private Category categorySelected;
@@ -64,10 +68,12 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 		addButton = new JButton("Ajouter");
         clearButton = new JButton("Clear");
         deleteButton = new JButton("Supprimer");
+		returnButton = new JButton("Retour");
 
         addButton.addActionListener(this);
         clearButton.addActionListener(this);
         deleteButton.addActionListener(this);
+		returnButton.addActionListener(this);
 	}
 	
 	private void setPanel() {
@@ -79,24 +85,35 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 		add(addButton);
 		add(clearButton);
 		add(deleteButton);
+		add(returnButton);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		if (e.getSource() == addButton) {
 			if (!number.getText().trim().equals("") &&
 					!name.getText().trim().equals("")) {
 				Room roomToAdd = new Room(Integer.parseInt(number.getText()),
 						name.getText());
 				if (categorySelected != null) {
-					new AddRoom(categorySelected.getHotelId(), categorySelected.getId(),
+					RoomManager.INSTANCE.addRoom(categorySelected.getHotelId(), categorySelected.getId(),
 							roomToAdd.getRoomNumber(), roomToAdd.getNameRoom());
 				}
+				else{
+					 JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner un hôtel et une catégorie");
+				}
+			}
+			else{
+				 JOptionPane.showMessageDialog(topFrame, "Veuillez remplir les champs");
 			}
 		} else if (e.getSource() == deleteButton) {
 			if (roomSelected != null) {
-				new DeleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
+				RoomManager.INSTANCE.deleteRoom(roomSelected.getIdHotel(), roomSelected.getIdCategory(), roomSelected.getRoomNumber());
 				clearSelection();
+			}
+			else{
+				 JOptionPane.showMessageDialog(topFrame, "Veuillez sélectionner une chambre");
 			}
 		} else if (e.getSource() == clearButton) {
 			if (roomSelected != null) {
@@ -105,6 +122,11 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 				number.setText("");
 				name.setText("");
 			}
+		} else if (e.getSource() == returnButton) {
+			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			currentFrame.dispose();
+			MainMenuFrame frame = new MainMenuFrame();
+			frame.setVisible(true);
 		}
 	}
 
@@ -128,7 +150,7 @@ public class RoomManagementPanel extends JPanel implements ActionListener,
 	@Override
 	public void onCategorySelection(Category category, JTable table) {
 		if (category != null) {
-			categorySelected = CategoryFactory.getInstance().getCategoryById(category.getId());
+			categorySelected = CategoryManager.INSTANCE.getCategoryById(category.getId());
 		}
 	}
 }

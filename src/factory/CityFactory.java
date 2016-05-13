@@ -11,6 +11,9 @@ import model.City;
 import ui.listener.city.CityChangeListener;
 import db.DbManager;
 
+/**
+ * La classe Fabrique de City
+ */
 public class CityFactory {
 
 	private static CityFactory INSTANCE;
@@ -19,6 +22,10 @@ public class CityFactory {
 	
 	private static List<CityChangeListener> listeners = new ArrayList<>();
 	
+	/**
+	 * Récupère l'instance de CityFactory
+	 * @return
+	 */
 	public static CityFactory getInstance(){
 		if(INSTANCE == null){
 			INSTANCE = new CityFactory();
@@ -26,10 +33,20 @@ public class CityFactory {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Permet de créer une City
+	 * @param id
+	 * @param nameCity
+	 * @return new City
+	 */
 	public City create(Long id, String nameCity){
 		return new City(id, nameCity);
 	}
 	
+	/**
+	 * Récupère toutes les villes de la base
+	 * @return List<City>
+	 */
 	public List<City> getAllCity(){
 		List<City> cities = new ArrayList<>();
 	
@@ -55,6 +72,11 @@ public class CityFactory {
 		return null;
 	}
 	
+	/**
+	 * Permet de récupérer une City par son id
+	 * @param id
+	 * @return City
+	 */
 	public City getCityById(Long id) {
 		City city = null;
 		try {
@@ -82,6 +104,11 @@ public class CityFactory {
 		return null;
 	}
 	
+	/**
+	 * Permet de récupérer une City grâce à son nom
+	 * @param citySelected
+	 * @return City
+	 */
 	public City getCityByName(String citySelected) {
 		City city = null;
 		try {
@@ -109,6 +136,11 @@ public class CityFactory {
 		return null;
 	}
 	
+	/**
+	 * Permet d'ajouter une City à la base de données
+	 * @param nameCity
+	 * @return code retour
+	 */
 	public int addCity(String nameCity){
 		try {
 			preparedStatement = conn.prepareStatement("insert into city " +
@@ -132,6 +164,11 @@ public class CityFactory {
 		
 	}
 	
+	/**
+	 * Permet de supprimer une City de la base de données
+	 * @param id
+	 * @return code retour
+	 */
 	public int removeCity(Long id){
 		try {
 			preparedStatement = conn.prepareStatement("delete from city " +
@@ -152,11 +189,18 @@ public class CityFactory {
 		
 		return 0;
 	}
-
+	
+	/**
+	 * Permet d'ajouter un listener à la liste de listeners de la factory
+	 * @param listener
+	 */
 	public void addListener(CityChangeListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Permet de vérifier si les city ont changés (via les listeners)
+	 */
 	private static void fireModelChangeEvent() {
 		for (CityChangeListener listener : listeners) {
 			listener.cityHasChanged();

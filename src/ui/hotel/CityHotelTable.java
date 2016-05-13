@@ -11,10 +11,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import job.city.CityManager;
+
 import model.City;
 import ui.MyJTableModel;
 import ui.listener.city.CityHotelSelectionListener;
-import ui.listener.city.CitySelectionListener;
 import factory.CityFactory;
 
 @SuppressWarnings("serial")
@@ -41,7 +42,7 @@ public class CityHotelTable extends JPanel{
 		}
 		
 		private void getCityDetails() {
-			cities = CityFactory.getInstance().getAllCity();
+			cities = CityManager.INSTANCE.getAllCity();
 			if (cities != null) {
 				for (City city : cities) {
 					Object[] row = {
@@ -65,12 +66,10 @@ public class CityHotelTable extends JPanel{
 						return;
 					}
 					ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-					if (lsm.isSelectionEmpty()) {
-						System.out.println("no row selected");
-					} else {
+					if (!lsm.isSelectionEmpty()) {
 						int selectedRow = lsm.getMinSelectionIndex();
 						String idCustomerSelected = table.getValueAt(selectedRow, 0).toString();
-						City city = CityFactory.getInstance()
+						City city = CityManager.INSTANCE
 								.getCityById(Long.parseLong(idCustomerSelected));
 						if (city != null) {
 							fireCitySelection(city);
