@@ -1,5 +1,7 @@
 FLAMEN Julien
+
 OSTROWSKI Thomas
+
 M1 MIAGE 2015/2016 : COO
 
 ##Résumé rapide de l'application
